@@ -1,22 +1,19 @@
-package worldOfZuul.textUI;
+package worldOfZuul.Main.Java.textUI;
 
 import java.util.Scanner;
-import worldOfZuul.Command;
-import worldOfZuul.Game;
+import worldOfZuul.Main.Java.Command;
+import worldOfZuul.Main.Java.Game;
 
-public class Parser 
-{
+public class Parser {
     private Scanner reader;
     private final Game game;
 
-    public Parser(Game game) 
-    {
+    public Parser(Game game) {
         this.game = game;
         this.reader = new Scanner(System.in);
     }
 
-    public Command getCommand() 
-    {
+    public Command getCommand() {
         String inputLine;
         String word1 = null;
         String word2 = null;
