@@ -1,5 +1,5 @@
 
-package worldOfZuul;
+package worldOfZuul.Main.Java;
 
 public interface Command {
 
