@@ -1,13 +1,12 @@
 package worldOfZuul.Main.Java.Classes;
 
 public class Activity {
+    private final int successPoints; // Positive number for number of points to receive when completing the activity.
+    private final int failurePoints; // Positive number to subtract from points when not completing or failing the activity.
+    private final int powerCost; // Amount of power required to complete the activity.
+    private final boolean daily; // Determines if the task is daily (Daily=true, non-daily=false)
 
-    private final int successPoints;
-    private final int failurePoints;
-    private final int powerCost;
-    private final boolean isDaily;
-
-    public Activity(int successPoints, int failurePoints, int powerCost, boolean isDaily) {
+    public Activity(int successPoints, int failurePoints, int powerCost, boolean daily) {
 
         // Math.max returns the highest of 2 numbers.
         // In this example it returns the variable if it's higher than 0.
@@ -15,7 +14,7 @@ public class Activity {
         this.failurePoints = Math.max(failurePoints, 0);
         this.powerCost = Math.max(powerCost, 0);
 
-        this.isDaily = isDaily;
+        this.daily = daily;
     }
 
     public int getSuccessPoints() {
@@ -31,6 +30,6 @@ public class Activity {
     }
 
     public boolean isDaily() {
-        return isDaily;
+        return daily;
     }
 }

@@ -40,15 +40,15 @@ public class CommandImplementation implements Command {
         return commandValue;
     }
 
+    @Override
+    public boolean hasCommandValue() {
+        return (commandValue != null);
+    }
 
     @Override
     public boolean isUnknown() {
         return (commandName == Commands.UNKNOWN);
     }
 
-    @Override
-    public boolean hasCommandValue() {
-        return (commandValue != null);
-    }
 }
 
