@@ -1,10 +1,12 @@
 package worldOfZuul.Main.Java.Classes;
 
+import java.util.ArrayList;
+
 public class Inventory {
     private ArrayList<Item> listOfItems; // Dynamic array to hold items within an inventory list.
 
     public Inventory() {
-        listOfItems = new ArrayList<Item>();
+        listOfItems = new ArrayList<>();
     }
 
     public ArrayList<Item> getInventoryList() {
@@ -20,7 +22,7 @@ public class Inventory {
     }
 
     public void printItems() {
-        if (ArrayList.isEmpty()) {
+        if (listOfItems.isEmpty()) {
             System.out.println("Your inventory is currently empty!");
             
         }

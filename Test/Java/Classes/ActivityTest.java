@@ -14,7 +14,7 @@ class ActivityTest {
 
     @Test
     @DisplayName("Test Activity - Constructor")
-    public void testConstructor1() {
+    public void testConstructor() {
         // Trys to open the files ActivityTest.csv and ActivityTest_expected.csv
         try (Scanner scanner_test_input = new Scanner(new File("Test/Java/Classes/ActivityTest.csv")); Scanner scanner_test_expected = new Scanner(new File("Test/Java/Classes/ActivityTest_expected.csv"))) {
             // Runs a loop as long as both files has another line.
