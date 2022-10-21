@@ -15,7 +15,7 @@ class ApplianceTest {
         Activity activity = new Activity(5, 5, 5, false);
         Appliance appliance = new Appliance("Test 1", activity);
 
-        assertEquals(appliance.getApplianceActivity(), activity);
-        assertEquals(appliance.getApplianceName(), "Test 1");
+        assertEquals(appliance.getActivityReference(), activity);
+        assertEquals(appliance.getName(), "Test 1");
     }
 }

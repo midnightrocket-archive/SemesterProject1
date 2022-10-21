@@ -2,18 +2,18 @@ package worldOfZuul.Main.Java.Classes;
 
 public class Appliance {
     private final String name; // Name of the appliance
-    private final Activity activity; // Reference to associated activity
+    private final Activity activityReference; // Reference to associated activity
 
-    public Appliance(String name, Activity activity) {
+    public Appliance(String name, Activity activityReference) {
         this.name = name;
-        this.activity = activity;
+        this.activityReference = activityReference;
     }
 
-    public Activity getApplianceActivity() {
-        return activity;
+    public Activity getActivityReference() {
+        return activityReference;
     }
 
-    public String getApplianceName() {
+    public String getName() {
         return name;
     }
 }

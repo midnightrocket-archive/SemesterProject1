@@ -2,15 +2,15 @@ package worldOfZuul.Main.Java.Classes;
 
 public class Item {
     private final String name; // Name of the item
-    private final Appliance appliance; // Reference to the associated appliance
+    private final Appliance applianceReference; // Reference to the associated appliance
 
-    public Item(String name, Appliance appliance) {
+    public Item(String name, Appliance applianceReference) {
         this.name = name;
-        this.appliance = appliance;
+        this.applianceReference = applianceReference;
     }
     
-    public Appliance getItemAppliance() {
-        return appliance;
+    public Appliance getApplianceReference() {
+        return applianceReference;
     }
 
     public String getItemName() {

@@ -51,4 +51,24 @@ class ActivityTest {
         assertFalse(activityTest1.isDaily());
         assertTrue(activityTest2.isDaily());
     }
+
+    @Test
+    @DisplayName("Test Activity - setActivityDone")
+    public void testSetActivityDone() {
+        // Creates 2 constructors.
+        Activity activityTest1 = new Activity(-5, 5, -5, false);
+        Activity activityTest2 = new Activity(-5, 5, -5, true);
+
+        // Checks if both activities are done. Expected is that both are NOT done.
+        assertFalse(activityTest1.isActivityDone());
+        assertFalse(activityTest2.isActivityDone());
+
+        // Sets activity 1 to done.
+        activityTest1.setActivityDone();
+
+        // Checks if both activities are done.
+        // Activity 1 is expected to be done. Activity 2 is not.
+        assertTrue(activityTest1.isActivityDone());
+        assertFalse(activityTest2.isActivityDone());
+    }
 }
