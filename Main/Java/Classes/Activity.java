@@ -5,6 +5,8 @@ public class Activity {
     private final int failurePoints; // Positive number to subtract from points when not completing or failing the activity.
     private final int powerCost; // Amount of power required to complete the activity.
     private final boolean daily; // Determines if the task is daily (Daily=true, non-daily=false)
+    private boolean activityDone; // False if activity is not done, true if activity is done.
+
 
     public Activity(int successPoints, int failurePoints, int powerCost, boolean daily) {
 
@@ -15,6 +17,10 @@ public class Activity {
         this.powerCost = Math.max(powerCost, 0);
 
         this.daily = daily;
+    }
+
+    public void setActivityDone() {
+        activityDone = true;
     }
 
     public int getSuccessPoints() {
@@ -31,5 +37,9 @@ public class Activity {
 
     public boolean isDaily() {
         return daily;
+    }
+
+    public boolean isActivityDone() {
+        return activityDone;
     }
 }

@@ -17,7 +17,7 @@ class ItemTest {
         Appliance appliance = new Appliance("Test 1", activity);
         Item item = new Item("Test 1", appliance);
 
-        assertEquals(item.getItemAppliance(), appliance);
+        assertEquals(item.getApplianceReference(), appliance);
         assertEquals(item.getItemName(), "Test 1");
     }
 }

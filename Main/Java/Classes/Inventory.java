@@ -28,8 +28,8 @@ public class Inventory {
         }
         else {
             System.out.println("Your inventory currently contains: ");
-            for (int i = 0; i < listOfItems.size(); i++) {
-                System.out.println(listOfItems.get(i).getItemName());
+            for (Item item : listOfItems) {
+                System.out.println(item.getItemName());
             }
         }
     }
