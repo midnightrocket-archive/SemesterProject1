@@ -1,0 +1,77 @@
+@startuml Diagram
+
+class Game {
+	+ {static} day : int
+	+ {static} power : int
+	+ {static} points : int
+	+ switchDay() : void
+	+ setPower(int N) : voids
+}
+
+
+class Player {
+	- activeRoom : int[][]
+	- points : int
+	+ moveRoom() : void
+	+ addItemToInventory() : void
+	+ removeItemFromInventory() : void
+}
+
+
+class Inventory {
+	- listOfItems : ArrayList<Item>
+	+ getInventoryList() : ArrayList<Item>
+	+ addItem(Item item) : void
+	+ removeItem(Item item) : void
+	+ printItems() : void
+}
+
+
+class Item {
+	- name : String
+	- applianceReference : Appliance
+	+ getApplianceReference() : Appliance
+	+ getItemName() : String
+}
+
+
+class Appliance {
+	- name : String
+	- activityReference : Activity
+	+ getActivityReference() : Activity
+	+ getName() : String
+}
+
+
+class ActivityManager {
+	+ listOfActivities : Activity[]
+	+ addActivity(Activity activity) : void
+	+ addPoints(Activity activity) : void
+	+ removePoints(Activity activity) : void
+	+ removePower(Activity activity) : void
+}
+
+
+class Activity {
+	- successPoints : int
+	- failurePoints : int
+	- powerCost : int
+	- daily : boolean
+	- activityDone : boolean
+	+ setActivityDone() : void
+	+ getSuccessPoints() : int
+	+ getFailurePoints() : int
+	+ getPowerCost() : int
+	+ isDaily() : boolean
+	+ isActivityDone() : boolean
+}
+
+
+Game ..> ActivityManager
+Player ..> Inventory
+Inventory ..> Item
+Item ..> Appliance
+Appliance ..> Activity
+ActivityManager ..> Activity
+
+@enduml
