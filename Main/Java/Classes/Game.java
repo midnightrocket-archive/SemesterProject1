@@ -5,13 +5,15 @@ import java.util.Random;
 public class Game {
 
 
-    //Attributter
+    //Attributes
     public static int day;
-    private int maxDays;
     public static int power;
+    public static int points;
+    private int maxDays;
+
     private int defaultPower;
     public int extraPower;
-    public static int points;
+
 
 
     //Constructors
@@ -25,29 +27,29 @@ public class Game {
     }
 
 
-    //Metoder
+    //Methods
 
-    //Metode getPower til at hente powerværdi.
+    //Method getPower
     public int getPower() {
         return power;
     }
 
-    //Metode set power værdi på dagen
+    //Method setPower
     public void setPower(int newPower) {
         power = newPower;
     }
 
-    //Metode for check day.
-    public boolean notLastDay() {
-        if (day < maxDays)
+    //Method for checking last day
+    public boolean isLastDay() {
+        if (day > maxDays)
             return true;
         else return false;
     }
 
-    //Metode for skift af dag
-    public void nextDay() {
+    //Method go to next day
+    public void setNextDay() {
         day += 1;
-        if (notLastDay()) {
+        if (isLastDay()) {
             double randomExtraPower = Math.random() * extraPower;
             setPower(defaultPower + (int) randomExtraPower);
             extraPower -= (int) randomExtraPower;
@@ -58,12 +60,12 @@ public class Game {
     }
 
 
-    //Metode for points værdi.
+    //Method points value
     public int getPoints () {
         return points;
     }
 
-    //Metode for tilføje til points værdi.
+    //Method add points
     public void addPoints (int pointsToAdd){
         points += pointsToAdd;
     }
