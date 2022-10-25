@@ -5,7 +5,7 @@ class Game {
 	+ {static} power : int
 	+ {static} points : int
 	+ switchDay() : void
-	+ setPower(int N) : voids
+	+ setPower(int N) : void
 }
 
 

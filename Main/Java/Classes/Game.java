@@ -4,24 +4,19 @@ import java.util.Random;
 
 public class Game {
 
-
     // Static attributes
-    public static int day;
+    public static int day = 0;
     public static int power;
     public static int points;
 
     // Instance attributes
     private int maxDays;
-
     private int defaultPower;
     public int extraPower;
 
-
-
-    // Constructors
-
+  
+    // Constructor
     public Game(int extraPower, int defaultPower, int maxDays) {
-        this.day = 0;
         this.defaultPower = defaultPower;
         this.power = defaultPower;
         this.maxDays = maxDays;
@@ -29,26 +24,22 @@ public class Game {
     }
 
 
-    // Methods
+    // Methods //
 
-    //Method getPower
-    public int getPower() {
-        return power;
+    // Method add points
+    public void addPoints(int pointsToAdd) {
+        points += pointsToAdd;
     }
-
-    //Method setPower
-    public void setPower(int newPower) {
-        power = newPower;
-    }
-
-    //Method for checking last day
+  
+  
+    // Method for checking last day
     public boolean isLastDay() {
         if (day > maxDays)
             return true;
         else return false;
     }
 
-    //Method go to next day
+    // Method go to next day
     public void setNextDay() {
         day += 1;
         if (isLastDay()) {
@@ -61,23 +52,18 @@ public class Game {
         }
     }
 
-
-    //Method points value
-    public int getPoints () {
+    // Metode for points værdi.
+    public int getPoint() {
         return points;
     }
+  
+    // Metode getPower til at hente powerværdi.
+    public int getPower() {
+        return power;
+    }
 
-    //Method add points
-    public void addPoints (int pointsToAdd){
-        points += pointsToAdd;
+    // Metode set power værdi på dagen
+    public void setPower(int newPower) {
+        power = newPower;
     }
 }
-
-
-
-
-
-
-
-
-
