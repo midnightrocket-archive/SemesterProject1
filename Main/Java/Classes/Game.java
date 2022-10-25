@@ -8,7 +8,7 @@ public class Game {
     //Attributter
     public static int day;
     private int maxDays;
-    private static int power;
+    public static int power;
     private int defaultPower;
     public int extraPower;
     public static int points;
