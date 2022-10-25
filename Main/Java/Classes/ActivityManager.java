@@ -6,6 +6,7 @@ public class ActivityManager extends Game {
 
     // Constructor WITH a list as input
     public ActivityManager(Activity[] listOfActivities) {
+        super(1,1,1);
         this.listOfActivities = listOfActivities;
     }
 
