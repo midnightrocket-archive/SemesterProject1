@@ -6,11 +6,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
-
     @Test
     @DisplayName("Test Game")
-    public void testGame() {
-        // Add code.
+    public  void testContructor() {
+        // Code
     }
 
 }
