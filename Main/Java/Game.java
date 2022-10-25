@@ -5,7 +5,7 @@ import java.util.List;
 public class Game {
 
     private Room currentRoom;
-    private CommandWords commands;
+    private CommandWords commands; // holds all valid commands
 
     public Game() {
         createRooms();
@@ -57,6 +57,7 @@ public class Game {
         }
     }
 
+    // Returns false if user input of command has a second word.
     public boolean quit(Command command) {
         if (command.hasCommandValue()) {
             return false;
@@ -69,16 +70,25 @@ public class Game {
         return currentRoom.getLongDescription();
     }
 
+    // Returns a CommandWords object which holds all valid commands.
     public CommandWords getCommands() {
         return commands;
     }
 
+    // Returns List<String> of all valid command strings.
     public List<String> getCommandDescriptions() {
         return commands.getCommandWords();
     }
 
+    /* This is used in the Parser class and takes the user input as arguments.
+     * commands.getCommand(word1) returns the corresponding command enum to the first word in the user input.
+     * Then returns a Command object with the evaluated enum and the command string.
+     */
     public Command getCommand(String word1, String word2) {
+        
         return new CommandImplementation(commands.getCommand(word1), word2);
     }
+
+
 
 }
