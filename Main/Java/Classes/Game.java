@@ -5,10 +5,12 @@ import java.util.Random;
 public class Game {
 
 
-    //Attributes
+    // Static attributes
     public static int day;
     public static int power;
     public static int points;
+
+    // Instance attributes
     private int maxDays;
 
     private int defaultPower;
@@ -16,7 +18,7 @@ public class Game {
 
 
 
-    //Constructors
+    // Constructors
 
     public Game(int extraPower, int defaultPower, int maxDays) {
         this.day = 0;
@@ -27,7 +29,7 @@ public class Game {
     }
 
 
-    //Methods
+    // Methods
 
     //Method getPower
     public int getPower() {
