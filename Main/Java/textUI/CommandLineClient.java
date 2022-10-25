@@ -28,6 +28,7 @@ public class CommandLineClient {
 
         boolean finished = false;
         while (!finished) {
+            // parser takes user input and returns a Command object that constains command enum and command string.
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
@@ -54,7 +55,7 @@ public class CommandLineClient {
     public boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
-        Commands commandWord = command.getCommandName();
+        Commands commandWord = command.getCommandName(); // holds command enum
 
         if (commandWord == Commands.UNKNOWN) {
             System.out.println("I don't know what you mean...");
