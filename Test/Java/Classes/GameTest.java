@@ -7,9 +7,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class GameTest {
     @Test
-    @DisplayName("Test Game - Constructor")
+    @DisplayName("Test Game")
     public  void testContructor() {
-        assertEquals(5, 5);
+        // Code
     }
 
 }
