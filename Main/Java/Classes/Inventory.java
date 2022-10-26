@@ -19,8 +19,9 @@ public class Inventory {
     public boolean isEmpty() {
         if (listOfItems.isEmpty()) {
             return true;
+        } else {
+            return false;
         }
-        else return false;
     }
 
     public ArrayList<Item> getInventoryList() {
