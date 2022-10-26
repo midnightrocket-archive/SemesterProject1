@@ -86,7 +86,7 @@ public class Game {
     }
 
     public String getAppliancesInRoom() {
-        return currentRoom.getAppliances();
+        return currentRoom.getAppliancesString();
     }
 
     public String getInventory() {

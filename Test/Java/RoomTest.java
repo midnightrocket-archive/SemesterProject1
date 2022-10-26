@@ -23,15 +23,31 @@ class RoomTest {
     
     @Test
     @DisplayName("Test Room - CreateAppliance")
-    void testCreateAppliance() {
+    Appliance testCreateAppliance() {
         Appliance fridge = kitchen.createAppliance("fridge", turnOff);
         assertInstanceOf(Appliance.class, fridge);
+        return fridge;
     }
 
     @Test
     @DisplayName("Test Room - GetAppliance")
     void testGetAppliance() {
         testCreateAppliance();
-        System.out.println(kitchen.getAppliances());
+        System.out.println(kitchen.getAppliancesString());
+    }
+
+    @Test
+    @DisplayName("Test Room - HasAppliance")
+    void testHasAppliance() {
+        assertEquals(kitchen.hasAppliance("fridge"), false);
+        testCreateAppliance();
+        assertEquals(kitchen.hasAppliance("fridge"), true);
+    }
+
+    @Test
+    @DisplayName("Test Room - GetApplianceActivity")
+    void testGetApplianceActivity() {
+        Appliance fridge = testCreateAppliance();
+        assertEquals(kitchen.getApplianceActivity(fridge), turnOff);
     }
 }
