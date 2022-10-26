@@ -20,7 +20,7 @@ public class CommandWordsImplementation implements CommandWords {
      * For example, "go" is the key to the value Commands.GO.
      */
     public CommandWordsImplementation() {
-        validCommands = new HashMap<String, Commands>();
+        validCommands = new HashMap<>();
         for(Commands command : Commands.values()) {
             if(command != Commands.UNKNOWN) {
                 validCommands.put(command.toString(), command);

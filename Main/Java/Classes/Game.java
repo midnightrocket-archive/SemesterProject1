@@ -10,8 +10,8 @@ public class Game {
     public static int points;
 
     // Instance attributes
-    private int maxDays;
-    private int defaultPower;
+    private final int maxDays;
+    private final int defaultPower;
     public int extraPower;
 
   
@@ -22,7 +22,6 @@ public class Game {
         this.maxDays = maxDays;
         this.extraPower = extraPower;
     }
-
 
     // Methods //
 
@@ -52,11 +51,6 @@ public class Game {
         }
     }
 
-    // Metode for points værdi.
-    public int getPoint() {
-        return points;
-    }
-  
     // Metode getPower til at hente powerværdi.
     public int getPower() {
         return power;
@@ -65,5 +59,10 @@ public class Game {
     // Metode set power værdi på dagen
     public void setPower(int newPower) {
         power = newPower;
+    }
+
+    // Metode for points værdi.
+    public int getPoint() {
+        return points;
     }
 }

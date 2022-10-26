@@ -16,6 +16,7 @@ public class Inventory {
     public void removeItem(Item item) {
         listOfItems.remove(item);
     }
+
     public boolean isEmpty() {
         if (listOfItems.isEmpty()) {
             return true;
@@ -27,6 +28,7 @@ public class Inventory {
     public ArrayList<Item> getInventoryList() {
         return listOfItems;
     }
+    
     public String toString() {
         String inventoryString = new String();
         if (listOfItems.isEmpty()) {

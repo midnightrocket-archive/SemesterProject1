@@ -25,21 +25,21 @@ class ActivityManagerTest {
         activityManager.addActivity(activity2);
         activityManager.addActivity(activity3);
 
-        assertEquals(activityManager.listOfActivities[1], activity2);
+        assertEquals(activityManager.listOfActivities.get(1), activity2);
     }
 
     @Test
     @DisplayName("Test ActivityManager - isActivityDone")
     public void isActivityDone() {
-        assertFalse(activityManager.listOfActivities[0].isActivityDone());
-        assertFalse(activityManager.listOfActivities[1].isActivityDone());
-        assertFalse(activityManager.listOfActivities[2].isActivityDone());
+        assertFalse(activityManager.listOfActivities.get(0).isActivityDone());
+        assertFalse(activityManager.listOfActivities.get(1).isActivityDone());
+        assertFalse(activityManager.listOfActivities.get(2).isActivityDone());
 
-        activityManager.listOfActivities[1].setActivityDone();
+        activityManager.listOfActivities.get(1).setActivityDone();
 
-        assertFalse(activityManager.listOfActivities[0].isActivityDone());
-        assertTrue(activityManager.listOfActivities[1].isActivityDone());
-        assertFalse(activityManager.listOfActivities[2].isActivityDone());
+        assertFalse(activityManager.listOfActivities.get(0).isActivityDone());
+        assertTrue(activityManager.listOfActivities.get(1).isActivityDone());
+        assertFalse(activityManager.listOfActivities.get(2).isActivityDone());
     }
 
     @Test

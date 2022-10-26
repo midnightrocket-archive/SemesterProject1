@@ -11,7 +11,7 @@ import worldOfZuul.Main.Java.Command;
 import worldOfZuul.Main.Java.Game;
 
 public class Parser {
-    private Scanner reader;
+    private final Scanner reader;
     private final Game game;
 
     public Parser(Game game) {
@@ -31,15 +31,11 @@ public class Parser {
         // Find up to two words on the line. The rest of the input line is ignored.
         Scanner tokenizer = new Scanner(inputLine);
         if(tokenizer.hasNext()) {
-            word1 = tokenizer.next(); // get first word.
+            word1 = tokenizer.next().toLowerCase(); // get first word and lower case it for command processing
             if(tokenizer.hasNext()) {
-                word2 = tokenizer.next();  // get the second word
+                word2 = tokenizer.next().toLowerCase();  // get the second word and lower case it for command processing
             }
         }
-
-        // standardise input to lower case for command processing
-        word1 = word1.toLowerCase();
-        word2 = word2.toLowerCase();
 
         return game.getCommand(word1,word2);
     }

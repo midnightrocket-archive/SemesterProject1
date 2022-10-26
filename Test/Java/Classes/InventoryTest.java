@@ -7,6 +7,7 @@ import worldOfZuul.Main.Java.Classes.Activity;
 import worldOfZuul.Main.Java.Classes.Appliance;
 import worldOfZuul.Main.Java.Classes.Inventory;
 import worldOfZuul.Main.Java.Classes.Item;
+import worldOfZuul.Main.Java.Room;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,11 +23,14 @@ class InventoryTest {
     Item item2;
     Inventory inventory;
 
+    Room room;
+
     @BeforeEach
     @DisplayName("Test Inventory - Setup")
     public void setup() {
         activity = new Activity(5, 5, 5, false);
-        appliance = new Appliance("Test appliance", activity);
+        room = new Room("room");
+        appliance = new Appliance("Test appliance", room, activity);
         item1 = new Item("Test item1", appliance);
         item2 = new Item("Test item2", appliance);
         inventory = new Inventory();

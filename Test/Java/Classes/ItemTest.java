@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import worldOfZuul.Main.Java.Classes.Activity;
 import worldOfZuul.Main.Java.Classes.Appliance;
 import worldOfZuul.Main.Java.Classes.Item;
+import worldOfZuul.Main.Java.Room;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +15,8 @@ class ItemTest {
     @DisplayName("Test Item - Constructor")
     public void testConstructor() {
         Activity activity = new Activity(5, 5, 5, false);
-        Appliance appliance = new Appliance("Test 1", activity);
+        Room room = new Room("room description");
+        Appliance appliance = new Appliance("Test 1", room, activity);
         Item item = new Item("Test 1", appliance);
 
         assertEquals(item.getApplianceReference(), appliance);
