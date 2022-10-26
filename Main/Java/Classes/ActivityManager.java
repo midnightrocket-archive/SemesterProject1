@@ -1,32 +1,27 @@
 package worldOfZuul.Main.Java.Classes;
 
+import java.util.ArrayList;
+
 public class ActivityManager extends Game {
 
-    public Activity[] listOfActivities;
+    public ArrayList<Activity> listOfActivities;
 
     // Constructor WITH a list as input
-    public ActivityManager(Activity[] listOfActivities) {
+    public ActivityManager(ArrayList<Activity> listOfActivities) {
         super(1,1,1);
         this.listOfActivities = listOfActivities;
     }
 
     // Constructor WITHOUT a list as input
     public ActivityManager() {
-        this(new Activity[0]);
+        this(new ArrayList<>());
     }
+
 
     public void addActivity(Activity activity) {
-        Activity[] _listOfActivities = new Activity[listOfActivities.length + 1];
-        for (int i = 0; i < (listOfActivities.length + 1); i++) {
-            if (i == listOfActivities.length) {
-                _listOfActivities[i] = activity;
-            } else {
-                _listOfActivities[i] = listOfActivities[i];
-            }
-        }
-
-        listOfActivities = _listOfActivities.clone();
+        listOfActivities.add(activity);
     }
+
 
     public void addPoints(Activity activity) {
         points += activity.getSuccessPoints();
