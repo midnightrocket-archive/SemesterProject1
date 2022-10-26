@@ -7,7 +7,7 @@ package worldOfZuul.Main.Java;
 
 public enum Commands {
     // Defines a constant for each command alongside its corresponding command string.
-    GO("go"), QUIT("quit"), HELP("help"), UNKNOWN("?");
+    GO("go"), QUIT("quit"), HELP("help"), INVENTORY("inventory"), UNKNOWN("?");
     
     // The command string.
     private String commandName;

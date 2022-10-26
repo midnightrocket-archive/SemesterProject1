@@ -1,5 +1,5 @@
 package worldOfZuul.Main.Java;
-
+import worldOfZuul.Main.Java.Classes.Inventory;
 import java.util.List;
 
 public class Game {
@@ -7,9 +7,12 @@ public class Game {
     private Room currentRoom;
     private CommandWords commands; // holds all valid commands
 
+    private Inventory inventory;
+
     public Game() {
         createRooms();
         commands = new CommandWordsImplementation();
+        inventory = new Inventory();
     }
 
     private void createRooms() {
@@ -68,6 +71,10 @@ public class Game {
 
     public String getRoomDescription() {
         return currentRoom.getLongDescription();
+    }
+
+    public String getInventory() {
+        return inventory.toString();
     }
 
     // Returns a CommandWords object which holds all valid commands.

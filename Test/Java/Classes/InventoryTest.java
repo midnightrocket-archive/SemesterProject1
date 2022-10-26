@@ -53,12 +53,23 @@ class InventoryTest {
     }
 
     @Test
-    @DisplayName("Test Inventory - PrintItems")
-    public void testPrintItems() {
-        inventory.printItems();
+    @DisplayName("Test Inventory - ToString")
+    public void testToString() {
+        System.out.println(inventory.toString());
         inventory.addItem(item1);
         inventory.addItem(item2);
         inventory.addItem(item2);
-        inventory.printItems();
+        System.out.println(inventory.toString());
+    }
+
+    @Test
+    @DisplayName("Test Inventory - IsEmpty")
+    public void testIsEmpty() {
+        // System.out.println(inventory.isEmpty());
+        assertEquals(inventory.isEmpty(), true);
+        inventory.addItem(item1);
+        inventory.addItem(item2);
+        inventory.addItem(item2);
+        assertEquals(inventory.isEmpty(), false);
     }
 }

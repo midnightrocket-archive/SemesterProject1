@@ -9,10 +9,6 @@ public class Inventory {
         listOfItems = new ArrayList<>();
     }
 
-    public ArrayList<Item> getInventoryList() {
-        return listOfItems;
-    }
-
     public void addItem(Item item) {
         listOfItems.add(item);
     }
@@ -20,17 +16,26 @@ public class Inventory {
     public void removeItem(Item item) {
         listOfItems.remove(item);
     }
-
-    public void printItems() {
+    public boolean isEmpty() {
         if (listOfItems.isEmpty()) {
-            System.out.println("Your inventory is currently empty!");
-            
+            return true;
+        } else {
+            return false;
         }
-        else {
-            System.out.println("Your inventory currently contains: ");
+    }
+
+    public ArrayList<Item> getInventoryList() {
+        return listOfItems;
+    }
+    public String toString() {
+        String inventoryString = new String();
+        if (listOfItems.isEmpty()) {
+            return "Nothing. Your inventory is empty!";
+        } else {
             for (Item item : listOfItems) {
-                System.out.println(item.getItemName());
+                inventoryString += item.getItemName() + "\n";
             }
+            return inventoryString;
         }
     }
 }
