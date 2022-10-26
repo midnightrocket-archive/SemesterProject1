@@ -1,5 +1,9 @@
 package worldOfZuul.Main.Java;
+import worldOfZuul.Main.Java.Classes.Activity;
+import worldOfZuul.Main.Java.Classes.Appliance;
+import worldOfZuul.Main.Java.Classes.Item;
 
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 
@@ -7,14 +11,21 @@ public class Room {
     private String description;
     private HashMap<String, Room> exits;
 
+    private ArrayList<Appliance> roomAppliances = new ArrayList<>();
+
     public Room(String description) {
         this.description = description;
         exits = new HashMap<String, Room>();
     }
 
+    public void createAppliance(String name, Activity activityReference) {
+        roomAppliances.add(new Appliance(name, this, activityReference));
+    }
+
     public void setExit(String direction, Room neighbor) {
         exits.put(direction, neighbor);
     }
+
 
     public String getShortDescription() {
         return description;
@@ -22,6 +33,18 @@ public class Room {
 
     public String getLongDescription() {
         return "You are " + description + ".\n" + getExitString();
+    }
+
+    public String getAppliances() {
+        String appliancesString = new String();
+        if (roomAppliances.isEmpty()) {
+            return "This room is empty.";
+        } else {
+            for (Appliance appliance : roomAppliances) {
+                appliancesString += appliance.getName() + "\t";
+            }
+            return appliancesString;
+        }
     }
 
     private String getExitString() {
