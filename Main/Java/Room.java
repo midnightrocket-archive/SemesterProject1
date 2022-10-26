@@ -32,8 +32,8 @@ public class Room {
         return appliance;
     }
 
-    public boolean hasAppliance(Appliance appliance) {
-        return roomAppliances.containsValue(appliance);
+    public boolean hasAppliance(String applianceName) {
+        return roomAppliances.containsKey(applianceName);
     }
     public Activity getApplianceActivity(Appliance appliance) {
         return appliance.getActivityReference();
