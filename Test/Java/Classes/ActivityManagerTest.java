@@ -19,7 +19,7 @@ class ActivityManagerTest {
         activityManager = new ActivityManager();
         Activity activity1 = new Activity(5, 5, 5, false);
         Activity activity2 = new Activity(2, 7, 1, true);
-        Activity activity3 = new Activity(-4, 32, 48, false);
+        Activity activity3 = new Activity(0, 32, 48, false);
 
         activityManager.addActivity(activity1);
         activityManager.addActivity(activity2);
