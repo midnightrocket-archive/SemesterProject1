@@ -1,3 +1,5 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:dd6cb9af76c783744c2c62b971886071e57d2f6a64c6d778f57521f15cd0d453
-size 31
+2,3,0,false
+successPoints cannot be negative,2147483647,0,true
+successPoints cannot be negative,1453,9,true
+234,failurePoints cannot be negative,powerCost cannot be negative,false
+0,234,powerCost cannot be negative,true
