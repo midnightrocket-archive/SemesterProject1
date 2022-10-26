@@ -61,4 +61,14 @@ class InventoryTest {
         inventory.addItem(item2);
         inventory.printItems();
     }
+
+    @Test
+    @DisplayName("Test Inventory - ToString")
+    public void testToString() {
+        System.out.println(inventory.toString());
+        inventory.addItem(item1);
+        inventory.addItem(item2);
+        inventory.addItem(item2);
+        System.out.println(inventory.toString());
+    }
 }

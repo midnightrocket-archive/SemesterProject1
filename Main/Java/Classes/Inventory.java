@@ -9,10 +9,6 @@ public class Inventory {
         listOfItems = new ArrayList<>();
     }
 
-    public ArrayList<Item> getInventoryList() {
-        return listOfItems;
-    }
-
     public void addItem(Item item) {
         listOfItems.add(item);
     }
@@ -28,9 +24,19 @@ public class Inventory {
         }
         else {
             System.out.println("Your inventory currently contains: ");
-            for (Item item : listOfItems) {
-                System.out.println(item.getItemName());
-            }
+            System.out.println(this.toString());
         }
+    }
+
+    public ArrayList<Item> getInventoryList() {
+        return listOfItems;
+    }
+
+    public String toString() {
+        String inventoryString = new String();
+        for (Item item : listOfItems) {
+            inventoryString += item.getItemName() + "\n";
+        }
+        return inventoryString;
     }
 }
