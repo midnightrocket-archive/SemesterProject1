@@ -16,7 +16,7 @@ class ItemTest {
     public void testConstructor() {
         Activity activity = new Activity(5, 5, 5, false);
         Room room = new Room("room description");
-        Appliance appliance = new Appliance("Test 1", activity, room);
+        Appliance appliance = new Appliance("Test 1", room, activity);
         Item item = new Item("Test 1", appliance);
 
         assertEquals(item.getApplianceReference(), appliance);

@@ -18,8 +18,10 @@ public class Room {
         exits = new HashMap<String, Room>();
     }
 
-    public void createAppliance(String name, Activity activityReference) {
-        roomAppliances.add(new Appliance(name, this, activityReference));
+    public Appliance createAppliance(String name, Activity activityReference) {
+        Appliance appliance = new Appliance(name, this, activityReference);
+        roomAppliances.add(appliance);
+        return appliance;
     }
 
     public void setExit(String direction, Room neighbor) {
