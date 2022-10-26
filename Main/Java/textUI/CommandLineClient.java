@@ -29,6 +29,7 @@ public class CommandLineClient {
 
         boolean finished = false;
         while (!finished) {
+            // parser takes user input and returns a Command object that constains command enum and command string.
             Command command = parser.getCommand();
             finished = processCommand(command); // finished is true, if "wantToQuit" becomes true.
         }
@@ -56,7 +57,7 @@ public class CommandLineClient {
     public boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
-        Commands commandWord = command.getCommandName();
+        Commands commandWord = command.getCommandName(); // holds command enum
 
         if (commandWord == Commands.UNKNOWN) {
             System.out.println("I don't know what you mean...");
@@ -81,6 +82,10 @@ public class CommandLineClient {
             } else {
                 System.out.println("Quit what?");
             }
+
+        } else if (commandWord == Commands.INVENTORY) {
+            System.out.println("Your inventory contains: ");
+            System.out.println(game.getInventory());
         }
 
         return wantToQuit;

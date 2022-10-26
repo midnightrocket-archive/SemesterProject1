@@ -7,6 +7,7 @@ import worldOfZuul.Main.Java.Classes.Activity;
 import worldOfZuul.Main.Java.Classes.Appliance;
 import worldOfZuul.Main.Java.Classes.Inventory;
 import worldOfZuul.Main.Java.Classes.Item;
+import worldOfZuul.Main.Java.Room;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,11 +23,14 @@ class InventoryTest {
     Item item2;
     Inventory inventory;
 
+    Room room;
+
     @BeforeEach
     @DisplayName("Test Inventory - Setup")
     public void setup() {
         activity = new Activity(5, 5, 5, false);
-        appliance = new Appliance("Test appliance", activity);
+        room = new Room("room");
+        appliance = new Appliance("Test appliance", room, activity);
         item1 = new Item("Test item1", appliance);
         item2 = new Item("Test item2", appliance);
         inventory = new Inventory();
@@ -53,12 +57,23 @@ class InventoryTest {
     }
 
     @Test
-    @DisplayName("Test Inventory - PrintItems")
-    public void testPrintItems() {
-        inventory.printItems();
+    @DisplayName("Test Inventory - ToString")
+    public void testToString() {
+        System.out.println(inventory.toString());
         inventory.addItem(item1);
         inventory.addItem(item2);
         inventory.addItem(item2);
-        inventory.printItems();
+        System.out.println(inventory.toString());
+    }
+
+    @Test
+    @DisplayName("Test Inventory - IsEmpty")
+    public void testIsEmpty() {
+        // System.out.println(inventory.isEmpty());
+        assertEquals(inventory.isEmpty(), true);
+        inventory.addItem(item1);
+        inventory.addItem(item2);
+        inventory.addItem(item2);
+        assertEquals(inventory.isEmpty(), false);
     }
 }

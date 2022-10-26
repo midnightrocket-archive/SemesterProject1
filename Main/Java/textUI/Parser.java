@@ -1,3 +1,9 @@
+/*
+ * The parser reads user input and interprets the user input.
+ * It tries to interpret the line as a two-word command.
+ * It returns a Command object constructed with the two-word command.
+ */
+
 package worldOfZuul.Main.Java.textUI;
 
 import java.util.Scanner;
@@ -14,21 +20,26 @@ public class Parser {
     }
 
     public Command getCommand() {
-        String inputLine;
+        String inputLine; // holds the full input line
         String word1 = null;
         String word2 = null;
 
-        System.out.print("> "); 
+        System.out.print("> "); // print prompt
 
         inputLine = reader.nextLine();
 
+        // Find up to two words on the line. The rest of the input line is ignored.
         Scanner tokenizer = new Scanner(inputLine);
         if(tokenizer.hasNext()) {
-            word1 = tokenizer.next();
+            word1 = tokenizer.next(); // get first word.
             if(tokenizer.hasNext()) {
-                word2 = tokenizer.next(); 
+                word2 = tokenizer.next();  // get the second word
             }
         }
+
+        // standardise input to lower case for command processing
+        word1 = word1.toLowerCase();
+        word2 = word2.toLowerCase();
 
         return game.getCommand(word1,word2);
     }
