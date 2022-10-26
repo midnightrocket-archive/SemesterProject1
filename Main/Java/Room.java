@@ -9,7 +9,15 @@ public class Room {
 
     public Room(String description) {
         this.description = description;
-        exits = new HashMap<String, Room>();
+        exits = new HashMap<>();
+    }
+    private String getExitString() {
+        String returnString = "Exits:";
+        Set<String> keys = exits.keySet();
+        for(String exit : keys) {
+            returnString += " " + exit;
+        }
+        return returnString;
     }
 
     public void setExit(String direction, Room neighbor) {
@@ -24,14 +32,6 @@ public class Room {
         return "You are " + description + ".\n" + getExitString();
     }
 
-    private String getExitString() {
-        String returnString = "Exits:";
-        Set<String> keys = exits.keySet();
-        for(String exit : keys) {
-            returnString += " " + exit;
-        }
-        return returnString;
-    }
 
     public Room getExit(String direction) {
         return exits.get(direction);

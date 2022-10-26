@@ -8,7 +8,7 @@ public class CommandWordsImplementation implements CommandWords {
     private HashMap<String, Commands> validCommands;
 
     public CommandWordsImplementation() {
-        validCommands = new HashMap<String, Commands>();
+        validCommands = new HashMap<>();
         for(Commands command : Commands.values()) {
             if(command != Commands.UNKNOWN) {
                 validCommands.put(command.toString(), command);

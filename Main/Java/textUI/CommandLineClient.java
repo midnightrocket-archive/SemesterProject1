@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package worldOfZuul.Main.Java.textUI;
 
 import worldOfZuul.Main.Java.Command;
@@ -29,9 +30,11 @@ public class CommandLineClient {
         boolean finished = false;
         while (!finished) {
             Command command = parser.getCommand();
-            finished = processCommand(command);
+            finished = processCommand(command); // finished is true, if "wantToQuit" becomes true.
         }
-        System.out.println("Thank you for playing.  Good bye.");
+
+        System.out.println("Thank you for playing.   Goodbye.");
+        // Game ends from here
     }
 
     private void printWelcome() {
@@ -44,8 +47,7 @@ public class CommandLineClient {
     }
 
     private void printHelp() {
-        for(String str : game.getCommandDescriptions())
-        {
+        for(String str : game.getCommandDescriptions()) {
             System.out.println(str + " ");
         }
     }
@@ -79,8 +81,8 @@ public class CommandLineClient {
             } else {
                 System.out.println("Quit what?");
             }
-
         }
+
         return wantToQuit;
     }
 }

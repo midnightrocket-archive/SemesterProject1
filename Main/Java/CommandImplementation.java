@@ -29,7 +29,6 @@ public class CommandImplementation implements Command {
         this.commandValue = secondWord;
     }
 
-
     @Override
     public Commands getCommandName() {
         return commandName;
@@ -49,6 +48,5 @@ public class CommandImplementation implements Command {
     public boolean isUnknown() {
         return (commandName == Commands.UNKNOWN);
     }
-
 }
 

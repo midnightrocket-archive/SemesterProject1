@@ -9,11 +9,11 @@ public class Appliance {
         this.activityReference = activityReference;
     }
 
-    public Activity getActivityReference() {
-        return activityReference;
-    }
-
     public String getName() {
         return name;
+    }
+
+    public Activity getActivityReference() {
+        return activityReference;
     }
 }
