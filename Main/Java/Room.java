@@ -34,19 +34,20 @@ public class Room {
     }
 
     public String getLongDescription() {
-        return "You are " + description + ".\n" + getExitString();
+        return "You are " + description + ".\n\n" + getAppliances() + "\n\n" + getExitString();
     }
 
     public String getAppliances() {
-        String appliancesString = new String();
+        String appliancesString = new String("In this room you can find: \n");
         if (roomAppliances.isEmpty()) {
-            return "This room is empty.";
+            appliancesString += "Nothing. This room is empty.";
         } else {
             for (Appliance appliance : roomAppliances) {
                 appliancesString += appliance.getName() + "\t";
             }
-            return appliancesString;
+
         }
+        return appliancesString;
     }
 
     private String getExitString() {

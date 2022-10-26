@@ -85,6 +85,10 @@ public class Game {
         return currentRoom.getLongDescription();
     }
 
+    public String getAppliancesInRoom() {
+        return currentRoom.getAppliances();
+    }
+
     public String getInventory() {
         return inventory.toString();
     }
