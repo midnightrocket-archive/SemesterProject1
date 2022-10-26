@@ -32,6 +32,6 @@ class RoomTest {
     @DisplayName("Test Room - GetAppliance")
     void testGetAppliance() {
         testCreateAppliance();
-        System.out.println(kitchen.getAppliances());
+        System.out.println(kitchen.getAppliancesString());
     }
 }

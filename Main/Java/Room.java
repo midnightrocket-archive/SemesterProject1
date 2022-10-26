@@ -11,7 +11,7 @@ public class Room {
     private String description;
     private HashMap<String, Room> exits;
 
-    private ArrayList<Appliance> roomAppliances = new ArrayList<>();
+    private HashMap<String, Appliance> roomAppliances = new HashMap<>();
 
     public Room(String description) {
         this.description = description;
@@ -28,7 +28,7 @@ public class Room {
 
     public Appliance createAppliance(String name, Activity activityReference) {
         Appliance appliance = new Appliance(name, this, activityReference);
-        roomAppliances.add(appliance);
+        roomAppliances.put(name, appliance);
         return appliance;
     }
 
@@ -42,16 +42,16 @@ public class Room {
     }
 
     public String getLongDescription() {
-        return "You are " + description + ".\n\n" + getAppliances() + "\n\n" + getExitString();
+        return "You are " + description + ".\n\n" + getAppliancesString() + "\n\n" + getExitString();
     }
 
-    public String getAppliances() {
+    public String getAppliancesString() {
         String appliancesString = new String("In this room you can find: \n");
         if (roomAppliances.isEmpty()) {
             appliancesString += "Nothing. This room is empty.";
         } else {
-            for (Appliance appliance : roomAppliances) {
-                appliancesString += appliance.getName() + "\t";
+            for (String applianceName : roomAppliances.keySet()) {
+                appliancesString += applianceName + "\t";
             }
 
         }
