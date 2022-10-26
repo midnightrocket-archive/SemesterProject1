@@ -81,6 +81,9 @@ public class CommandLineClient {
                 System.out.println("Quit what?");
             }
 
+        } else if (commandWord == Commands.INVENTORY) {
+            System.out.println("Your inventory contains: ");
+            System.out.println(game.getInventory());
         }
         return wantToQuit;
     }

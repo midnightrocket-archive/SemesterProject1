@@ -52,7 +52,7 @@ class InventoryTest {
         assertEquals(inventory.getInventoryList(), new ArrayList<>(Collections.singletonList(item2)));
     }
 
-    @Test
+    /*@Test
     @DisplayName("Test Inventory - PrintItems")
     public void testPrintItems() {
         inventory.printItems();
@@ -60,7 +60,7 @@ class InventoryTest {
         inventory.addItem(item2);
         inventory.addItem(item2);
         inventory.printItems();
-    }
+    }*/
 
     @Test
     @DisplayName("Test Inventory - ToString")
@@ -70,5 +70,16 @@ class InventoryTest {
         inventory.addItem(item2);
         inventory.addItem(item2);
         System.out.println(inventory.toString());
+    }
+
+    @Test
+    @DisplayName("Test Inventory - IsEmpty")
+    public void testIsEmpty() {
+        // System.out.println(inventory.isEmpty());
+        assertEquals(inventory.isEmpty(), true);
+        inventory.addItem(item1);
+        inventory.addItem(item2);
+        inventory.addItem(item2);
+        assertEquals(inventory.isEmpty(), false);
     }
 }
