@@ -52,16 +52,6 @@ class InventoryTest {
         assertEquals(inventory.getInventoryList(), new ArrayList<>(Collections.singletonList(item2)));
     }
 
-    /*@Test
-    @DisplayName("Test Inventory - PrintItems")
-    public void testPrintItems() {
-        inventory.printItems();
-        inventory.addItem(item1);
-        inventory.addItem(item2);
-        inventory.addItem(item2);
-        inventory.printItems();
-    }*/
-
     @Test
     @DisplayName("Test Inventory - ToString")
     public void testToString() {
