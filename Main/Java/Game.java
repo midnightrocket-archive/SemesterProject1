@@ -6,15 +6,30 @@ import java.util.List;
 
 public class Game {
 
+    public static int day;
+    public static int power;
+    public static int points;
     private static Room currentRoom;
     private CommandWords commands; // holds all valid commands
-
     private Inventory inventory;
+
+    private final int maxDays;
+    private final int defaultPower; // can maybe be changed into a constant value
+    public int extraPower;
+
 
     public Game() {
         createRooms();
         commands = new CommandWordsImplementation();
         inventory = new Inventory();
+
+        maxDays = 7;
+        defaultPower = 100; // random placeholder value
+
+        day = 0;
+        extraPower = 100; // random placeholder value, should later be replaced by value-generating method
+        power = defaultPower;
+
     }
 
     private void createRooms() {
@@ -114,5 +129,45 @@ public class Game {
     public Command getCommand(String word1, String word2) {
         
         return new CommandImplementation(commands.getCommand(word1), word2);
+    }
+
+    // Method add points
+    public void addPoints(int pointsToAdd) {
+        points += pointsToAdd;
+    }
+
+    // Method for checking last day
+    public boolean isLastDay() {
+        if (day > maxDays)
+            return true;
+        else return false;
+    }
+
+    // Method go to next day
+    public void setNextDay() {
+        day += 1;
+        if (isLastDay()) {
+            double randomExtraPower = Math.random() * extraPower;
+            setPower(defaultPower + (int) randomExtraPower);
+            extraPower -= (int) randomExtraPower;
+        } else {
+            setPower(defaultPower + extraPower);
+            extraPower = 0;
+        }
+    }
+
+    // Metode getPower til at hente powerværdi.
+    public int getPower() {
+        return power;
+    }
+
+    // Metode set power værdi på dagen
+    public void setPower(int newPower) {
+        power = newPower;
+    }
+
+    // Metode for points værdi.
+    public int getPoint() {
+        return points;
     }
 }

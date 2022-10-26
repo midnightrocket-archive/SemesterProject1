@@ -1,5 +1,6 @@
 package worldOfZuul.Main.Java.Classes;
 
+import worldOfZuul.Main.Java.Game;
 import java.util.ArrayList;
 
 public class ActivityManager extends Game {
@@ -8,7 +9,7 @@ public class ActivityManager extends Game {
 
     // Constructor WITH a list as input
     public ActivityManager(ArrayList<Activity> listOfActivities) {
-        super(1,1,1);
+        super();
         this.listOfActivities = listOfActivities;
     }
 

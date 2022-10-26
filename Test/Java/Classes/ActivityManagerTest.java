@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import worldOfZuul.Main.Java.Classes.Activity;
 import worldOfZuul.Main.Java.Classes.ActivityManager;
-import worldOfZuul.Main.Java.Classes.Game;
+import worldOfZuul.Main.Java.Game;
 
 import static org.junit.jupiter.api.Assertions.*;
 
