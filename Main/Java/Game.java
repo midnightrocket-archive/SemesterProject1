@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Game {
 
-    private Room currentRoom;
+    private static Room currentRoom;
     private CommandWords commands; // holds all valid commands
 
     private Inventory inventory;
@@ -93,6 +93,10 @@ public class Game {
         return inventory.toString();
     }
 
+    public static Room getCurrentRoom() {
+        return currentRoom;
+    }
+
     // Returns a CommandWords object which holds all valid commands.
     public CommandWords getCommands() {
         return commands;
@@ -111,7 +115,4 @@ public class Game {
         
         return new CommandImplementation(commands.getCommand(word1), word2);
     }
-
-
-
 }
