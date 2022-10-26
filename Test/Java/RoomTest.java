@@ -15,22 +15,23 @@ class RoomTest {
     Activity turnOff;
 
     @BeforeEach
-    @DisplayName("Test Room - Construction")
-    void construction() {
+    @DisplayName("Test Room - Constructor")
+    void testConstructor() {
         kitchen = new Room("kitchen");
         turnOff = new Activity(1, 1, 1, true);
     }
+    
     @Test
-    @DisplayName("Test Room - createAppliance")
-    void createAppliance() {
+    @DisplayName("Test Room - CreateAppliance")
+    void testCreateAppliance() {
         Appliance fridge = kitchen.createAppliance("fridge", turnOff);
         assertInstanceOf(Appliance.class, fridge);
     }
 
     @Test
-    @DisplayName("Test Room - getAppliance")
-    void getAppliances() {
-        createAppliance();
+    @DisplayName("Test Room - GetAppliance")
+    void testGetAppliance() {
+        testCreateAppliance();
         System.out.println(kitchen.getAppliances());
     }
 }
