@@ -32,6 +32,13 @@ public class Room {
         return appliance;
     }
 
+    public boolean hasAppliance(Appliance appliance) {
+        return roomAppliances.containsValue(appliance);
+    }
+    public Activity getApplianceActivity(Appliance appliance) {
+        return appliance.getActivityReference();
+    }
+
     public void setExit(String direction, Room neighbor) {
         exits.put(direction, neighbor);
     }
@@ -53,7 +60,6 @@ public class Room {
             for (String applianceName : roomAppliances.keySet()) {
                 appliancesString += applianceName + "\t";
             }
-
         }
         return appliancesString;
     }
