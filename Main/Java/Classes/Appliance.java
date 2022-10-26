@@ -12,14 +12,21 @@ public class Appliance {
         this.roomReference = roomReference;
         this.activityReference = activityReference;
     }
+
     public Room getRoomReference() {
         return roomReference;
     }
+    
     public Activity getActivityReference() {
         return activityReference;
     }
 
+
     public String getName() {
         return name;
+    }
+
+    public Activity getActivityReference() {
+        return activityReference;
     }
 }

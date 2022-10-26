@@ -7,7 +7,6 @@ public class Activity {
     private final boolean daily; // Determines if the task is daily (Daily=true, non-daily=false)
     private boolean activityDone; // False if activity is not done, true if activity is done.
 
-
     public Activity(int successPoints, int failurePoints, int powerCost, boolean daily) {
 
         // Math.max returns the highest of 2 numbers.

@@ -1,4 +1,3 @@
-
 package worldOfZuul.Main.Java;
 
 public interface Command {
@@ -10,5 +9,4 @@ public interface Command {
     boolean hasCommandValue();
 
     boolean isUnknown();
-    
 }

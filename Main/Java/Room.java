@@ -15,7 +15,15 @@ public class Room {
 
     public Room(String description) {
         this.description = description;
-        exits = new HashMap<String, Room>();
+        exits = new HashMap<>();
+    }
+    private String getExitString() {
+        String returnString = "Exits:";
+        Set<String> keys = exits.keySet();
+        for(String exit : keys) {
+            returnString += " " + exit;
+        }
+        return returnString;
     }
 
     public Appliance createAppliance(String name, Activity activityReference) {
@@ -50,14 +58,6 @@ public class Room {
         return appliancesString;
     }
 
-    private String getExitString() {
-        String returnString = "Exits:";
-        Set<String> keys = exits.keySet();
-        for(String exit : keys) {
-            returnString += " " + exit;
-        }
-        return returnString;
-    }
 
     public Room getExit(String direction) {
         return exits.get(direction);

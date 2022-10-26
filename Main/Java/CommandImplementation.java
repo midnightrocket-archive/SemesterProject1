@@ -61,6 +61,4 @@ public class CommandImplementation implements Command {
     public boolean isUnknown() {
         return (commandName == Commands.UNKNOWN);
     }
-
 }
-
