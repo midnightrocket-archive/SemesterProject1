@@ -38,8 +38,12 @@ public class Parser {
         }
 
         // standardise input to lower case for command processing
-        word1 = word1.toLowerCase();
-        word2 = word2.toLowerCase();
+        if (word1 != null) {
+            word1 = word1.toLowerCase();
+        }
+        if (word2 != null) {
+            word2 = word2.toLowerCase();
+        }
 
         return game.getCommand(word1,word2);
     }
