@@ -3,7 +3,7 @@ package worldOfZuul.Main.Java.Classes;
 import worldOfZuul.Main.Java.Game;
 import java.util.ArrayList;
 
-public class ActivityManager extends Game {
+public class ActivityManager {
 
     public ArrayList<Activity> listOfActivities;
 
@@ -25,14 +25,14 @@ public class ActivityManager extends Game {
 
 
     public void addPoints(Activity activity) {
-        points += activity.getSuccessPoints();
+        Game.points += activity.getSuccessPoints();
     }
 
     public void removePoints(Activity activity) {
-        points -= activity.getFailurePoints();
+        Game.points -= activity.getFailurePoints();
     }
 
     public void removePower(Activity activity) {
-        power -= activity.getPowerCost();
+        Game.power -= activity.getPowerCost();
     }
 }
