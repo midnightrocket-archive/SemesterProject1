@@ -40,10 +40,15 @@ public class Room {
         return appliance.getActivityReference();
     }
 
+    public Item createItem(String name, Appliance applianceReference) {
+        Item item = new Item(name, applianceReference);
+        roomItems.put(name, item);
+        return item;
+    }
+
     public void setExit(String direction, Room neighbor) {
         exits.put(direction, neighbor);
     }
-
 
     public String getShortDescription() {
         return description;

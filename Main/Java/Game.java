@@ -2,6 +2,8 @@ package worldOfZuul.Main.Java;
 import worldOfZuul.Main.Java.Classes.Activity;
 import worldOfZuul.Main.Java.Classes.Appliance;
 import worldOfZuul.Main.Java.Classes.Inventory;
+import worldOfZuul.Main.Java.Classes.Item;
+
 import java.util.List;
 
 public class Game {
@@ -34,8 +36,9 @@ public class Game {
 
     private void createRooms() {
         Room outside, theatre, pub, lab, office;
-        Activity turnOff; // Activity creation will be handled with ActivityManager
+        Activity turnOff, makeFood; // Activity creation will be handled with ActivityManager
         Appliance fridge, lights, oven;
+        Item food;
 
         outside = new Room("outside the main entrance of the university");
         theatre = new Room("in a lecture theatre");
@@ -61,10 +64,13 @@ public class Game {
         // Temporary appliance creation
 
         turnOff = new Activity(1, 1, 1, true);
+        makeFood = new Activity(1, 1, 1, true);
 
         fridge = office.createAppliance("fridge", turnOff);
         lights = office.createAppliance("lights", turnOff);
-        oven = lab.createAppliance("oven", turnOff);
+        oven = lab.createAppliance("oven", makeFood);
+
+        food = lab.createItem("food", oven);
     }
 
     public boolean goRoom(Command command) {
