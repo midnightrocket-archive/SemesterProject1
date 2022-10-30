@@ -66,4 +66,11 @@ class RoomTest {
         testCreateItem();
         assertEquals(kitchen.hasItem("food"), true);
     }
+
+    @Test
+    @DisplayName("Test Room - GetItem")
+    void testGetItem() {
+        testCreateItem();
+        assertInstanceOf(Item.class, kitchen.getItem("food"));
+    }
 }
