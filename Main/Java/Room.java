@@ -63,7 +63,7 @@ public class Room {
     }
 
     public String getLongDescription() {
-        return "You are " + description +
+        return "\n\nYou are " + description +
                 ".\n\n" + getAppliancesString() +
                 "\n\n" + getItemsString() +
                 "\n\n" + getExitString();
