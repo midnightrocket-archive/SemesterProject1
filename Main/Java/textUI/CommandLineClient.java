@@ -86,6 +86,12 @@ public class CommandLineClient {
         } else if (commandWord == Commands.INVENTORY) {
             System.out.println("Your inventory contains: ");
             System.out.println(game.getInventory());
+        } else if (commandWord == Commands.PICKUP) {
+            if(game.pickupItem(command)) {
+                System.out.println("This item has been added to your inventory!");
+            } else {
+                System.out.println("That item does not exist in this room...");
+            }
         }
 
         return wantToQuit;

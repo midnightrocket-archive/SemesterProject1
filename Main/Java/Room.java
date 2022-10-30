@@ -46,6 +46,10 @@ public class Room {
         return item;
     }
 
+    public void removeItem(String itemName) {
+        roomItems.remove(itemName);
+    }
+
     public boolean hasItem(String itemName) {
         return roomItems.containsKey(itemName);
     }

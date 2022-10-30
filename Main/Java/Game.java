@@ -92,6 +92,28 @@ public class Game {
             return true;
         }
     }
+    public boolean pickupItem(Command command) {
+
+        if (!command.hasCommandValue()) {
+            //No item on command.
+            //Can't continue with PICKUP command.
+            return false;
+        }
+
+        String item = command.getCommandValue();
+
+        if (!currentRoom.hasItem(item)) {
+            // item is not in room.
+            return false;
+        }
+
+        Item itemInRoom = currentRoom.getItem(item);
+
+        currentRoom.removeItem(itemInRoom.getItemName());
+        inventory.addItem(itemInRoom);
+
+        return true; // command succeeded
+    }
 
     // Returns false if user input of command has a second word.
     public boolean quit(Command command) {
