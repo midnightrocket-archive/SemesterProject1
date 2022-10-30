@@ -59,7 +59,10 @@ public class Room {
     }
 
     public String getLongDescription() {
-        return "You are " + description + ".\n\n" + getAppliancesString() + "\n\n" + getExitString();
+        return "You are " + description +
+                ".\n\n" + getAppliancesString() +
+                "\n\n" + getItemsString() +
+                "\n\n" + getExitString();
     }
 
     public Appliance getAppliance(String applianceKey) {
