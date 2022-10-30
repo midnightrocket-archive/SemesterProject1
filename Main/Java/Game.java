@@ -3,6 +3,7 @@ import worldOfZuul.Main.Java.Classes.Activity;
 import worldOfZuul.Main.Java.Classes.Appliance;
 import worldOfZuul.Main.Java.Classes.Inventory;
 import worldOfZuul.Main.Java.Classes.Item;
+import worldOfZuul.Main.Java.Classes.ActivityManager;
 
 import java.util.List;
 
@@ -26,7 +27,16 @@ public class Game {
         inventory = new Inventory();
 
         maxDays = 7;
-        defaultPower = 100; // random placeholder value
+        ActivityManager activityManager = new ActivityManager(); // Placeholder object, until "real one" has been created.
+
+        // Calculates, and assigns minimum daily power to defaultPower.
+        int tempPower = 0;
+        for(int i = 0; i < activityManager.listOfActivities.size(); i++){
+            if(activityManager.listOfActivities.get(i).isDaily()){
+                tempPower += activityManager.listOfActivities.get(i).getPowerCost();
+            }
+        }
+        defaultPower = tempPower;
 
         day = 0;
         extraPower = 100; // random placeholder value, should later be replaced by value-generating method
