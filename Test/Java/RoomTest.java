@@ -16,8 +16,8 @@ class RoomTest {
     Activity turnOff;
 
     @BeforeEach
-    @DisplayName("Test Room - Constructor")
-    void testConstructor() {
+    @DisplayName("Test Room - Setup")
+    void setup() {
         kitchen = new Room("kitchen");
         turnOff = new Activity(1, 1, 1, true);
     }
