@@ -22,6 +22,8 @@ public class Game {
     public int extraPower;
     private ArrayList<Integer> extraPowerList = new ArrayList<Integer>();
 
+    private ActivityManager activityManager = new ActivityManager(); // Placeholder object, until "real one" has been created.
+
 
     public Game() {
         createRooms();
@@ -29,7 +31,6 @@ public class Game {
         inventory = new Inventory();
 
         maxDays = 7;
-        ActivityManager activityManager = new ActivityManager(); // Placeholder object, until "real one" has been created.
 
         // Calculates, and assigns minimum daily power to defaultPower.
         int tempPower = 0;
@@ -144,6 +145,29 @@ public class Game {
         } else {
             return true;
         }
+    }
+
+    // Returns a random int between 0 and the sum of extraPowerList. If last day, return remaining extra power.
+    public int getRandomExtraPower(){
+        int dailyExtra = 0;
+
+        if(isLastDay()){
+            for(int i = 0; i < extraPowerList.size(); i++){
+                dailyExtra += extraPowerList.size();
+            }
+            extraPowerList.clear();
+            return dailyExtra;
+        }
+        
+        for(int i = 0; i < extraPowerList.size(); i++){
+            if(Math.random()*7 >= 6){
+                dailyExtra += extraPowerList.get(i);
+                extraPowerList.remove(i);
+                i -= 1; // If the current list-item is removed, the list will get one object "smaller".
+            }
+        }
+
+        return dailyExtra;
     }
 
     public String getRoomDescription() {
