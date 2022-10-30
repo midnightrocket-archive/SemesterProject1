@@ -73,4 +73,13 @@ class RoomTest {
         testCreateItem();
         assertInstanceOf(Item.class, kitchen.getItem("food"));
     }
+
+    @Test
+    @DisplayName("Test Room - RemoveItem")
+    void testRemoveItem() {
+        testCreateItem();
+        assertEquals(kitchen.hasItem("food"), true);
+        kitchen.removeItem("food");
+        assertEquals(kitchen.hasItem("food"), false);
+    }
 }
