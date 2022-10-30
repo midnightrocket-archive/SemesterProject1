@@ -12,6 +12,7 @@ public class Room {
     private HashMap<String, Room> exits;
 
     private HashMap<String, Appliance> roomAppliances = new HashMap<>();
+    private HashMap<String, Item> roomItems = new HashMap<>();
 
     public Room(String description) {
         this.description = description;
