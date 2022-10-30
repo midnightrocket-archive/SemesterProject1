@@ -46,6 +46,10 @@ public class Room {
         return item;
     }
 
+    public boolean hasItem(String itemName) {
+        return roomItems.containsKey(itemName);
+    }
+
     public void setExit(String direction, Room neighbor) {
         exits.put(direction, neighbor);
     }
@@ -58,6 +62,9 @@ public class Room {
         return "You are " + description + ".\n\n" + getAppliancesString() + "\n\n" + getExitString();
     }
 
+    public Appliance getAppliance(String applianceKey) {
+        return roomAppliances.get(applianceKey);
+    }
     public String getAppliancesString() {
         String appliancesString = new String("In this room you can find: \n");
         if (roomAppliances.isEmpty()) {

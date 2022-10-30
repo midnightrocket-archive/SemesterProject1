@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import worldOfZuul.Main.Java.Classes.Activity;
 import worldOfZuul.Main.Java.Classes.Appliance;
+import worldOfZuul.Main.Java.Classes.Item;
 import worldOfZuul.Main.Java.Room;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,8 +31,8 @@ class RoomTest {
     }
 
     @Test
-    @DisplayName("Test Room - GetAppliance")
-    void testGetAppliance() {
+    @DisplayName("Test Room - GetAppliancesString")
+    void testGetAppliancesString() {
         testCreateAppliance();
         System.out.println(kitchen.getAppliancesString());
     }
@@ -49,5 +50,20 @@ class RoomTest {
     void testGetApplianceActivity() {
         Appliance fridge = testCreateAppliance();
         assertEquals(kitchen.getApplianceActivity(fridge), turnOff);
+    }
+
+    @Test
+    @DisplayName("Test Room - CreateItem")
+    Item testCreateItem() {
+        Item food = kitchen.createItem("food", kitchen.getAppliance("fridge"));
+        assertInstanceOf(Item.class, food);
+        return food;
+    }
+
+    @Test
+    @DisplayName("Test Room - HasItem")
+    void testHasItem() {
+        testCreateItem();
+        assertEquals(kitchen.hasItem("food"), true);
     }
 }
