@@ -2,6 +2,8 @@ package worldOfZuul.Main.Java;
 import worldOfZuul.Main.Java.Classes.Activity;
 import worldOfZuul.Main.Java.Classes.Appliance;
 import worldOfZuul.Main.Java.Classes.Inventory;
+import worldOfZuul.Main.Java.Classes.Item;
+
 import java.util.List;
 
 public class Game {
@@ -34,8 +36,9 @@ public class Game {
 
     private void createRooms() {
         Room outside, theatre, pub, lab, office;
-        Activity turnOff; // Activity creation will be handled with ActivityManager
-        Appliance fridge, lights, oven;
+        Activity turnOff, makeFood, lockDoor; // Activity creation will be handled with ActivityManager
+        Appliance fridge, lights, oven, door;
+        Item food, key;
 
         outside = new Room("outside the main entrance of the university");
         theatre = new Room("in a lecture theatre");
@@ -61,10 +64,16 @@ public class Game {
         // Temporary appliance creation
 
         turnOff = new Activity(1, 1, 1, true);
+        makeFood = new Activity(1, 1, 1, true);
+        lockDoor = new Activity(1, 1, 1, true);
 
+        door = outside.createAppliance("door", lockDoor);
         fridge = office.createAppliance("fridge", turnOff);
         lights = office.createAppliance("lights", turnOff);
-        oven = lab.createAppliance("oven", turnOff);
+        oven = lab.createAppliance("oven", makeFood);
+
+        key = outside.createItem("key", door);
+        food = lab.createItem("food", oven);
     }
 
     public boolean goRoom(Command command) {
@@ -85,6 +94,28 @@ public class Game {
             currentRoom = nextRoom;
             return true;
         }
+    }
+    public boolean pickupItem(Command command) {
+
+        if (!command.hasCommandValue()) {
+            //No item on command.
+            //Can't continue with PICKUP command.
+            return false;
+        }
+
+        String item = command.getCommandValue();
+
+        if (!currentRoom.hasItem(item)) {
+            // item is not in room.
+            return false;
+        }
+
+        Item itemInRoom = currentRoom.getItem(item);
+
+        currentRoom.removeItem(itemInRoom.getItemName());
+        inventory.addItem(itemInRoom);
+
+        return true; // command succeeded
     }
 
     // Returns false if user input of command has a second word.
