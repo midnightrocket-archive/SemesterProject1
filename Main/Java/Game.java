@@ -36,9 +36,9 @@ public class Game {
 
     private void createRooms() {
         Room outside, theatre, pub, lab, office;
-        Activity turnOff, makeFood; // Activity creation will be handled with ActivityManager
-        Appliance fridge, lights, oven;
-        Item food;
+        Activity turnOff, makeFood, lockDoor; // Activity creation will be handled with ActivityManager
+        Appliance fridge, lights, oven, door;
+        Item food, key;
 
         outside = new Room("outside the main entrance of the university");
         theatre = new Room("in a lecture theatre");
@@ -65,11 +65,14 @@ public class Game {
 
         turnOff = new Activity(1, 1, 1, true);
         makeFood = new Activity(1, 1, 1, true);
+        lockDoor = new Activity(1, 1, 1, true);
 
+        door = outside.createAppliance("door", lockDoor);
         fridge = office.createAppliance("fridge", turnOff);
         lights = office.createAppliance("lights", turnOff);
         oven = lab.createAppliance("oven", makeFood);
 
+        key = outside.createItem("key", door);
         food = lab.createItem("food", oven);
     }
 
