@@ -5,6 +5,7 @@ import worldOfZuul.Main.Java.Classes.Inventory;
 import worldOfZuul.Main.Java.Classes.Item;
 import worldOfZuul.Main.Java.Classes.ActivityManager;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -19,6 +20,7 @@ public class Game {
     private final int maxDays;
     private final int defaultPower; // can maybe be changed into a constant value
     public int extraPower;
+    private ArrayList<Integer> extraPowerList = new ArrayList<Integer>();
 
 
     public Game() {
@@ -39,8 +41,15 @@ public class Game {
         defaultPower = tempPower;
 
         day = 0;
-        extraPower = 100; // random placeholder value, should later be replaced by value-generating method
         power = defaultPower;
+
+        // Make list of extra power costs:
+        for(int i = 0; i < activityManager.listOfActivities.size(); i++){
+            if(!activityManager.listOfActivities.get(i).isDaily()){
+                extraPowerList.add(activityManager.listOfActivities.get(i).getPowerCost());
+            }
+        }
+        extraPower = 100; // random placeholder value, should later be replaced by value-generating method
 
     }
 
