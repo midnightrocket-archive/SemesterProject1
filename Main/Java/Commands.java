@@ -12,7 +12,7 @@ public enum Commands {
     HELP("help"),
     INVENTORY("inventory"),
     PICKUP("pickup"),
-    ACTIVITYS("activitys"),
+    ACTIVITYS("activities"),
     IMLOST("imlost"),
     UNKNOWN("?");
     
