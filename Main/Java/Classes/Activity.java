@@ -1,7 +1,7 @@
 package worldOfZuul.Main.Java.Classes;
 
 public class Activity {
-    private String name;
+    private final String name;
     private int successPoints; // Positive number for number of points to receive when completing the activity.
     private int failurePoints; // Positive number to subtract from points when not completing or failing the activity.
     private int powerCost; // Amount of power required to complete the activity.
