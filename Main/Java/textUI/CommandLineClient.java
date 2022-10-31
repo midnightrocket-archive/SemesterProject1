@@ -92,6 +92,11 @@ public class CommandLineClient {
             } else {
                 System.out.println("That item does not exist in this room...");
             }
+        } else if (commandWord == Commands.ACTIVITYS) {
+            System.out.println("\nYou are still missing the following activitys:");
+            System.out.println(game.getActivity());
+        } else if (commandWord == Commands.IMLOST) {
+            System.out.println(game.getRoomDescription());
         }
 
         return wantToQuit;

@@ -19,7 +19,7 @@ class RoomTest {
     @DisplayName("Test Room - Setup")
     void setup() {
         kitchen = new Room("kitchen");
-        turnOff = new Activity(1, 1, 1, true);
+        turnOff = new Activity("test", 1, 1, 1, true);
     }
     
     @Test

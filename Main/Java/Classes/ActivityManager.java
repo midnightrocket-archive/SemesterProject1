@@ -35,4 +35,17 @@ public class ActivityManager {
     public void removePower(Activity activity) {
         Game.power -= activity.getPowerCost();
     }
+
+    @Override
+    public String toString() {
+        String activityManagerString = "";
+        if (listOfActivities.isEmpty()) {
+            return "There are no more activitys.";
+        } else {
+            for (Activity activity : listOfActivities) {
+                activityManagerString += " - " + activity.getName() + "\n";
+            }
+            return activityManagerString;
+        }
+    }
 }
