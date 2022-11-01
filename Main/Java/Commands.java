@@ -14,6 +14,7 @@ public enum Commands {
     PICKUP("pickup"),
     ACTIVITYS("activities"),
     IMLOST("imlost"),
+    POWER("power"),
     UNKNOWN("?");
     
     // The command string.
