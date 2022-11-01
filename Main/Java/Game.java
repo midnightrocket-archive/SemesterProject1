@@ -1,6 +1,7 @@
 package worldOfZuul.Main.Java;
 import worldOfZuul.Main.Java.Classes.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Game {
@@ -11,11 +12,13 @@ public class Game {
     private static Room currentRoom;
     private ValidActions commands; // holds all valid commands
     private Inventory inventory;
-    private ActivityManager activityManager;
 
     private final int maxDays;
     private final int defaultPower; // can maybe be changed into a constant value
     public int extraPower;
+    private ArrayList<Integer> extraPowerList = new ArrayList<Integer>();
+
+    private ActivityManager activityManager = new ActivityManager(); // Placeholder object, until "real one" has been created.
 
 
     public Game() {
@@ -25,14 +28,39 @@ public class Game {
 
 
         maxDays = 7;
-        defaultPower = 100; // random placeholder value
+
+        defaultPower = calcDefaultPower();
 
         day = 0;
+
+        makeExtraPowerList();
         extraPower = 100; // random placeholder value, should later be replaced by value-generating method
         power = defaultPower;
         points = 0;
 
         createRooms();
+    }
+
+    // Calculates daily minimum power
+    private int calcDefaultPower(){
+        int tempPower = 0;
+        for(int i = 0; i < activityManager.listOfActivities.size(); i++){
+            if(activityManager.listOfActivities.get(i).isDaily()){
+                tempPower += activityManager.listOfActivities.get(i).getPowerCost();
+            }
+        }
+        System.out.println(tempPower);
+        return tempPower;
+    }
+
+    // Makes list of "extra" activities' power costs
+    private void makeExtraPowerList(){
+        // Make list of extra power costs:
+        for(int i = 0; i < activityManager.listOfActivities.size(); i++){
+            if(!activityManager.listOfActivities.get(i).isDaily()){
+                extraPowerList.add(activityManager.listOfActivities.get(i).getPowerCost());
+            }
+        }
     }
 
     private void createRooms() {
@@ -129,6 +157,29 @@ public class Game {
         // Makes sure that there are no extra argument.
         // If there is another argument, it will return false.
         return !command.hasCommandValue();
+    }
+
+    // Returns a random int between 0 and the sum of extraPowerList. If last day, return remaining extra power.
+    public int getRandomExtraPower(){
+        int dailyExtra = 0;
+
+        if(isLastDay()){
+            for(int i = 0; i < extraPowerList.size(); i++){
+                dailyExtra += extraPowerList.size();
+            }
+            extraPowerList.clear();
+            return dailyExtra;
+        }
+        
+        for(int i = 0; i < extraPowerList.size(); i++){
+            if(Math.random()*7 >= 6){
+                dailyExtra += extraPowerList.get(i);
+                extraPowerList.remove(i);
+                i -= 1; // If the current list-item is removed, the list will get one object "smaller".
+            }
+        }
+
+        return dailyExtra;
     }
 
     public String getRoomDescription() {

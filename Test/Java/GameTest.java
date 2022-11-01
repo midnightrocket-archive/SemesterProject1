@@ -76,10 +76,10 @@ class GameTest {
     @Test
     @DisplayName("Test Game - SetPower")
     public void testSetPower() {
-        assertEquals(game.getPower(), 100);
+        assertEquals(game.getPower(), 0);
 
-        game.setPower(150);
-        assertEquals(game.getPower(), 150);
+        game.setPower(50);
+        assertEquals(game.getPower(), 50);
     }
 
     @Test
@@ -94,12 +94,12 @@ class GameTest {
     @Test
     @DisplayName("Test Game - SetNextDay")
     public void testSetNextDay() {
-        assertEquals(game.getPower(), 100);
+        assertEquals(game.getPower(), 0);
         assertEquals(Game.day, 0);
 
         game.setNextDay();
         assertEquals(Game.day, 1);
-        assertTrue(game.getPower() > 100);
+        assertTrue(game.getPower() > 0);
 
         for (int i = 0; i < 7; i++) {
             game.setNextDay();

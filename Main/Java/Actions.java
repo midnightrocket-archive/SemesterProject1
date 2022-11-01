@@ -1,6 +1,6 @@
 /*
  * Represents all the valid actions in the game, defined as enum constants.
- * Each action enum corresponds to a action string.
+ * Each action enum corresponds to an action string.
  */
 
 package worldOfZuul.Main.Java;
@@ -14,6 +14,7 @@ public enum Actions {
     PICKUP("pickup"),
     ACTIVITYS("activities"),
     IMLOST("imlost"),
+    POWER("power"),
     UNKNOWN("?");
     
     // The action string.

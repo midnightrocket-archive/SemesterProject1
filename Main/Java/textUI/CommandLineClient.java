@@ -97,6 +97,8 @@ public class CommandLineClient {
             System.out.println(game.getActivity());
         } else if (commandWord == Actions.IMLOST) {
             System.out.println(game.getRoomDescription());
+        } else if (commandWord == Actions.POWER) {
+            System.out.println("Your power is " +game.getPower());
         }
 
         return wantToQuit;
