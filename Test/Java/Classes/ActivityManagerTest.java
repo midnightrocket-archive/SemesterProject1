@@ -17,9 +17,9 @@ class ActivityManagerTest {
     @DisplayName("Test ActivityManager - setup and addActivity")
     public void setup() {
         activityManager = new ActivityManager();
-        Activity activity1 = new Activity(5, 5, 5, false);
-        Activity activity2 = new Activity(2, 7, 1, true);
-        Activity activity3 = new Activity(0, 32, 48, false);
+        Activity activity1 = new Activity("test", 5, 5, 5, false);
+        Activity activity2 = new Activity("test", 2, 7, 1, true);
+        Activity activity3 = new Activity("test", 0, 32, 48, false);
 
         activityManager.addActivity(activity1);
         activityManager.addActivity(activity2);
@@ -48,7 +48,7 @@ class ActivityManagerTest {
         Game.points = 0;
         assertEquals(Game.points, 0);
 
-        activityManager.addPoints(new Activity(5, 7, 3, false));
+        activityManager.addPoints(new Activity("test", 5, 7, 3, false));
 
         assertEquals(Game.points, 5);
     }
@@ -59,7 +59,7 @@ class ActivityManagerTest {
         Game.points = 0;
         assertEquals(Game.points, 0);
 
-        activityManager.removePoints(new Activity(5, 7, 3, false));
+        activityManager.removePoints(new Activity("test", 5, 7, 3, false));
 
         assertEquals(Game.points, -7);
     }
@@ -70,8 +70,18 @@ class ActivityManagerTest {
         Game.power = 10;
         assertEquals(Game.power, 10);
 
-        activityManager.removePower(new Activity(5, 7, 3, false));
+        activityManager.removePower(new Activity("test", 5, 7, 3, false));
 
         assertEquals(Game.power, 7);
+    }
+
+    @Test
+    @DisplayName("Test ActivityManager - toString")
+    public void testToString() {
+        System.out.println(activityManager);
+
+        // This code tests the toString method, when there are no activity's.
+        ActivityManager testActivityManager = new ActivityManager();
+        System.out.println(testActivityManager);
     }
 }

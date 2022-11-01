@@ -26,7 +26,7 @@ class PlayerTest {
     @BeforeEach
     @DisplayName("Test Player - setup")
     public void setup() {
-        activity = new Activity(5, 5, 5, false);
+        activity = new Activity("test", 5, 5, 5, false);
         room = new Room("TestRoom");
         appliance = new Appliance("TestAppliance", room, activity);
         item = new Item("TestItem", appliance);

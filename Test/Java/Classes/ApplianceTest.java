@@ -18,7 +18,7 @@ class ApplianceTest {
     @BeforeEach
     @DisplayName("Test Appliance - setup")
     public void setup() {
-        activity = new Activity(5, 5, 5, false);
+        activity = new Activity("test", 5, 5, 5, false);
         room = new Room("room");
         appliance = new Appliance("Test 1", room, activity);
     }

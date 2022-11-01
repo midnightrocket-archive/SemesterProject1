@@ -28,7 +28,7 @@ class InventoryTest {
     @BeforeEach
     @DisplayName("Test Inventory - Setup")
     public void setup() {
-        activity = new Activity(5, 5, 5, false);
+        activity = new Activity("test",5, 5, 5, false);
         room = new Room("room");
         appliance = new Appliance("Test appliance", room, activity);
         item1 = new Item("Test item1", appliance);

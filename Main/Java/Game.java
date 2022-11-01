@@ -1,9 +1,5 @@
 package worldOfZuul.Main.Java;
-import worldOfZuul.Main.Java.Classes.Activity;
-import worldOfZuul.Main.Java.Classes.Appliance;
-import worldOfZuul.Main.Java.Classes.Inventory;
-import worldOfZuul.Main.Java.Classes.Item;
-import worldOfZuul.Main.Java.Classes.ActivityManager;
+import worldOfZuul.Main.Java.Classes.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +12,7 @@ public class Game {
     private static Room currentRoom;
     private CommandWords commands; // holds all valid commands
     private Inventory inventory;
+    private ActivityManager activityManager;
 
     private final int maxDays;
     private final int defaultPower; // can maybe be changed into a constant value
@@ -26,9 +23,10 @@ public class Game {
 
 
     public Game() {
-        createRooms();
         commands = new CommandWordsImplementation();
         inventory = new Inventory();
+        activityManager = new ActivityManager();
+
 
         maxDays = 7;
 
@@ -40,6 +38,7 @@ public class Game {
         extraPower = 100; // random placeholder value, should later be replaced by value-generating method
         power = defaultPower;
 
+        createRooms();
     }
 
     // Calculates daily minimum power
@@ -90,16 +89,21 @@ public class Game {
 
         currentRoom = outside;
 
-        // Temporary appliance creation
+        // Temporary appliance and activity creation
 
-        turnOff = new Activity(1, 1, 1, true);
-        makeFood = new Activity(1, 1, 1, true);
-        lockDoor = new Activity(1, 1, 1, true);
+        turnOff = new Activity("Turn off", 1, 1, 1, true);
+        makeFood = new Activity("Make food", 1, 1, 1, true);
+        lockDoor = new Activity("Lock door", 1, 1, 1, true);
 
         door = outside.createAppliance("door", lockDoor);
         fridge = office.createAppliance("fridge", turnOff);
         lights = office.createAppliance("lights", turnOff);
         oven = lab.createAppliance("oven", makeFood);
+
+        activityManager.addActivity(lockDoor);
+        activityManager.addActivity(turnOff);
+        activityManager.addActivity(turnOff);
+        activityManager.addActivity(makeFood);
 
         key = outside.createItem("key", door);
         food = lab.createItem("food", oven);
@@ -189,6 +193,10 @@ public class Game {
 
     public String getInventory() {
         return inventory.toString();
+    }
+
+    public String getActivity() {
+        return activityManager.toString();
     }
 
     public static Room getCurrentRoom() {

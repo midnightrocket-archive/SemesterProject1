@@ -1,6 +1,5 @@
 package worldOfZuul.Test.Java.Classes;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import worldOfZuul.Main.Java.Classes.Activity;
@@ -50,24 +49,25 @@ class ActivityTest {
             ArrayList<String> testArgs = testInput.get(i);
             ArrayList<String> expectedArgs = expected.get(i);
             try {
-                Activity activityTest = new Activity(Integer.parseInt(testArgs.get(0)), Integer.parseInt(testArgs.get(1)), Integer.parseInt(testArgs.get(2)), Boolean.parseBoolean(testArgs.get(3)));
+                Activity activityTest = new Activity(testArgs.get(0), Integer.parseInt(testArgs.get(1)), Integer.parseInt(testArgs.get(2)), Integer.parseInt(testArgs.get(3)), Boolean.parseBoolean(testArgs.get(4)));
 
-                assertEquals(Integer.parseInt(expectedArgs.get(0)),activityTest.getSuccessPoints());
-                assertEquals(Integer.parseInt(expectedArgs.get(1)),activityTest.getFailurePoints());
-                assertEquals(Integer.parseInt(expectedArgs.get(2)),activityTest.getPowerCost());
-                assertEquals(Boolean.parseBoolean(expectedArgs.get(3)),activityTest.isDaily());
+                assertEquals(expectedArgs.get(0),activityTest.getName());
+                assertEquals(Integer.parseInt(expectedArgs.get(1)),activityTest.getSuccessPoints());
+                assertEquals(Integer.parseInt(expectedArgs.get(2)),activityTest.getFailurePoints());
+                assertEquals(Integer.parseInt(expectedArgs.get(3)),activityTest.getPowerCost());
+                assertEquals(Boolean.parseBoolean(expectedArgs.get(4)),activityTest.isDaily());
             } catch (IllegalArgumentException exception) {
 
                 //switch statement to check if we get the expected error.
                 switch (exception.getMessage()) {
                     case "successPoints cannot be negative":
-                        assertEquals(expectedArgs.get(0), exception.getMessage());
-                        break;
-                    case "failurePoints cannot be negative":
                         assertEquals(expectedArgs.get(1), exception.getMessage());
                         break;
-                    case "powerCost cannot be negative":
+                    case "failurePoints cannot be negative":
                         assertEquals(expectedArgs.get(2), exception.getMessage());
+                        break;
+                    case "powerCost cannot be negative":
+                        assertEquals(expectedArgs.get(3), exception.getMessage());
                         break;
                     default:
                         throw exception;
@@ -80,8 +80,8 @@ class ActivityTest {
     @DisplayName("Test Activity - isDaily Getter")
     public void testIsDaily() {
         // Creates 2 constructors, one with daily as false and one with daily as true.
-        Activity activityTest1 = new Activity(1, 5, 5, false);
-        Activity activityTest2 = new Activity(1, 5, 5, true);
+        Activity activityTest1 = new Activity("test", 1, 5, 5, false);
+        Activity activityTest2 = new Activity("test", 1, 5, 5, true);
 
         // Checks if the 2 instances' getter-functions work.
         assertFalse(activityTest1.isDaily());
@@ -92,8 +92,8 @@ class ActivityTest {
     @DisplayName("Test Activity - setActivityDone")
     public void testSetActivityDone() {
         // Creates 2 constructors.
-        Activity activityTest1 = new Activity(1, 5, 5, false);
-        Activity activityTest2 = new Activity(1, 5, 5, true);
+        Activity activityTest1 = new Activity("test", 1, 5, 5, false);
+        Activity activityTest2 = new Activity("test", 1, 5, 5, true);
 
         // Checks if both activities are done. Expected is that both are NOT done.
         assertFalse(activityTest1.isActivityDone());
