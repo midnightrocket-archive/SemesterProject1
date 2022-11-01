@@ -32,26 +32,35 @@ public class Game {
 
         maxDays = 7;
 
-        // Calculates, and assigns minimum daily power to defaultPower.
+        defaultPower = calcDefaultPower();
+
+        day = 0;
+
+        makeExtraPowerList();
+        extraPower = 100; // random placeholder value, should later be replaced by value-generating method
+        power = defaultPower;
+
+    }
+
+    // Calculates daily minimum power
+    private int calcDefaultPower(){
         int tempPower = 0;
         for(int i = 0; i < activityManager.listOfActivities.size(); i++){
             if(activityManager.listOfActivities.get(i).isDaily()){
                 tempPower += activityManager.listOfActivities.get(i).getPowerCost();
             }
         }
-        defaultPower = tempPower;
+        return tempPower;
+    }
 
-        day = 0;
-        power = defaultPower;
-
+    // Makes list of "extra" activities' power costs
+    private void makeExtraPowerList(){
         // Make list of extra power costs:
         for(int i = 0; i < activityManager.listOfActivities.size(); i++){
             if(!activityManager.listOfActivities.get(i).isDaily()){
                 extraPowerList.add(activityManager.listOfActivities.get(i).getPowerCost());
             }
         }
-        extraPower = 100; // random placeholder value, should later be replaced by value-generating method
-
     }
 
     private void createRooms() {
