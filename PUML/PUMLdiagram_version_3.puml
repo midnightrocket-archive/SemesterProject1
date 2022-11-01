@@ -1,0 +1,200 @@
+@startuml Diagram
+
+package "Java" {
+	class Game {
+		+ {static} day : int
+		+ {static} power : int
+		+ {static} points : int
+		- maxDays : int
+		- defaultPower : int
+		+ extraPower : int
+		- command : CommandWords
+		+ addPoints() : void
+		+ createRooms() : void
+		+ goRoom() : boolean
+		+ quit() : boolean
+		+ isLastDay() : boolean
+		+ setNextDay() : void
+		+ getPower() : int
+		+ setPower() : void
+		+ getPoint() : int
+		+ getRoomDescription() : String
+		+ getCommands() : CommandWords
+		+ getCommandDescriptions() : List<String>
+		+ getCommand() : Command
+	}
+
+	class Room {
+		- description : String
+		- exits : HashMap<String, Room>
+		+ getExitString() : String
+		+ setExit(String direction, Room neighbour) : void
+		+ getShortDescription() : String
+		+ getLongDescription() : String
+		+ getExit(String direction) : Room
+
+	}
+
+	' interface Command {
+	'     + getCommandName() : Commands
+	'     + getCommandValue() : String
+	'     + hasCommandValue() : boolean
+	'     + isUnknown() : boolean
+	' }
+
+	class CommandImplementation {
+		- commandNames : Commands
+		- commandValue : String
+		+ getCommandName() : Commands
+		+ getCommandValue() : String
+		+ hasCommandValue() : boolean
+		+ isUnknown() : boolean
+	}
+
+	' interface ValidActions {
+	'     + getCommand(String commandWord) : Commands
+	'     + isCommand(String aString) : boolean
+	'     + getCommandWords() : List<String>
+	' }
+
+	class ValidActionsImplementation {
+		- validCommands : HashMap<String, Commands>
+		+ getCommand(String commandWord) : Commands
+		+ isCommand(String aString) : boolean
+		+ getCommandWords() : List<String>
+	}
+
+	enum Actions {
+		..constants..
+		GO
+		QUIT
+		HELP
+		INVENTORY
+		UNKNOWN
+		__
+		- actionName : String
+		__
+		+ toString() : String
+	}
+}
+
+
+
+package "Java/TextUI" {
+    class WorldOfZuulApplication {
+        + main(String[] args) : void
+    }
+
+    class Parser {
+        - reader : Scanner
+        - game : Game
+        + getCommand() : Command
+    }
+
+    class CommandLineClient {
+        - parser : Parser
+        - game : Game
+        + play() : void
+        + printWelcome() : void
+		+ printHelp() : void
+        + processCommand(Command command) : boolean
+    }
+}
+
+
+
+package "Java/Classes" {
+	class Player {
+		- currentRoom : Room
+		+ addItemToInventory() : void
+		+ removeItemFromInventory() : void
+	}
+
+
+	class Inventory {
+		- listOfItems : ArrayList<Item>
+		+ addItem(Item item) : void
+		+ removeItem(Item item) : void
+		+ getInventoryList() : ArrayList<Item>
+		+ toString() : String
+	}
+
+
+	class Item {
+		- name : String
+		- applianceReference : Appliance
+		+ getApplianceReference() : Appliance
+		+ getItemName() : String
+	}
+
+
+	class Appliance {
+		- name : String
+		- activityReference : Activity
+		+ getName() : String
+		+ getActivityReference() : Activity
+	}
+
+
+	class ActivityManager {
+		+ listOfActivities : Activity[]
+		+ addActivity(Activity activity) : void
+		+ addPoints(Activity activity) : void
+		+ removePoints(Activity activity) : void
+		+ removePower(Activity activity) : void
+	}
+
+
+	class Activity {
+		- successPoints : int
+		- failurePoints : int
+		- powerCost : int
+		- daily : boolean
+		- activityDone : boolean
+		+ setActivityDone() : void
+		+ getSuccessPoints() : int
+		+ getFailurePoints() : int
+		+ getPowerCost() : int
+		+ isDaily() : boolean
+		+ isActivityDone() : boolean
+	}
+}
+
+
+WorldOfZuulApplication .right> CommandLineClient
+
+CommandLineClient ..> Parser
+CommandLineClient .> Game
+CommandLineClient ..> Actions
+
+Parser ..> CommandImplementation
+
+Game .> Room
+Game ..> ValidActionsImplementation
+Game ..> CommandImplementation
+Game ..> ActivityManager
+
+Room ..> Appliance
+
+ValidActionsImplementation ..> CommandImplementation
+ValidActionsImplementation ..> Actions
+
+CommandImplementation ..> Actions
+
+Player .> Inventory
+Player .> Game
+Player ..> Appliance
+
+Inventory ..> Item
+
+Appliance ..> Activity
+
+ActivityManager ..> Activity
+
+Activity ..> Item
+
+' ValidActions ..> ValidActionsImplementation
+' Command .> CommandImplementation
+
+
+@enduml

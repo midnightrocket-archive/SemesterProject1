@@ -21,7 +21,7 @@ package worldOfZuul.Main.Java;
 
 public class CommandImplementation implements Command {
 
-    private final Commands commandName; // the first word in the command.
+    private final Actions commandName; // the first word in the command.
     private final String commandValue; //the second word in the command.
 
     /*
@@ -30,15 +30,15 @@ public class CommandImplementation implements Command {
      * If the first word was not recognised the command enum is Commands.UNKNOWN.
      * The second word aka the commandValue may be null if none is given.
      */
-    public CommandImplementation(Commands commandWord, String secondWord) {
-        this.commandName = commandWord;
+    public CommandImplementation(Actions actionWord, String secondWord) {
+        this.commandName = actionWord;
         this.commandValue = secondWord;
     }
 
     // Returns the command enum
     // e.g. TAKE in "take map"
     @Override
-    public Commands getCommandName() {
+    public Actions getCommandName() {
         return commandName;
     }
 
@@ -59,6 +59,6 @@ public class CommandImplementation implements Command {
     // Returns true if the command enum is not valid.
     @Override
     public boolean isUnknown() {
-        return (commandName == Commands.UNKNOWN);
+        return (commandName == Actions.UNKNOWN);
     }
 }

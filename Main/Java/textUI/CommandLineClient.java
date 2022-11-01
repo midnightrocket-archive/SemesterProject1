@@ -7,7 +7,7 @@
 package worldOfZuul.Main.Java.textUI;
 
 import worldOfZuul.Main.Java.Command;
-import worldOfZuul.Main.Java.Commands;
+import worldOfZuul.Main.Java.Actions;
 import worldOfZuul.Main.Java.Game;
 
 /**
@@ -42,7 +42,7 @@ public class CommandLineClient {
         System.out.println();
         System.out.println("Welcome to the World of Zuul!");
         System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type '" + Commands.HELP + "' if you need help.");
+        System.out.println("Type '" + Actions.HELP + "' if you need help.");
         System.out.println();
         System.out.println(game.getRoomDescription());
     }
@@ -57,45 +57,45 @@ public class CommandLineClient {
     public boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
-        Commands commandWord = command.getCommandName(); // holds command enum
+        Actions commandWord = command.getCommandName(); // holds command enum
 
-        if (commandWord == Commands.UNKNOWN) {
+        if (commandWord == Actions.UNKNOWN) {
             System.out.println("I don't know what you mean...");
             return false;
         }
 
-        if (commandWord == Commands.HELP) {
+        if (commandWord == Actions.HELP) {
             System.out.println("You are lost. You are alone. You wander");
             System.out.println("around at the university.");
             System.out.println();
             System.out.println("Your command words are:");
             printHelp();
-        } else if (commandWord == Commands.GO) {
+        } else if (commandWord == Actions.GO) {
             if (game.goRoom(command)) {
                 System.out.println(game.getRoomDescription());
             } else {
                 System.out.println("Can't walk in that direction.");
             }
-        } else if (commandWord == Commands.QUIT) {
+        } else if (commandWord == Actions.QUIT) {
             if (game.quit(command)) {
                 wantToQuit = true;
             } else {
                 System.out.println("Quit what?");
             }
 
-        } else if (commandWord == Commands.INVENTORY) {
+        } else if (commandWord == Actions.INVENTORY) {
             System.out.println("Your inventory contains: ");
             System.out.println(game.getInventory());
-        } else if (commandWord == Commands.PICKUP) {
+        } else if (commandWord == Actions.PICKUP) {
             if(game.pickupItem(command)) {
                 System.out.println("This item has been added to your inventory!");
             } else {
                 System.out.println("That item does not exist in this room...");
             }
-        } else if (commandWord == Commands.ACTIVITYS) {
+        } else if (commandWord == Actions.ACTIVITYS) {
             System.out.println("\nYou are still missing the following activitys:");
             System.out.println(game.getActivity());
-        } else if (commandWord == Commands.IMLOST) {
+        } else if (commandWord == Actions.IMLOST) {
             System.out.println(game.getRoomDescription());
         }
 
