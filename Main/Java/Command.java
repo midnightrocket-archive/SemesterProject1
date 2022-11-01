@@ -2,7 +2,7 @@ package worldOfZuul.Main.Java;
 
 public interface Command {
 
-    Commands getCommandName();
+    Actions getCommandName();
 
     String getCommandValue();
 

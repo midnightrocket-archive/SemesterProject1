@@ -9,7 +9,6 @@ public class ActivityManager {
 
     // Constructor WITH a list as input
     public ActivityManager(ArrayList<Activity> listOfActivities) {
-        super();
         this.listOfActivities = listOfActivities;
     }
 

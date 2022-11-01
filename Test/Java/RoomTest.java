@@ -13,13 +13,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class RoomTest {
 
     Room kitchen;
+    Room hallway;
     Activity turnOff;
 
     @BeforeEach
     @DisplayName("Test Room - Setup")
     void setup() {
         kitchen = new Room("kitchen");
+        hallway = new Room("hallway");
         turnOff = new Activity("test", 1, 1, 1, true);
+
     }
     
     @Test
@@ -31,18 +34,27 @@ class RoomTest {
     }
 
     @Test
+    @DisplayName("Test Room - GetShortDecription")
+    public void testGetShortDescription() {
+        System.out.println(kitchen.getShortDescription());
+    }
+
+    @Test
     @DisplayName("Test Room - GetAppliancesString")
     void testGetAppliancesString() {
         testCreateAppliance();
         System.out.println(kitchen.getAppliancesString());
+
+        // Test without any appliances
+        System.out.println(hallway.getAppliancesString());
     }
 
     @Test
     @DisplayName("Test Room - HasAppliance")
     void testHasAppliance() {
-        assertEquals(kitchen.hasAppliance("fridge"), false);
+        assertFalse(kitchen.hasAppliance("fridge"));
         testCreateAppliance();
-        assertEquals(kitchen.hasAppliance("fridge"), true);
+        assertTrue(kitchen.hasAppliance("fridge"));
     }
 
     @Test
@@ -64,7 +76,7 @@ class RoomTest {
     @DisplayName("Test Room - HasItem")
     void testHasItem() {
         testCreateItem();
-        assertEquals(kitchen.hasItem("food"), true);
+        assertTrue(kitchen.hasItem("food"));
     }
 
     @Test
@@ -78,8 +90,8 @@ class RoomTest {
     @DisplayName("Test Room - RemoveItem")
     void testRemoveItem() {
         testCreateItem();
-        assertEquals(kitchen.hasItem("food"), true);
+        assertTrue(kitchen.hasItem("food"));
         kitchen.removeItem("food");
-        assertEquals(kitchen.hasItem("food"), false);
+        assertFalse(kitchen.hasItem("food"));
     }
 }

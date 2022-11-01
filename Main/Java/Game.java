@@ -10,7 +10,7 @@ public class Game {
     public static int power;
     public static int points;
     private static Room currentRoom;
-    private CommandWords commands; // holds all valid commands
+    private ValidActions commands; // holds all valid commands
     private Inventory inventory;
 
     private final int maxDays;
@@ -22,7 +22,7 @@ public class Game {
 
 
     public Game() {
-        commands = new CommandWordsImplementation();
+        commands = new ValidActionsImplementation();
         inventory = new Inventory();
         activityManager = new ActivityManager();
 
@@ -36,6 +36,7 @@ public class Game {
         makeExtraPowerList();
         extraPower = 100; // random placeholder value, should later be replaced by value-generating method
         power = defaultPower;
+        points = 0;
 
         createRooms();
     }
@@ -48,6 +49,7 @@ public class Game {
                 tempPower += activityManager.listOfActivities.get(i).getPowerCost();
             }
         }
+        System.out.println(tempPower);
         return tempPower;
     }
 
@@ -152,11 +154,9 @@ public class Game {
 
     // Returns false if user input of command has a second word.
     public boolean quit(Command command) {
-        if (command.hasCommandValue()) {
-            return false;
-        } else {
-            return true;
-        }
+        // Makes sure that there are no extra argument.
+        // If there is another argument, it will return false.
+        return !command.hasCommandValue();
     }
 
     // Returns a random int between 0 and the sum of extraPowerList. If last day, return remaining extra power.
@@ -203,13 +203,13 @@ public class Game {
     }
 
     // Returns a CommandWords object which holds all valid commands.
-    public CommandWords getCommands() {
+    public ValidActions getCommands() {
         return commands;
     }
 
     // Returns List<String> of all valid command strings.
     public List<String> getCommandDescriptions() {
-        return commands.getCommandWords();
+        return commands.getActionWords();
     }
 
     /* This is used in the Parser class and takes the user input as arguments.
@@ -217,8 +217,7 @@ public class Game {
      * Then returns a Command object with the evaluated enum and the command string.
      */
     public Command getCommand(String word1, String word2) {
-        
-        return new CommandImplementation(commands.getCommand(word1), word2);
+        return new CommandImplementation(commands.getAction(word1), word2);
     }
 
     // Method add points
@@ -228,9 +227,8 @@ public class Game {
 
     // Method for checking last day
     public boolean isLastDay() {
-        if (day > maxDays)
-            return true;
-        else return false;
+        // Returns true, if day is higher than max days
+        return day > maxDays;
     }
 
     // Method go to next day
@@ -257,7 +255,7 @@ public class Game {
     }
 
     // Metode for points værdi.
-    public int getPoint() {
+    public int getPoints() {
         return points;
     }
 }
