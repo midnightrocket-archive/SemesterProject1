@@ -12,7 +12,6 @@ public class Game {
     private static Room currentRoom;
     private CommandWords commands; // holds all valid commands
     private Inventory inventory;
-    private ActivityManager activityManager;
 
     private final int maxDays;
     private final int defaultPower; // can maybe be changed into a constant value
