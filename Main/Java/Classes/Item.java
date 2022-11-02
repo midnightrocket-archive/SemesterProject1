@@ -8,12 +8,12 @@ public class Item {
         this.name = name;
         this.applianceReference = applianceReference;
     }
-    
-    public Appliance getApplianceReference() {
-        return applianceReference;
+
+    public String getName() {
+        return name;
     }
 
-    public String getItemName() {
-        return name;
+    public Appliance getApplianceReference() {
+        return applianceReference;
     }
 }

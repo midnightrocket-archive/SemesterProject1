@@ -12,10 +12,8 @@ import worldOfZuul.Main.Java.Game;
 
 public class Parser {
     private final Scanner reader;
-    private final Game game;
 
-    public Parser(Game game) {
-        this.game = game;
+    public Parser() {
         this.reader = new Scanner(System.in);
     }
 
@@ -26,7 +24,7 @@ public class Parser {
 
         System.out.print("> "); // print prompt
 
-        inputLine = reader.nextLine();
+        inputLine = reader.nextLine(); // Asks for the next line
 
         // Find up to two words on the line. The rest of the input line is ignored.
         Scanner tokenizer = new Scanner(inputLine);
@@ -37,6 +35,6 @@ public class Parser {
             }
         }
 
-        return game.getCommand(word1,word2);
+        return Game.getInstance().getCommand(word1,word2);
     }
 }

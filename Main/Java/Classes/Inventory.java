@@ -17,27 +17,27 @@ public class Inventory {
         listOfItems.remove(item);
     }
 
-    public boolean isEmpty() {
-        if (listOfItems.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public ArrayList<Item> getInventoryList() {
         return listOfItems;
     }
-    
+
+    public boolean isEmpty() {
+        // Returns true, if the listOfItems is empty.
+        return listOfItems.isEmpty();
+    }
+
+    @Override
     public String toString() {
-        String inventoryString = new String();
+        String inventoryString = "";
+
         if (listOfItems.isEmpty()) {
-            return "Nothing. Your inventory is empty!";
-        } else {
-            for (Item item : listOfItems) {
-                inventoryString += item.getItemName() + "\n";
-            }
-            return inventoryString;
+            return "Your inventory is empty.";
         }
+
+        for (Item item : listOfItems) {
+            inventoryString += " - " +item.getName() + "\n";
+        }
+
+        return inventoryString;
     }
 }

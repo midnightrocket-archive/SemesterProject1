@@ -2,41 +2,70 @@
 
 package "Java" {
 	class Game {
-		+ {static} day : int
-		+ {static} power : int
-		+ {static} points : int
-		- maxDays : int
+		- day : int
+		- power : int
 		- defaultPower : int
-		+ extraPower : int
-		- command : CommandWords
-		+ addPoints() : void
+		- points : int
+		- maxDays : int
+		- currentRoom : Room
+		- commands : ValidActions
+		- inventory : Inventory
+		- maxDays : maxDays
+		- extraPowerList : ArrayList<Integer>
+		- activityManager : ActivityManager
+		- Game()
+		+ {static} getInstance() : Game
+		+ calcDefaultPower() : int
+		+ makeExtraPowerList() : void
 		+ createRooms() : void
 		+ goRoom() : boolean
+		+ pickupItem(Command command) : boolean
 		+ quit() : boolean
+		+ getRandomExtraPower() : int
+		+ getRoomDescription() : String
+		+ getAppliancesInRoom() : String
+		+ getInventory() : String
+		+ getActivity() : String
+		+ getCurrentRoom() : Room
+		+ getCommands() : ValidActions
+		+ getCommandDescriptions() : List<String>
+		+ getCommand() : Command
+		+ addPoints() : void
+        + removePoints(int n) : void
+        + removePower(int n) : void
 		+ isLastDay() : boolean
 		+ setNextDay() : void
 		+ getPower() : int
 		+ setPower() : void
 		+ getPoint() : int
-		+ getRoomDescription() : String
-		+ getCommands() : CommandWords
-		+ getCommandDescriptions() : List<String>
-		+ getCommand() : Command
+        + setPoints(int n) : void
+        + getDay() : int
 	}
 
 	class Room {
 		- description : String
 		- exits : HashMap<String, Room>
+		- roomAppliance : HashMap<String, Appliance>
+		- roomItems : HashMap<String, Item>
+		+ createAppliance(String name, Activity activityReference) : Appliance
+		+ hasAppliance(String applianceName) : Appliance
+		+ createItem(String name, Appliance applianceReference) : Item
+		+ removeItem(String itemName) : void
+		+ hasItem(String itemName) : boolean
 		+ getExitString() : String
 		+ setExit(String direction, Room neighbour) : void
+		+ getExit(String direction) : Room
+		+ getApplianceActivity(Appliance appliance) : Activity
 		+ getShortDescription() : String
 		+ getLongDescription() : String
-		+ getExit(String direction) : Room
-
+		+ getAppliance(String applianceKey) : Appliance
+		+ getApplianceString() : String
+		+ getItem(String itemKey) : Item
+		+ getItemsString() : String
 	}
 
 	' interface Command {
-	'     + getCommandName() : Commands
+	'     + getCommandName() : Actions
 	'     + getCommandValue() : String
 	'     + hasCommandValue() : boolean
 	'     + isUnknown() : boolean
@@ -52,16 +81,16 @@ package "Java" {
 	}
 
 	' interface ValidActions {
-	'     + getCommand(String commandWord) : Commands
-	'     + isCommand(String aString) : boolean
-	'     + getCommandWords() : List<String>
+	'     + getAction(String commandWord) : Actions
+	'     + isAction(String aString) : boolean
+	'     + getActionWords() : List<String>
 	' }
 
 	class ValidActionsImplementation {
-		- validCommands : HashMap<String, Commands>
-		+ getCommand(String commandWord) : Commands
-		+ isCommand(String aString) : boolean
-		+ getCommandWords() : List<String>
+		- validActions : HashMap<String, Actions>
+		+ getAction(String actionWord) : Actions
+		+ isAction(String aString) : boolean
+		+ getActionWords() : List<String>
 	}
 
 	enum Actions {
@@ -70,6 +99,10 @@ package "Java" {
 		QUIT
 		HELP
 		INVENTORY
+		PICKUP
+		ACTIVITIES
+		IMLOST
+		POWER
 		UNKNOWN
 		__
 		- actionName : String
@@ -87,7 +120,6 @@ package "Java/TextUI" {
 
     class Parser {
         - reader : Scanner
-        - game : Game
         + getCommand() : Command
     }
 
@@ -108,6 +140,8 @@ package "Java/Classes" {
 		- currentRoom : Room
 		+ addItemToInventory() : void
 		+ removeItemFromInventory() : void
+		+ getCurrentRoom() : Room
+		+ getInventory() : ArrayList<Item>
 	}
 
 
@@ -116,6 +150,7 @@ package "Java/Classes" {
 		+ addItem(Item item) : void
 		+ removeItem(Item item) : void
 		+ getInventoryList() : ArrayList<Item>
+		+ isEmpty() : boolean
 		+ toString() : String
 	}
 
@@ -123,40 +158,49 @@ package "Java/Classes" {
 	class Item {
 		- name : String
 		- applianceReference : Appliance
+		+ getName() : String
 		+ getApplianceReference() : Appliance
-		+ getItemName() : String
 	}
 
 
 	class Appliance {
 		- name : String
+		- roomReference : Room
 		- activityReference : Activity
 		+ getName() : String
+		+ getRoomReference() : Room
 		+ getActivityReference() : Activity
 	}
 
 
 	class ActivityManager {
-		+ listOfActivities : Activity[]
+		+ listOfActivities : ArrayList<Activity>
 		+ addActivity(Activity activity) : void
+		+ removeActivity(Activity activity) : void
 		+ addPoints(Activity activity) : void
 		+ removePoints(Activity activity) : void
 		+ removePower(Activity activity) : void
+		+ toString() : String
 	}
 
 
 	class Activity {
+	    - name : String
 		- successPoints : int
 		- failurePoints : int
 		- powerCost : int
 		- daily : boolean
 		- activityDone : boolean
-		+ setActivityDone() : void
+		+ getName() : String
 		+ getSuccessPoints() : int
+		+ setSuccessPoints(int points) : void
 		+ getFailurePoints() : int
+		+ setFailurePoints(int points) : void
 		+ getPowerCost() : int
+		+ setPowerCost(int PowerCost) : void
 		+ isDaily() : boolean
 		+ isActivityDone() : boolean
+		+ setActivityDone() : void
 	}
 }
 
