@@ -259,3 +259,16 @@ public class Game {
         return points;
     }
 }
+    // Attempt at making day system
+    public boolean daySystem() {
+        for (int i = 0; i < activityManager.listOfActivities.size(); i++) {
+            if (!activityManager.listOfActivities.get(i).isActivityDone()) {
+                return false;
+            }
+        }
+        setNextDay();
+        setPower(defaultPower + getRandomExtraPower());
+        System.out.println("Your power is " + getPower());
+        return true;
+    }
+}
