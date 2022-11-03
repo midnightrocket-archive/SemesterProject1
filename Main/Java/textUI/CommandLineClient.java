@@ -97,6 +97,8 @@ public class CommandLineClient {
             System.out.println(game.getRoomDescription());
         } else if (commandWord == Actions.POWER) { // POWER COMMAND
             System.out.println("\nYour power is " +game.getPower());
+        } else if (commandWord == Actions.USE) { // USE COMMAND
+            game.player.use(command);
         }
 
         return wantToQuit;
