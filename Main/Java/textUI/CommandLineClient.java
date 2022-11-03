@@ -98,7 +98,7 @@ public class CommandLineClient {
         } else if (commandWord == Actions.POWER) { // POWER COMMAND
             System.out.println("\nYour power is " +game.getPower());
         } else if (commandWord == Actions.USE) { // USE COMMAND
-            game.player.use(command);
+            Game.getInstance().getPlayer().use(command);
         }
 
         return wantToQuit;

@@ -11,9 +11,6 @@ public class Player {
     Inventory inventoryReference;
 
     public Player(Inventory inventory) {
-        // Commented out to fix StackOverFlowError, as this is instantiating game, which is the instantiating this back, and so on.
-        // this.currentRoom = this.getCurrentRoom();
-
         this.inventoryReference = inventory;
     }
 
@@ -22,58 +19,57 @@ public class Player {
      * for said activity (power amount, items in inv) is matched, the activity connected to the mentioned appliance will
      * be executed.
      */
-    public void use(Command command){
+    public void use(Command command) {
         Room currentRoom = Game.getInstance().getCurrentRoom();
         String applianceName;
         Appliance applianceInUse;
 
         Item item = new Item("PlaceholderItem", new Appliance("PlaceholderAppliance",
                 new Room("PlaceholderRoom"), new Activity("PlaceholderActivity",0,
-                0,0,
-                false))); // Placeholder item that will be replaced in inventory-search loop.
+                0,0, false))); // Placeholder item that will be replaced in inventory-search loop.
 
         Activity activity;
 
         applianceName = command.getCommandValue();
         // Checks whether the argument passed is a valid appliance name, and if that appliance has an active activity.
-        if(currentRoom.getAppliance(applianceName).getActivityReference() == null){
-            System.out.println("No appliance of that name has an activity to do in this room.");
+        if (currentRoom.getAppliance(applianceName).getActivityReference() == null) {
+            System.out.println("\nNo appliance of that name has an activity to do in this room.");
             return;
         }
-
 
         applianceInUse = currentRoom.getAppliance(applianceName);
         activity = applianceInUse.getActivityReference();
 
         // Checks if the activity has already been done
-        if(activity.isActivityDone()){
-            if(activity.isDaily()) {
-                System.out.println("This activity has already been performed today. Try again tomorrow.");
+        if (activity.isActivityDone()) {
+            if (activity.isDaily()) {
+                System.out.println("\nThis activity has already been performed today. Try again tomorrow.");
             }
             else {
-                System.out.println("This activity has already been performed this week.");
+                System.out.println("\nThis activity has already been performed this week.");
             }
+
             return;
         }
 
         // Checks if the player has enough power
-        if(Game.getInstance().getPower() < activity.getPowerCost()){
-            String message = String.format("Insufficient power. This activity requires %d power.", activity.getPowerCost());
+        if (Game.getInstance().getPower() < activity.getPowerCost()) {
+            String message = String.format("\nInsufficient power. This activity requires %d power.", activity.getPowerCost());
             System.out.println(message);
             return;
         }
 
         // Checks whether an Item inside inventory references the activity. (Might be changed later).
         boolean hasRequiredItem = false;
-        for(int i = 0; i < getInventory().size(); i++){
-            if(getInventory().get(i).getApplianceReference() == applianceInUse){
+        for (int i = 0; i < getInventory().size(); i++) {
+            if (getInventory().get(i).getApplianceReference() == applianceInUse) {
                 item = getInventory().get(i);
                 hasRequiredItem = true;
                 break;
             }
         }
-        if(!hasRequiredItem){
-            System.out.println("An item is needed to perform this activity.");
+        if (!hasRequiredItem) {
+            System.out.println("\nAn item is needed to perform this activity.");
             return;
         }
 
@@ -83,10 +79,10 @@ public class Player {
         activity.setActivityDone();
         getInventory().remove(item);
 
-        String message = String.format("%d points has been added.", activity.getSuccessPoints());
+        String message = String.format("\n%d points has been added.", activity.getSuccessPoints());
         System.out.println(message);
 
-        message = String.format("You have %d power left for the day.", Game.getInstance().getPower());
+        message = String.format("\nYou have %d power left for the day.", Game.getInstance().getPower());
         System.out.println(message);
     }
 
@@ -96,10 +92,6 @@ public class Player {
 
     public void removeItemFromInventory(Item item) {
         inventoryReference.removeItem(item);
-    }
-
-    public Room getCurrentRoom() {
-        return Game.getInstance().getCurrentRoom();
     }
 
     public ArrayList<Item> getInventory() {
