@@ -17,34 +17,38 @@ public class ActivityManager {
         this(new ArrayList<>());
     }
 
-
     public void addActivity(Activity activity) {
         listOfActivities.add(activity);
     }
 
+    public void removeActivity(Activity activity) {
+        listOfActivities.remove(activity);
+    }
 
     public void addPoints(Activity activity) {
-        Game.points += activity.getSuccessPoints();
+        Game.getInstance().addPoints(activity.getSuccessPoints());
     }
 
     public void removePoints(Activity activity) {
-        Game.points -= activity.getFailurePoints();
+        Game.getInstance().removePoints(activity.getFailurePoints());
     }
 
     public void removePower(Activity activity) {
-        Game.power -= activity.getPowerCost();
+        Game.getInstance().removePower(activity.getPowerCost());
     }
 
     @Override
     public String toString() {
         String activityManagerString = "";
+
         if (listOfActivities.isEmpty()) {
-            return "There are no more activitys.";
-        } else {
-            for (Activity activity : listOfActivities) {
-                activityManagerString += " - " + activity.getName() + "\n";
-            }
-            return activityManagerString;
+            return "There are no more activities.";
         }
+
+        for (Activity activity : listOfActivities) {
+            activityManagerString += " - " + activity.getName() + "\n";
+        }
+
+        return activityManagerString;
     }
 }

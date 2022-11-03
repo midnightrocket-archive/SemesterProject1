@@ -20,6 +20,6 @@ class ItemTest {
         Item item = new Item("Test 1", appliance);
 
         assertEquals(item.getApplianceReference(), appliance);
-        assertEquals(item.getItemName(), "Test 1");
+        assertEquals(item.getName(), "Test 1");
     }
 }

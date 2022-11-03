@@ -6,22 +6,21 @@ import java.util.List;
 
 public class Game {
 
-    public static int day;
-    public static int power;
-    public static int points;
-    private static Room currentRoom;
+    private static Game instance = null;
+
+    private int day;
+    private int power;
+    private int defaultPower; // can maybe be changed into a constant value
+    private int points;
+    private Room currentRoom;
     private ValidActions commands; // holds all valid commands
     private Inventory inventory;
-
-    private final int maxDays;
-    private final int defaultPower; // can maybe be changed into a constant value
-    public int extraPower;
-    private ArrayList<Integer> extraPowerList = new ArrayList<Integer>();
-
+    private int maxDays;
+    private ArrayList<Integer> extraPowerList = new ArrayList<>();
     private ActivityManager activityManager = new ActivityManager(); // Placeholder object, until "real one" has been created.
 
 
-    public Game() {
+    private Game() {
         commands = new ValidActionsImplementation();
         inventory = new Inventory();
         activityManager = new ActivityManager();
@@ -34,27 +33,33 @@ public class Game {
         day = 0;
 
         makeExtraPowerList();
-        extraPower = 100; // random placeholder value, should later be replaced by value-generating method
         power = defaultPower;
         points = 0;
 
         createRooms();
     }
 
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+
+        return instance;
+    }
+
     // Calculates daily minimum power
-    private int calcDefaultPower(){
+    private int calcDefaultPower() {
         int tempPower = 0;
         for(int i = 0; i < activityManager.listOfActivities.size(); i++){
             if(activityManager.listOfActivities.get(i).isDaily()){
                 tempPower += activityManager.listOfActivities.get(i).getPowerCost();
             }
         }
-        System.out.println(tempPower);
         return tempPower;
     }
 
     // Makes list of "extra" activities' power costs
-    private void makeExtraPowerList(){
+    private void makeExtraPowerList() {
         // Make list of extra power costs:
         for(int i = 0; i < activityManager.listOfActivities.size(); i++){
             if(!activityManager.listOfActivities.get(i).isDaily()){
@@ -64,50 +69,109 @@ public class Game {
     }
 
     private void createRooms() {
-        Room outside, theatre, pub, lab, office;
-        Activity turnOff, makeFood, lockDoor; // Activity creation will be handled with ActivityManager
-        Appliance fridge, lights, oven, door;
-        Item food, key;
+        Room homeOffice, livingRoom, bedroom,
+                kitchen, diningRoom, laundryRoom,
+                bathroom, hallway, entrance;
 
-        outside = new Room("outside the main entrance of the university");
-        theatre = new Room("in a lecture theatre");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
+        Activity dryHair, washCloths, dryCloths,
+                makeFood, washDishes, boilWater,
+                watchTV, playConsoleGames, playPCGames,
+                doWork;
 
-        outside.setExit("east", theatre);
-        outside.setExit("south", lab);
-        outside.setExit("west", pub);
+        Appliance hairdryer, washingMachine, dryer,
+                oven, dishwasher, kettel,
+                tv, gameConsole, computer, computer_work;
 
-        theatre.setExit("west", outside);
+        Item dirtyCloths, wetCloths, ovenFood,
+                stoveFood, dirtyDishes;
 
-        pub.setExit("east", outside);
 
-        lab.setExit("north", outside);
-        lab.setExit("east", office);
+        // Defining the rooms
+        homeOffice = new Room("in the home office");
+        livingRoom = new Room("in the living room");
+        bedroom = new Room("in your bedroom");
+        kitchen = new Room("in the kitchen");
+        diningRoom = new Room("in the dining room");
+        laundryRoom = new Room("in the laundry room");
+        bathroom = new Room("in the bathroom");
+        hallway = new Room("in the hallway");
+        entrance = new Room("at the entrance");
 
-        office.setExit("west", lab);
 
-        currentRoom = outside;
+        // Setting the room exits
+        homeOffice.setExit("east", livingRoom);
 
-        // Temporary appliance and activity creation
+        livingRoom.setExit("west", homeOffice);
+        livingRoom.setExit("east", bedroom);
+        livingRoom.setExit("south", diningRoom);
 
-        turnOff = new Activity("Turn off", 1, 1, 1, true);
-        makeFood = new Activity("Make food", 1, 1, 1, true);
-        lockDoor = new Activity("Lock door", 1, 1, 1, true);
+        bedroom.setExit("west", livingRoom);
 
-        door = outside.createAppliance("door", lockDoor);
-        fridge = office.createAppliance("fridge", turnOff);
-        lights = office.createAppliance("lights", turnOff);
-        oven = lab.createAppliance("oven", makeFood);
+        kitchen.setExit("east", diningRoom);
 
-        activityManager.addActivity(lockDoor);
-        activityManager.addActivity(turnOff);
-        activityManager.addActivity(turnOff);
+        diningRoom.setExit("north", livingRoom);
+        diningRoom.setExit("west", kitchen);
+        diningRoom.setExit("east", laundryRoom);
+        diningRoom.setExit("south", hallway);
+
+        laundryRoom.setExit("west", diningRoom);
+
+        bathroom.setExit("east", hallway);
+
+        hallway.setExit("north", diningRoom);
+        hallway.setExit("west", bathroom);
+        hallway.setExit("east", entrance);
+
+        entrance.setExit("west", hallway);
+
+
+        // Adding all activities
+        dryHair = new Activity("Dry hair", 1, 1, 1, false);
+        washCloths = new Activity("Wash cloths", 1, 1, 1, false);
+        dryCloths = new Activity("Dry cloths", 1, 1, 1, false);
+        makeFood = new Activity("Make food", 1, 1, 1, false);
+        washDishes = new Activity("Wash dishes", 1, 1, 1, false);
+        boilWater = new Activity("Boil water", 1, 1, 1, false);
+        watchTV = new Activity("Watch TV", 1, 1, 1, false);
+        playConsoleGames = new Activity("Play console games", 1, 1, 1, false);
+        playPCGames = new Activity("Play PC games", 1, 1, 1, false);
+        doWork = new Activity("Do work", 1, 1, 1, false);
+
+        activityManager.addActivity(dryHair);
+        activityManager.addActivity(washCloths);
+        activityManager.addActivity(dryCloths);
         activityManager.addActivity(makeFood);
+        activityManager.addActivity(washDishes);
+        activityManager.addActivity(boilWater);
+        activityManager.addActivity(watchTV);
+        activityManager.addActivity(playConsoleGames);
+        activityManager.addActivity(playPCGames);
+        activityManager.addActivity(doWork);
 
-        key = outside.createItem("key", door);
-        food = lab.createItem("food", oven);
+
+
+        // Adding all appliances to their rooms
+        hairdryer = bathroom.createAppliance("hairdryer", dryHair);
+        washingMachine = laundryRoom.createAppliance("washing_machine", washCloths);
+        dryer = laundryRoom.createAppliance("dryer", dryCloths);
+        oven = kitchen.createAppliance("oven", makeFood);
+        dishwasher = kitchen.createAppliance("dishwasher", washDishes);
+        kettel = kitchen.createAppliance("kettel", boilWater);
+        tv = livingRoom.createAppliance("tv", watchTV);
+        gameConsole = livingRoom.createAppliance("game_console", playConsoleGames);
+        computer = homeOffice.createAppliance("computer", playPCGames);
+        computer_work = homeOffice.createAppliance("computer_work", doWork);
+
+
+        // Adding all items to their rooms
+        dirtyCloths = bedroom.createItem("dirty_cloths", washingMachine);
+        wetCloths = laundryRoom.createItem("wet_cloths", dryer);
+        ovenFood = kitchen.createItem("oven_food", oven);
+        dirtyDishes = diningRoom.createItem("dirty_dishes", dishwasher);
+
+
+        // Also setting the current room to the entrance
+        currentRoom = entrance;
     }
 
     public boolean goRoom(Command command) {
@@ -146,7 +210,7 @@ public class Game {
 
         Item itemInRoom = currentRoom.getItem(item);
 
-        currentRoom.removeItem(itemInRoom.getItemName());
+        currentRoom.removeItem(itemInRoom.getName());
         inventory.addItem(itemInRoom);
 
         return true; // command succeeded
@@ -160,7 +224,7 @@ public class Game {
     }
 
     // Returns a random int between 0 and the sum of extraPowerList. If last day, return remaining extra power.
-    public int getRandomExtraPower(){
+    public int getRandomExtraPower() {
         int dailyExtra = 0;
 
         if(isLastDay()){
@@ -198,7 +262,7 @@ public class Game {
         return activityManager.toString();
     }
 
-    public static Room getCurrentRoom() {
+    public Room getCurrentRoom() {
         return currentRoom;
     }
 
@@ -220,9 +284,19 @@ public class Game {
         return new CommandImplementation(commands.getAction(word1), word2);
     }
 
-    // Method add points
+    // Method for adding points
     public void addPoints(int pointsToAdd) {
         points += pointsToAdd;
+    }
+
+    // Method for removing points
+    public void removePoints(int n) {
+        this.points -= n;
+    }
+
+    // Method for removing power
+    public void removePower(int n) {
+        this.power -= n;
     }
 
     // Method for checking last day
@@ -231,34 +305,36 @@ public class Game {
         return day > maxDays;
     }
 
-    // Method go to next day
+    // Method for incrementing the day counter
     public void setNextDay() {
         day += 1;
-        if (isLastDay()) {
-            double randomExtraPower = Math.random() * extraPower;
-            setPower(defaultPower + (int) randomExtraPower);
-            extraPower -= (int) randomExtraPower;
-        } else {
-            setPower(defaultPower + extraPower);
-            extraPower = 0;
-        }
     }
 
-    // Metode getPower til at hente powerværdi.
+    // Method for getting the power value
     public int getPower() {
         return power;
     }
 
-    // Metode set power værdi på dagen
+    // Method for setting the power value
     public void setPower(int newPower) {
         power = newPower;
     }
 
-    // Metode for points værdi.
+    // Method for getting the points value
     public int getPoints() {
         return points;
     }
-}
+    
+    // Method for setting the points value
+    public void setPoints(int n) {
+        this.points = n;
+    }
+
+    // Method for getting the day value
+    public int getDay() {
+        return day;
+    }
+
     // Attempt at making day system
     public boolean daySystem() {
         for (int i = 0; i < activityManager.listOfActivities.size(); i++) {
