@@ -18,13 +18,14 @@ public class Game {
     private int maxDays;
     private ArrayList<Integer> extraPowerList = new ArrayList<>();
     private ActivityManager activityManager = new ActivityManager(); // Placeholder object, until "real one" has been created.
+    public Player player;
 
 
     private Game() {
         commands = new ValidActionsImplementation();
         inventory = new Inventory();
         activityManager = new ActivityManager();
-
+        player = new Player(inventory);
 
         maxDays = 7;
 
