@@ -11,7 +11,9 @@ public class Player {
     Inventory inventoryReference;
 
     public Player(Inventory inventory) {
-        this.currentRoom = this.getCurrentRoom();
+        // Commented out to fix StackOverFlowError, as this is instantiating game, which is the instantiating this back, and so on.
+        // this.currentRoom = this.getCurrentRoom();
+
         this.inventoryReference = inventory;
     }
 
@@ -87,6 +89,7 @@ public class Player {
         message = String.format("You have %d power left for the day.", Game.getInstance().getPower());
         System.out.println(message);
     }
+
     public void addItemToInventory(Item item) {
         inventoryReference.addItem(item);
     }
