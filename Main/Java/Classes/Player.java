@@ -1,5 +1,6 @@
 package worldOfZuul.Main.Java.Classes;
 
+import worldOfZuul.Main.Java.Command;
 import worldOfZuul.Main.Java.Room;
 import worldOfZuul.Main.Java.Game;
 
