@@ -6,28 +6,27 @@ import worldOfZuul.Main.Java.Game;
 import java.util.ArrayList;
 
 public class Player {
-
     Room currentRoom;
-    Inventory inventory;
+    Inventory inventoryReference;
 
     public Player(Inventory inventory) {
-        this.inventory = inventory;
-        currentRoom = this.getCurrentRoom();
-    }
-
-    public Room getCurrentRoom() {
-        return Game.getCurrentRoom();
+        this.currentRoom = this.getCurrentRoom();
+        this.inventoryReference = inventory;
     }
 
     public void addItemToInventory(Item item) {
-        inventory.addItem(item);
+        inventoryReference.addItem(item);
     }
 
     public void removeItemFromInventory(Item item) {
-        inventory.removeItem(item);
+        inventoryReference.removeItem(item);
+    }
+
+    public Room getCurrentRoom() {
+        return Game.getInstance().getCurrentRoom();
     }
 
     public ArrayList<Item> getInventory() {
-        return inventory.getInventoryList();
+        return inventoryReference.getInventoryList();
     }
 }

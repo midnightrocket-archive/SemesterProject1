@@ -45,34 +45,34 @@ class ActivityManagerTest {
     @Test
     @DisplayName("Test ActivityManager - addPoints")
     public void testAddPoints() {
-        Game.points = 0;
-        assertEquals(Game.points, 0);
+        Game.getInstance().setPoints(0);
+        assertEquals(Game.getInstance().getPoints(), 0);
 
         activityManager.addPoints(new Activity("test", 5, 7, 3, false));
 
-        assertEquals(Game.points, 5);
+        assertEquals(Game.getInstance().getPoints(), 5);
     }
 
     @Test
     @DisplayName("Test ActivityManager - removePoints")
     public void testRemovePoints() {
-        Game.points = 0;
-        assertEquals(Game.points, 0);
+        Game.getInstance().setPoints(0);
+        assertEquals(Game.getInstance().getPoints(), 0);
 
         activityManager.removePoints(new Activity("test", 5, 7, 3, false));
 
-        assertEquals(Game.points, -7);
+        assertEquals(Game.getInstance().getPoints(), -7);
     }
 
     @Test
     @DisplayName("Test ActivityManager - removePower")
     public void testRemovePower() {
-        Game.power = 10;
-        assertEquals(Game.power, 10);
+        Game.getInstance().setPower(10);
+        assertEquals(Game.getInstance().getPower(), 10);
 
         activityManager.removePower(new Activity("test", 5, 7, 3, false));
 
-        assertEquals(Game.power, 7);
+        assertEquals(Game.getInstance().getPower(), 7);
     }
 
     @Test
