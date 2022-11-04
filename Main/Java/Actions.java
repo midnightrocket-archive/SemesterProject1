@@ -15,6 +15,7 @@ public enum Actions {
     ACTIVITYS("activities"),
     IMLOST("imlost"),
     POWER("power"),
+    USE("use"),
     UNKNOWN("?");
     
     // The action string.

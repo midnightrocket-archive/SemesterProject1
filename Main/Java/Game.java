@@ -18,23 +18,24 @@ public class Game {
     private int maxDays;
     private ArrayList<Integer> extraPowerList = new ArrayList<>();
     private ActivityManager activityManager = new ActivityManager(); // Placeholder object, until "real one" has been created.
+    private Player player;
 
 
     private Game() {
-        commands = new ValidActionsImplementation();
-        inventory = new Inventory();
-        activityManager = new ActivityManager();
+        this.commands = new ValidActionsImplementation();
+        this.inventory = new Inventory();
+        this.activityManager = new ActivityManager();
+        this.player = new Player(inventory);
 
+        this.maxDays = 7;
 
-        maxDays = 7;
+        this.defaultPower = calcDefaultPower();
 
-        defaultPower = calcDefaultPower();
-
-        day = 0;
+        this.day = 0;
 
         makeExtraPowerList();
-        power = defaultPower;
-        points = 0;
+        this.power = defaultPower;
+        this.points = 0;
 
         createRooms();
     }
@@ -346,5 +347,9 @@ public class Game {
         setPower(defaultPower + getRandomExtraPower());
         System.out.println("Your power is " + getPower());
         return true;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }
