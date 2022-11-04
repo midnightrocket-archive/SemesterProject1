@@ -28,16 +28,16 @@ public class Inventory {
 
     @Override
     public String toString() {
-        String inventoryString = "";
-
         if (listOfItems.isEmpty()) {
             return "Your inventory is empty.";
         }
 
+        StringBuilder inventoryString = new StringBuilder();
+
         for (Item item : listOfItems) {
-            inventoryString += " - " +item.getName() + "\n";
+            inventoryString.append(String.format(" - %s\n", item.getName()));
         }
 
-        return inventoryString;
+        return inventoryString.toString();
     }
 }
