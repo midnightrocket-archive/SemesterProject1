@@ -1,6 +1,7 @@
 package worldOfZuul.Main.Java.Classes;
 
 import worldOfZuul.Main.Java.Game;
+
 import java.util.ArrayList;
 
 public class ActivityManager {
@@ -39,16 +40,16 @@ public class ActivityManager {
 
     @Override
     public String toString() {
-        String activityManagerString = "";
-
-        if (listOfActivities.isEmpty()) {
+        if (this.listOfActivities.isEmpty()) {
             return "There are no more activities.";
         }
 
-        for (Activity activity : listOfActivities) {
-            activityManagerString += " - " + activity.getName() + "\n";
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Activity activity : this.listOfActivities) {
+            stringBuilder.append(String.format(" - %s\n", activity.getName()));
         }
 
-        return activityManagerString;
+        return stringBuilder.toString();
     }
 }
