@@ -62,8 +62,9 @@ public class Room {
     // Sets an exit for a room
     public void setExit(Direction direction, Room neighbor) {
         this.exits.put(direction, neighbor);
+
+        //By pass setExit() method, to avoid infinite recursion.
         neighbor.exits.put(direction.opposite(), this);
-        System.out.println(direction.opposite());
     }
 
     public Room getExit(Direction direction) {
