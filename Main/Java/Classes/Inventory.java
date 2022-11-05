@@ -9,12 +9,12 @@ public class Inventory {
         this.listOfItems = new ArrayList<>();
     }
 
-    public void addItem(Item item) {
-        this.listOfItems.add(item);
+    public boolean add(Item item) {
+        return this.listOfItems.add(item);
     }
 
-    public void removeItem(Item item) {
-        this.listOfItems.remove(item);
+    public boolean remove(Item item) {
+        return this.listOfItems.remove(item);
     }
 
     public ArrayList<Item> getInventoryList() {

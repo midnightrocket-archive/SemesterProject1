@@ -143,7 +143,7 @@ public class Game {
         Item itemInRoom = currentRoom.getItem(item);
 
         currentRoom.removeItem(itemInRoom.id());
-        inventory.addItem(itemInRoom);
+        inventory.add(itemInRoom);
 
         return true; // command succeeded
     }
