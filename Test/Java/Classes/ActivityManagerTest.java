@@ -16,7 +16,9 @@ class ActivityManagerTest {
     @BeforeEach
     @DisplayName("Test ActivityManager - setup and addActivity")
     public void setup() {
-        activityManager = new ActivityManager();
+        activityManager = ActivityManager.getInstance();
+        activityManager.clearActivities();
+
         Activity activity1 = new Activity("test", 5, 5, 5, false);
         Activity activity2 = new Activity("test", 2, 7, 1, true);
         Activity activity3 = new Activity("test", 0, 32, 48, false);
@@ -29,7 +31,18 @@ class ActivityManagerTest {
     }
 
     @Test
-    @DisplayName("Test ActivityManager - isActivityDone")
+    @DisplayName("Test ActivityManager - RemoveActivity")
+    public void testRemoveActivity() {
+        Activity activity = new Activity("Test", 1, 1, 1, false);
+        activityManager.addActivity(activity);
+        assertEquals(activityManager.listOfActivities.size(), 4);
+
+        activityManager.removeActivity(activity);
+        assertEquals(activityManager.listOfActivities.size(), 3);
+    }
+
+    @Test
+    @DisplayName("Test ActivityManager - isActivityDone (From Activity)")
     public void isActivityDone() {
         assertFalse(activityManager.listOfActivities.get(0).isActivityDone());
         assertFalse(activityManager.listOfActivities.get(1).isActivityDone());
@@ -81,7 +94,7 @@ class ActivityManagerTest {
         System.out.println(activityManager);
 
         // This code tests the toString method, when there are no activity's.
-        ActivityManager testActivityManager = new ActivityManager();
-        System.out.println(testActivityManager);
+        activityManager.clearActivities();
+        System.out.println(activityManager);
     }
 }

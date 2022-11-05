@@ -28,12 +28,12 @@ class InventoryTest {
     @BeforeEach
     @DisplayName("Test Inventory - Setup")
     public void setup() {
-        activity = new Activity("test",5, 5, 5, false);
+        activity = new Activity("test", 5, 5, 5, false);
         room = new Room("room");
         appliance = new Appliance("Test appliance", room, activity);
         item1 = new Item("Test item1", appliance);
         item2 = new Item("Test item2", appliance);
-        inventory = new Inventory();
+        inventory = Inventory.getInstance();
     }
 
     @Test
@@ -48,6 +48,7 @@ class InventoryTest {
     @Test
     @DisplayName("Test Inventory - RemoveItem")
     public void testRemoveItem() {
+        inventory.clearInventory();
         inventory.addItem(item1);
         inventory.addItem(item2);
 
@@ -57,23 +58,25 @@ class InventoryTest {
     }
 
     @Test
-    @DisplayName("Test Inventory - ToString")
-    public void testToString() {
-        System.out.println(inventory.toString());
-        inventory.addItem(item1);
-        inventory.addItem(item2);
-        inventory.addItem(item2);
-        System.out.println(inventory.toString());
-    }
-
-    @Test
     @DisplayName("Test Inventory - IsEmpty")
     public void testIsEmpty() {
-        // System.out.println(inventory.isEmpty());
+        inventory.clearInventory();
         assertEquals(inventory.isEmpty(), true);
         inventory.addItem(item1);
         inventory.addItem(item2);
         inventory.addItem(item2);
         assertEquals(inventory.isEmpty(), false);
+    }
+
+    @Test
+    @DisplayName("Test Inventory - ToString")
+    public void testToString() {
+        System.out.println(inventory);
+
+        // This code tests the toString method, when then inventory is empty.
+        inventory.clearInventory();
+        if (inventory.isEmpty()) {
+            System.out.println(inventory);
+        }
     }
 }

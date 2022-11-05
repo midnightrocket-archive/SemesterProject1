@@ -18,6 +18,11 @@
         <option name="INCLUDE" value="false" />
       </pattern>
       <pattern>
+        <option name="PATTERN" value="worldOfZuul.Main.Java.textUI.WorldOfZuulApplication" />
+        <option name="ENABLED" value="true" />
+        <option name="INCLUDE" value="false" />
+      </pattern>
+      <pattern>
         <option name="PATTERN" value="worldOfZuul.Main.*" />
         <option name="ENABLED" value="true" />
       </pattern>

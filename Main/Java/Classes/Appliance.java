@@ -1,4 +1,5 @@
 package worldOfZuul.Main.Java.Classes;
+
 import worldOfZuul.Main.Java.Room;
 
 public class Appliance {

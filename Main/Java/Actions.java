@@ -12,7 +12,7 @@ public enum Actions {
     HELP("help"),
     INVENTORY("inventory"),
     PICKUP("pickup"),
-    ACTIVITYS("activities"),
+    ACTIVITIES("activities"),
     IMLOST("imlost"),
     POWER("power"),
     USE("use"),

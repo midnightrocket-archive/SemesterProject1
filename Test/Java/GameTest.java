@@ -23,8 +23,9 @@ class GameTest {
     public void testGoRoom() {
         // WARNING! This test can be inoperative, if the rooms connections changes.
 
-        String[] directionsString = {"west", "north", "north", "west", "west", null};
-        Boolean[] directionsBoolean = {true, true, true, true, false, false};
+        // This test also resets the player location to the starting point
+        String[] directionsString = {"west", "north", "north", "west", "west", null, "east", "south", "south", "east"};
+        Boolean[] directionsBoolean = {true, true, true, true, false, false, true, true, true, true};
 
         for (int i = 0; i < directionsString.length; i++) {
             Command command = game.getCommand("go", directionsString[i]);
@@ -73,7 +74,6 @@ class GameTest {
         // They are purely for the testing of the methods being call-able.
         game.getRoomDescription();
         game.getAppliancesInRoom();
-        game.getInventory();
         game.getActivity();
         game.getCurrentRoom();
         game.getCommands();

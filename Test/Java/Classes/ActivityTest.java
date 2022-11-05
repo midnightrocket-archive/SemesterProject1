@@ -33,12 +33,10 @@ class ActivityTest {
         }
         return output;
     }
+
     private ArrayList<ArrayList<String>> loadFile(String path) {
         return this.loadFile(path, ",");
     }
-
-
-
 
     @Test
     @DisplayName("Test Activity - Constructor")
@@ -51,11 +49,11 @@ class ActivityTest {
             try {
                 Activity activityTest = new Activity(testArgs.get(0), Integer.parseInt(testArgs.get(1)), Integer.parseInt(testArgs.get(2)), Integer.parseInt(testArgs.get(3)), Boolean.parseBoolean(testArgs.get(4)));
 
-                assertEquals(expectedArgs.get(0),activityTest.getName());
-                assertEquals(Integer.parseInt(expectedArgs.get(1)),activityTest.getSuccessPoints());
-                assertEquals(Integer.parseInt(expectedArgs.get(2)),activityTest.getFailurePoints());
-                assertEquals(Integer.parseInt(expectedArgs.get(3)),activityTest.getPowerCost());
-                assertEquals(Boolean.parseBoolean(expectedArgs.get(4)),activityTest.isDaily());
+                assertEquals(expectedArgs.get(0), activityTest.getName());
+                assertEquals(Integer.parseInt(expectedArgs.get(1)), activityTest.getSuccessPoints());
+                assertEquals(Integer.parseInt(expectedArgs.get(2)), activityTest.getFailurePoints());
+                assertEquals(Integer.parseInt(expectedArgs.get(3)), activityTest.getPowerCost());
+                assertEquals(Boolean.parseBoolean(expectedArgs.get(4)), activityTest.isDaily());
             } catch (IllegalArgumentException exception) {
 
                 //switch statement to check if we get the expected error.
