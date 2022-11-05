@@ -59,46 +59,63 @@ public class CommandLineClient {
 
         Actions commandWord = command.getCommandName(); // holds command enum
 
-        // Checks if the command is invalid.
-        if (commandWord == Actions.UNKNOWN) {
-            System.out.println("\nI don't know what you mean...");
-            return false;
+
+        switch (commandWord) {
+            case HELP:
+                System.out.println("\nYou can use the following commands:");
+                printHelp();
+
+                break;
+            case GO:
+                if (game.goRoom(command)) {
+                    System.out.println(game.getRoomDescription());
+                } else {
+                    System.out.println("\nCan't walk in that direction.");
+                }
+
+                break;
+            case USE:
+                //Missing implementation
+                break;
+            case QUIT:
+                if (game.quit(command)) {
+                    wantToQuit = true;
+                } else {
+                    System.out.println("\nQuit what?");
+                }
+
+                break;
+            case INVENTORY:
+                System.out.println("\nYour inventory contains: ");
+                System.out.println(game.getInventory());
+
+                break;
+            case PICKUP:
+                if (game.pickupItem(command)) {
+                    System.out.println("\nThis item has been added to your inventory!");
+                } else {
+                    System.out.println("\nThat item does not exist in this room...");
+                }
+
+                break;
+            case ACTIVITIES:
+                System.out.println("\nYou are still missing the following activities:");
+                System.out.println(game.getActivity());
+
+                break;
+            case IMLOST:
+                System.out.println(game.getRoomDescription());
+
+                break;
+            case POWER:
+                System.out.println("\nYour power is " + game.getPower());
+
+                break;
+            case UNKNOWN:
+            default:
+                System.out.println("\nI don't know what you mean... \n type 'help', to get help");
         }
 
-        if (commandWord == Actions.HELP) { // HELP COMMAND
-            System.out.println("\nYou can use the following commands:");
-            printHelp();
-        } else if (commandWord == Actions.GO) { // GO COMMAND
-            if (game.goRoom(command)) {
-                System.out.println(game.getRoomDescription());
-            } else {
-                System.out.println("\nCan't walk in that direction.");
-            }
-        } else if (commandWord == Actions.QUIT) { // QUIT COMMAND
-            if (game.quit(command)) {
-                wantToQuit = true;
-            } else {
-                System.out.println("\nQuit what?");
-            }
-        } else if (commandWord == Actions.INVENTORY) { // INVENTORY COMMAND
-            System.out.println("\nYour inventory contains: ");
-            System.out.println(game.getInventory());
-        } else if (commandWord == Actions.PICKUP) { // PICKUP COMMAND
-            if (game.pickupItem(command)) {
-                System.out.println("\nThis item has been added to your inventory!");
-            } else {
-                System.out.println("\nThat item does not exist in this room...");
-            }
-        } else if (commandWord == Actions.ACTIVITIES) { // ACTIVITIES COMMAND
-            System.out.println("\nYou are still missing the following activities:");
-            System.out.println(game.getActivity());
-        } else if (commandWord == Actions.IMLOST) { // IMLOST COMMAND
-            System.out.println(game.getRoomDescription());
-        } else if (commandWord == Actions.POWER) { // POWER COMMAND
-            System.out.println("\nYour power is " + game.getPower());
-        } else if (commandWord == Actions.USE) { // USE COMMAND
-            //Game.getInstance().getPlayer().use(command);
-        }
 
         return wantToQuit;
     }
