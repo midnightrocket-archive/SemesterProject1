@@ -81,10 +81,19 @@ public class Game {
     private void createRooms() {
         Room entrance = new Room("entrance", "Entrance", "at the entrance");
         Room hallway = new Room("hallway", "Hallway", "in the hallway");
-        entrance.addExit(Direction.SOUTH, hallway);
-        hallway.addExit(Direction.NORTH, entrance);
-        Item shoes = new Item("shoes", "Shoes");
+        entrance.setExit(Direction.NORTH, hallway);
+        Item shoes = new Item("shoesTest", "Shoes test");
         hallway.addItem(shoes);
+
+        Appliance washer = new Appliance("washer", "Washing Machine", "washClothes", "dirtyClothes");
+
+        hallway.addAppliance(washer);
+
+        Activity testDaily = new Activity("daily", "Daily", 1, 1, 1, true);
+        Activity testNoneDaily = new Activity("none daily", "None Daily", 1, 1, 1, false);
+        testNoneDaily.setAsDone();
+        this.activityManager.addActivity(testDaily);
+        this.activityManager.addActivity(testNoneDaily);
 
         // Also setting the current room to the entrance
         currentRoom = entrance;

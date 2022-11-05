@@ -6,35 +6,35 @@ public class Inventory {
     private ArrayList<Item> listOfItems; // Dynamic array to hold items within an inventory list.
 
     public Inventory() {
-        listOfItems = new ArrayList<>();
+        this.listOfItems = new ArrayList<>();
     }
 
     public void addItem(Item item) {
-        listOfItems.add(item);
+        this.listOfItems.add(item);
     }
 
     public void removeItem(Item item) {
-        listOfItems.remove(item);
+        this.listOfItems.remove(item);
     }
 
     public ArrayList<Item> getInventoryList() {
-        return listOfItems;
+        return this.listOfItems;
     }
 
     public boolean isEmpty() {
         // Returns true, if the listOfItems is empty.
-        return listOfItems.isEmpty();
+        return this.listOfItems.isEmpty();
     }
 
     @Override
     public String toString() {
-        if (listOfItems.isEmpty()) {
+        if (this.listOfItems.isEmpty()) {
             return "Your inventory is empty.";
         }
 
         StringBuilder inventoryString = new StringBuilder();
 
-        for (Item item : listOfItems) {
+        for (Item item : this.listOfItems) {
             inventoryString.append(String.format(" - %s\n", item.displayName()));
         }
 

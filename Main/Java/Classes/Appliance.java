@@ -5,12 +5,14 @@ public class Appliance {
     private String id;
     private String displayName;
     private String activityId;
+    private String itemId;
 
 
-    public Appliance(String id, String displayName, String activityId) {
+    public Appliance(String id, String displayName, String activityId, String itemId) {
         this.id = id;
         this.displayName = displayName;
         this.activityId = activityId;
+        this.itemId = itemId;
     }
 
 
@@ -24,5 +26,9 @@ public class Appliance {
 
     public String getActivityId() {
         return activityId;
+    }
+
+    public String getItemId() {
+        return this.getItemId();
     }
 }

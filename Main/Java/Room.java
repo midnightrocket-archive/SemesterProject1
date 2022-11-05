@@ -1,6 +1,5 @@
 package worldOfZuul.Main.Java;
 
-import worldOfZuul.Main.Java.Classes.Activity;
 import worldOfZuul.Main.Java.Classes.Appliance;
 import worldOfZuul.Main.Java.Classes.Item;
 import worldOfZuul.Main.Java.Classes.Utilities.Direction;
@@ -61,8 +60,10 @@ public class Room {
     }
 
     // Sets an exit for a room
-    public void addExit(Direction direction, Room neighbor) {
+    public void setExit(Direction direction, Room neighbor) {
         this.exits.put(direction, neighbor);
+        neighbor.exits.put(direction.opposite(), this);
+        System.out.println(direction.opposite());
     }
 
     public Room getExit(Direction direction) {
