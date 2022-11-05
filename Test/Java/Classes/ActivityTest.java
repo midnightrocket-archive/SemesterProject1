@@ -13,11 +13,11 @@ import java.util.Scanner;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ActivityTest {
-
-    /*
+/*
+    *//*
      * Helper function, to read the contents of the test files,
      * which contains the test input.
-     */
+     *//*
     private ArrayList<ArrayList<String>> loadFile(String path, String delimiter) {
         File file = new File(path);
         ArrayList<ArrayList<String>> output = new ArrayList<ArrayList<String>>();
@@ -51,7 +51,7 @@ class ActivityTest {
             try {
                 Activity activityTest = new Activity(testArgs.get(0), Integer.parseInt(testArgs.get(1)), Integer.parseInt(testArgs.get(2)), Integer.parseInt(testArgs.get(3)), Boolean.parseBoolean(testArgs.get(4)));
 
-                assertEquals(expectedArgs.get(0),activityTest.getName());
+                assertEquals(expectedArgs.get(0),activityTest.getDisplayName());
                 assertEquals(Integer.parseInt(expectedArgs.get(1)),activityTest.getSuccessPoints());
                 assertEquals(Integer.parseInt(expectedArgs.get(2)),activityTest.getFailurePoints());
                 assertEquals(Integer.parseInt(expectedArgs.get(3)),activityTest.getPowerCost());
@@ -96,15 +96,15 @@ class ActivityTest {
         Activity activityTest2 = new Activity("test", 1, 5, 5, true);
 
         // Checks if both activities are done. Expected is that both are NOT done.
-        assertFalse(activityTest1.isActivityDone());
-        assertFalse(activityTest2.isActivityDone());
+        assertFalse(activityTest1.isDone());
+        assertFalse(activityTest2.isDone());
 
         // Sets activity 1 to done.
-        activityTest1.setActivityDone();
+        activityTest1.setAsDone();
 
         // Checks if both activities are done.
         // Activity 1 is expected to be done. Activity 2 is not.
-        assertTrue(activityTest1.isActivityDone());
-        assertFalse(activityTest2.isActivityDone());
-    }
+        assertTrue(activityTest1.isDone());
+        assertFalse(activityTest2.isDone());
+    }*/
 }

@@ -35,7 +35,7 @@ public class Inventory {
         StringBuilder inventoryString = new StringBuilder();
 
         for (Item item : listOfItems) {
-            inventoryString.append(String.format(" - %s\n", item.getName()));
+            inventoryString.append(String.format(" - %s\n", item.displayName()));
         }
 
         return inventoryString.toString();

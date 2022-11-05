@@ -16,7 +16,7 @@ import java.util.Collections;
 import static org.junit.jupiter.api.Assertions.*;
 
 class InventoryTest {
-
+/*
     Activity activity;
     Appliance appliance;
     Item item1;
@@ -75,5 +75,5 @@ class InventoryTest {
         inventory.addItem(item2);
         inventory.addItem(item2);
         assertEquals(inventory.isEmpty(), false);
-    }
+    }*/
 }

@@ -12,20 +12,20 @@ public enum Actions {
     HELP("help"),
     INVENTORY("inventory"),
     PICKUP("pickup"),
-    ACTIVITYS("activities"),
+    ACTIVITIES("activities"),
     IMLOST("imlost"),
     POWER("power"),
     USE("use"),
     UNKNOWN("?");
-    
+
     // The action string.
     private String actionName;
-    
+
     // The constructor for each enum constant.
     Actions(String actionsString) {
         this.actionName = actionsString;
     }
-    
+
     // Returns action string.
     @Override
     public String toString() {

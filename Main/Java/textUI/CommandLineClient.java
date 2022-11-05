@@ -11,7 +11,6 @@ import worldOfZuul.Main.Java.Actions;
 import worldOfZuul.Main.Java.Game;
 
 /**
- *
  * @author ancla
  */
 public class CommandLineClient {
@@ -85,20 +84,20 @@ public class CommandLineClient {
             System.out.println("\nYour inventory contains: ");
             System.out.println(game.getInventory());
         } else if (commandWord == Actions.PICKUP) { // PICKUP COMMAND
-            if(game.pickupItem(command)) {
+            if (game.pickupItem(command)) {
                 System.out.println("\nThis item has been added to your inventory!");
             } else {
                 System.out.println("\nThat item does not exist in this room...");
             }
-        } else if (commandWord == Actions.ACTIVITYS) { // ACTIVITYS COMMAND
-            System.out.println("\nYou are still missing the following activitys:");
+        } else if (commandWord == Actions.ACTIVITIES) { // ACTIVITIES COMMAND
+            System.out.println("\nYou are still missing the following activities:");
             System.out.println(game.getActivity());
         } else if (commandWord == Actions.IMLOST) { // IMLOST COMMAND
             System.out.println(game.getRoomDescription());
         } else if (commandWord == Actions.POWER) { // POWER COMMAND
-            System.out.println("\nYour power is " +game.getPower());
+            System.out.println("\nYour power is " + game.getPower());
         } else if (commandWord == Actions.USE) { // USE COMMAND
-            Game.getInstance().getPlayer().use(command);
+            //Game.getInstance().getPlayer().use(command);
         }
 
         return wantToQuit;

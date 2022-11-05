@@ -1,26 +1,28 @@
 package worldOfZuul.Main.Java.Classes;
-import worldOfZuul.Main.Java.Room;
+
 
 public class Appliance {
-    private final String name; // Name of the appliance
-    private final Room roomReference; // Room the appliance is inside
-    private final Activity activityReference; // Reference to associated activity
+    private String id;
+    private String displayName;
+    private String activityId;
 
-    public Appliance(String name, Room roomReference, Activity activityReference) {
-        this.name = name;
-        this.roomReference = roomReference;
-        this.activityReference = activityReference;
+
+    public Appliance(String id, String displayName, String activityId) {
+        this.id = id;
+        this.displayName = displayName;
+        this.activityId = activityId;
     }
 
-    public String getName() {
-        return name;
+
+    public String getId() {
+        return id;
     }
 
-    public Room getRoomReference() {
-        return roomReference;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public Activity getActivityReference() {
-        return activityReference;
+    public String getActivityId() {
+        return activityId;
     }
 }
