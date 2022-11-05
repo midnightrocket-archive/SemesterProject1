@@ -29,6 +29,6 @@ public enum Actions {
     // Returns action string.
     @Override
     public String toString() {
-        return actionName;
+        return this.actionName;
     }
 }

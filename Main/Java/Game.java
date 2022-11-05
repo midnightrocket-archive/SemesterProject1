@@ -1,10 +1,8 @@
 package worldOfZuul.Main.Java;
 
 import worldOfZuul.Main.Java.Classes.*;
-import worldOfZuul.Main.Java.Classes.Utilities.ConfigLoader;
-import worldOfZuul.Main.Java.Classes.Utilities.Directions;
+import worldOfZuul.Main.Java.Classes.Utilities.Direction;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,8 +81,8 @@ public class Game {
     private void createRooms() {
         Room entrance = new Room("entrance", "Entrance", "at the entrance");
         Room hallway = new Room("hallway", "Hallway", "in the hallway");
-        entrance.addExit(Directions.SOUTH.toString(), hallway);
-        hallway.addExit(Directions.NORTH.toString(), entrance);
+        entrance.addExit(Direction.SOUTH, hallway);
+        hallway.addExit(Direction.NORTH, entrance);
         Item shoes = new Item("shoes", "Shoes");
         hallway.addItem(shoes);
 
@@ -100,7 +98,13 @@ public class Game {
             return false;
         }
 
-        String direction = command.getCommandValue();
+        Direction direction;
+
+        try {
+            direction = Direction.parse(command.getCommandValue());
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
 
         Room nextRoom = currentRoom.getExit(direction);
 

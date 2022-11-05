@@ -31,7 +31,7 @@ public class CommandLineClient {
 
         // The main loop. If this loop stops, the game stops.
         while (!finished) {
-            // parser takes user input and returns a Command object that constains command enum and command string.
+            // parser takes user input and returns a Command object that contains command enum and command string.
             Command command = parser.getCommand();
             finished = processCommand(command); // finished is true, if "wantToQuit" becomes true.
         }

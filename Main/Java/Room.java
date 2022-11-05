@@ -3,6 +3,7 @@ package worldOfZuul.Main.Java;
 import worldOfZuul.Main.Java.Classes.Activity;
 import worldOfZuul.Main.Java.Classes.Appliance;
 import worldOfZuul.Main.Java.Classes.Item;
+import worldOfZuul.Main.Java.Classes.Utilities.Direction;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -15,7 +16,7 @@ public class Room {
     private final String id;
 
 
-    private HashMap<String, Room> exits = new HashMap<String, Room>();
+    private HashMap<Direction, Room> exits = new HashMap<Direction, Room>();
     private HashMap<String, Appliance> roomAppliances = new HashMap<>();
     private HashMap<String, Item> roomItems = new HashMap<>();
 
@@ -50,8 +51,8 @@ public class Room {
     private String exitsToString() {
         StringBuilder stringBuilder = new StringBuilder("Exits:\n");
 
-        for (Map.Entry<String, Room> exit : this.exits.entrySet()) {
-            String direction = exit.getKey();
+        for (Map.Entry<Direction, Room> exit : this.exits.entrySet()) {
+            Direction direction = exit.getKey();
             Room nextRoom = exit.getValue();
             stringBuilder.append(String.format(" - %s: '%s'\n", direction, nextRoom.getDisplayName()));
         }
@@ -60,11 +61,11 @@ public class Room {
     }
 
     // Sets an exit for a room
-    public void addExit(String direction, Room neighbor) {
+    public void addExit(Direction direction, Room neighbor) {
         this.exits.put(direction, neighbor);
     }
 
-    public Room getExit(String direction) {
+    public Room getExit(Direction direction) {
         return this.exits.get(direction);
     }
 
