@@ -1,16 +1,11 @@
 package worldOfZuul.Main.Java.Classes;
 
-import worldOfZuul.Main.Java.Game;
-
 import java.util.ArrayList;
 
 public class ActivityManager {
     private ArrayList<Activity> noneDailyActivities;
 
     private ArrayList<Activity> dailyActivities;
-
-
-
 
 
     private static void prettyFormatActivityList(StringBuilder stringBuilder, ArrayList<Activity> arrayList) {
@@ -20,7 +15,6 @@ public class ActivityManager {
     }
 
 
-
     // Constructor
     public ActivityManager() {
         this.noneDailyActivities = new ArrayList<Activity>();
@@ -28,8 +22,7 @@ public class ActivityManager {
     }
 
 
-
-    public void addActivity(Activity activity) {
+    public void add(Activity activity) {
         if (activity.isDaily()) {
             this.dailyActivities.add(activity);
         } else {
@@ -37,7 +30,7 @@ public class ActivityManager {
         }
     }
 
-    public void removeActivity(Activity activity) {
+    public void remove(Activity activity) {
         if (activity.isDaily()) {
             this.dailyActivities.remove(activity);
         } else {
@@ -86,12 +79,30 @@ public class ActivityManager {
     }
 
 
+    public int getDailyPowerRequirement() {
+        int total = 0;
+        for (Activity activity : this.dailyActivities) {
+            total += activity.getPowerCost();
+        }
+        return total;
+    }
+
+    public ArrayList<Integer> getExtraPowerLevels() {
+        ArrayList<Integer> extra = new ArrayList<Integer>();
+        for (Activity activity : this.noneDailyActivities) {
+            extra.add(activity.getPowerCost());
+        }
+        return extra;
+    }
+
+
     public ArrayList<Activity> getAllActivities() {
         ArrayList<Activity> arrayList = new ArrayList<Activity>();
         arrayList.addAll(this.dailyActivities);
         arrayList.addAll(this.noneDailyActivities);
         return arrayList;
     }
+
     public String dailyActivitiesToString() {
         if (this.dailyActivities.isEmpty()) {
             return "There are no more daily activities.";
@@ -103,6 +114,7 @@ public class ActivityManager {
 
         return stringBuilder.toString();
     }
+
     public String noneDailyActivitiesToString() {
         if (this.noneDailyActivities.isEmpty()) {
             return "There are no additional activities.";

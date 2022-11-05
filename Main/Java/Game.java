@@ -37,11 +37,11 @@ public class Game {
 
         this.maxDays = 7;
 
-        this.defaultPower = this.calcDefaultPower();
+        this.defaultPower = activityManager.getDailyPowerRequirement();
 
         this.day = 0;
 
-        this.makeExtraPowerList();
+        this.extraPowerList = activityManager.getExtraPowerLevels();
         this.power = defaultPower;
         this.points = 0;
 
@@ -55,28 +55,6 @@ public class Game {
         return instance;
     }
 
-    // Calculates daily minimum power
-    private int calcDefaultPower() {
-        ArrayList<Activity> activities = activityManager.getAllActivities();
-        int tempPower = 0;
-        for (Activity activity : activities) {
-            if (activity.isDaily()) {
-                tempPower += activity.getPowerCost();
-            }
-        }
-        return tempPower;
-    }
-
-    // Makes list of "extra" activities' power costs
-    private void makeExtraPowerList() {
-        ArrayList<Activity> activities = activityManager.getAllActivities();
-        // Make list of extra power costs:
-        for (Activity activity : activities) {
-            if (!activity.isDaily()) {
-                this.extraPowerList.add(activity.getPowerCost());
-            }
-        }
-    }
 
     private void createRooms() {
         Room entrance = new Room("entrance", "Entrance", "at the entrance");
@@ -92,8 +70,8 @@ public class Game {
         Activity testDaily = new Activity("daily", "Daily", 1, 1, 1, true);
         Activity testNoneDaily = new Activity("none daily", "None Daily", 1, 1, 1, false);
         testNoneDaily.setAsDone();
-        this.activityManager.addActivity(testDaily);
-        this.activityManager.addActivity(testNoneDaily);
+        this.activityManager.add(testDaily);
+        this.activityManager.add(testNoneDaily);
 
         // Also setting the current room to the entrance
         currentRoom = entrance;
