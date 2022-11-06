@@ -7,12 +7,20 @@ import worldOfZuul.Main.Java.Game;
 import java.util.ArrayList;
 
 public class Player {
-    Room currentRoom;
-    Inventory inventoryReference;
+    private static Player instance = null;
 
-    public Player(Inventory inventory) {
-        this.inventoryReference = inventory;
+    private Player() {
+        // Nothing is needed when instantiating.
     }
+
+    public static Player getInstance() {
+        if (instance == null) {
+            instance = new Player();
+        }
+
+        return instance;
+    }
+
 
     /*
      * If string matches an appliance in CurrentRoom, which has a complete-able activity "attached", and all criteria
@@ -25,16 +33,21 @@ public class Player {
         Appliance applianceInUse;
 
         Item item = new Item("PlaceholderItem", new Appliance("PlaceholderAppliance",
-                new Room("PlaceholderRoom"), new Activity("PlaceholderActivity",0,
-                0,0, false))); // Placeholder item that will be replaced in inventory-search loop.
+                new Room("PlaceholderRoom"), new Activity("PlaceholderActivity", 0,
+                0, 0, false))); // Placeholder item that will be replaced in inventory-search loop.
 
         Activity activity;
 
         applianceName = command.getCommandValue();
         // Checks whether the argument passed is a valid appliance name, and if that appliance has an active activity.
-        if (currentRoom.getAppliance(applianceName).getActivityReference() == null) {
-            System.out.println("\nNo appliance of that name has an activity to do in this room.");
+        if (currentRoom.getAppliance(applianceName) == null) {
+            System.out.println("\nThat appliance does not exist.");
             return;
+        } else {
+            if (currentRoom.getAppliance(applianceName).getActivityReference() == null) {
+                System.out.println("\nNo appliance of that name has an activity to do in this room.");
+                return;
+            }
         }
 
         applianceInUse = currentRoom.getAppliance(applianceName);
@@ -44,8 +57,7 @@ public class Player {
         if (activity.isActivityDone()) {
             if (activity.isDaily()) {
                 System.out.println("\nThis activity has already been performed today. Try again tomorrow.");
-            }
-            else {
+            } else {
                 System.out.println("\nThis activity has already been performed this week.");
             }
 
@@ -87,14 +99,14 @@ public class Player {
     }
 
     public void addItemToInventory(Item item) {
-        inventoryReference.addItem(item);
+        Inventory.getInstance().addItem(item);
     }
 
     public void removeItemFromInventory(Item item) {
-        inventoryReference.removeItem(item);
+        Inventory.getInstance().removeItem(item);
     }
 
     public ArrayList<Item> getInventory() {
-        return inventoryReference.getInventoryList();
+        return Inventory.getInstance().getInventoryList();
     }
 }

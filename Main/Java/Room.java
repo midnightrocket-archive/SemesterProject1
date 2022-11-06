@@ -1,4 +1,5 @@
 package worldOfZuul.Main.Java;
+
 import worldOfZuul.Main.Java.Classes.Activity;
 import worldOfZuul.Main.Java.Classes.Appliance;
 import worldOfZuul.Main.Java.Classes.Item;
@@ -49,7 +50,7 @@ public class Room {
         String returnString = "Exits:\n";
         Set<String> keys = exits.keySet();
 
-        for(String exit : keys) {
+        for (String exit : keys) {
             returnString += " - " + exit + "\n";
         }
 
@@ -81,6 +82,10 @@ public class Room {
     }
 
     public Appliance getAppliance(String applianceKey) {
+        if (roomAppliances.get(applianceKey) == null) {
+            return null;
+        }
+
         return roomAppliances.get(applianceKey);
     }
 
@@ -95,6 +100,7 @@ public class Room {
         }
         return appliancesString;
     }
+
     public Item getItem(String itemKey) {
         return roomItems.get(itemKey);
     }

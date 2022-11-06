@@ -1,21 +1,26 @@
 package worldOfZuul.Main.Java.Classes;
 
 import worldOfZuul.Main.Java.Game;
+
 import java.util.ArrayList;
 
 public class ActivityManager {
 
+    private static ActivityManager instance;
     public ArrayList<Activity> listOfActivities;
 
-    // Constructor WITH a list as input
-    public ActivityManager(ArrayList<Activity> listOfActivities) {
+    private ActivityManager(ArrayList<Activity> listOfActivities) {
         this.listOfActivities = listOfActivities;
     }
 
-    // Constructor WITHOUT a list as input
-    public ActivityManager() {
-        this(new ArrayList<>());
+    public static ActivityManager getInstance() {
+        if (instance == null) {
+            instance = new ActivityManager(new ArrayList<>());
+        }
+
+        return instance;
     }
+
 
     public void addActivity(Activity activity) {
         listOfActivities.add(activity);
@@ -23,6 +28,10 @@ public class ActivityManager {
 
     public void removeActivity(Activity activity) {
         listOfActivities.remove(activity);
+    }
+
+    public void clearActivities() {
+        listOfActivities.clear();
     }
 
     public void addPoints(Activity activity) {

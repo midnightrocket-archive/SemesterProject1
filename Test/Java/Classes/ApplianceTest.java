@@ -23,7 +23,6 @@ class ApplianceTest {
         appliance = new Appliance("Test 1", room, activity);
     }
 
-
     @Test
     @DisplayName("Test Appliance - GetActivityReference")
     public void testGetActivityReference() {

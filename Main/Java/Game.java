@@ -1,4 +1,5 @@
 package worldOfZuul.Main.Java;
+
 import worldOfZuul.Main.Java.Classes.*;
 
 import java.util.ArrayList;
@@ -14,25 +15,16 @@ public class Game {
     private int points;
     private Room currentRoom;
     private ValidActions commands; // holds all valid commands
-    private Inventory inventory;
     private int maxDays;
     private ArrayList<Integer> extraPowerList = new ArrayList<>();
-    private ActivityManager activityManager = new ActivityManager(); // Placeholder object, until "real one" has been created.
-    private Player player;
-
 
     private Game() {
         this.commands = new ValidActionsImplementation();
-        this.inventory = new Inventory();
-        this.activityManager = new ActivityManager();
-        this.player = new Player(inventory);
 
         this.maxDays = 7;
-
-        this.defaultPower = calcDefaultPower();
-
         this.day = 0;
 
+        this.defaultPower = calcDefaultPower();
         makeExtraPowerList();
         this.power = defaultPower;
         this.points = 0;
@@ -51,9 +43,9 @@ public class Game {
     // Calculates daily minimum power
     private int calcDefaultPower() {
         int tempPower = 0;
-        for(int i = 0; i < activityManager.listOfActivities.size(); i++){
-            if(activityManager.listOfActivities.get(i).isDaily()){
-                tempPower += activityManager.listOfActivities.get(i).getPowerCost();
+        for (int i = 0; i < ActivityManager.getInstance().listOfActivities.size(); i++) {
+            if (ActivityManager.getInstance().listOfActivities.get(i).isDaily()) {
+                tempPower += ActivityManager.getInstance().listOfActivities.get(i).getPowerCost();
             }
         }
         return tempPower;
@@ -62,9 +54,9 @@ public class Game {
     // Makes list of "extra" activities' power costs
     private void makeExtraPowerList() {
         // Make list of extra power costs:
-        for(int i = 0; i < activityManager.listOfActivities.size(); i++){
-            if(!activityManager.listOfActivities.get(i).isDaily()){
-                extraPowerList.add(activityManager.listOfActivities.get(i).getPowerCost());
+        for (int i = 0; i < ActivityManager.getInstance().listOfActivities.size(); i++) {
+            if (!ActivityManager.getInstance().listOfActivities.get(i).isDaily()) {
+                extraPowerList.add(ActivityManager.getInstance().listOfActivities.get(i).getPowerCost());
             }
         }
     }
@@ -80,7 +72,7 @@ public class Game {
                 doWork;
 
         Appliance hairdryer, washingMachine, dryer,
-                oven, dishwasher, kettel,
+                oven, dishwasher, kettle,
                 tv, gameConsole, computer, computer_work;
 
         Item dirtyCloths, wetCloths, ovenFood,
@@ -130,7 +122,7 @@ public class Game {
         dryHair = new Activity("Dry hair", 1, 1, 1, false);
         washCloths = new Activity("Wash cloths", 1, 1, 1, false);
         dryCloths = new Activity("Dry cloths", 1, 1, 1, false);
-        makeFood = new Activity("Make food", 1, 1, 1, false);
+        makeFood = new Activity("Make food", 1, 1, 1, true);
         washDishes = new Activity("Wash dishes", 1, 1, 1, false);
         boilWater = new Activity("Boil water", 1, 1, 1, false);
         watchTV = new Activity("Watch TV", 1, 1, 1, false);
@@ -138,17 +130,16 @@ public class Game {
         playPCGames = new Activity("Play PC games", 1, 1, 1, false);
         doWork = new Activity("Do work", 1, 1, 1, false);
 
-        activityManager.addActivity(dryHair);
-        activityManager.addActivity(washCloths);
-        activityManager.addActivity(dryCloths);
-        activityManager.addActivity(makeFood);
-        activityManager.addActivity(washDishes);
-        activityManager.addActivity(boilWater);
-        activityManager.addActivity(watchTV);
-        activityManager.addActivity(playConsoleGames);
-        activityManager.addActivity(playPCGames);
-        activityManager.addActivity(doWork);
-
+        ActivityManager.getInstance().addActivity(dryHair);
+        ActivityManager.getInstance().addActivity(washCloths);
+        ActivityManager.getInstance().addActivity(dryCloths);
+        ActivityManager.getInstance().addActivity(makeFood);
+        ActivityManager.getInstance().addActivity(washDishes);
+        ActivityManager.getInstance().addActivity(boilWater);
+        ActivityManager.getInstance().addActivity(watchTV);
+        ActivityManager.getInstance().addActivity(playConsoleGames);
+        ActivityManager.getInstance().addActivity(playPCGames);
+        ActivityManager.getInstance().addActivity(doWork);
 
 
         // Adding all appliances to their rooms
@@ -157,7 +148,7 @@ public class Game {
         dryer = laundryRoom.createAppliance("dryer", dryCloths);
         oven = kitchen.createAppliance("oven", makeFood);
         dishwasher = kitchen.createAppliance("dishwasher", washDishes);
-        kettel = kitchen.createAppliance("kettel", boilWater);
+        kettle = kitchen.createAppliance("kettle", boilWater);
         tv = livingRoom.createAppliance("tv", watchTV);
         gameConsole = livingRoom.createAppliance("game_console", playConsoleGames);
         computer = homeOffice.createAppliance("computer", playPCGames);
@@ -194,6 +185,7 @@ public class Game {
             return true;
         }
     }
+
     public boolean pickupItem(Command command) {
 
         if (!command.hasCommandValue()) {
@@ -212,7 +204,7 @@ public class Game {
         Item itemInRoom = currentRoom.getItem(item);
 
         currentRoom.removeItem(itemInRoom.getName());
-        inventory.addItem(itemInRoom);
+        Inventory.getInstance().addItem(itemInRoom);
 
         return true; // command succeeded
     }
@@ -228,16 +220,16 @@ public class Game {
     public int getRandomExtraPower() {
         int dailyExtra = 0;
 
-        if(isLastDay()){
-            for(int i = 0; i < extraPowerList.size(); i++){
+        if (isLastDay()) {
+            for (int i = 0; i < extraPowerList.size(); i++) {
                 dailyExtra += extraPowerList.size();
             }
             extraPowerList.clear();
             return dailyExtra;
         }
-        
-        for(int i = 0; i < extraPowerList.size(); i++){
-            if(Math.random()*7 >= 6){
+
+        for (int i = 0; i < extraPowerList.size(); i++) {
+            if (Math.random() * 7 >= 6) {
                 dailyExtra += extraPowerList.get(i);
                 extraPowerList.remove(i);
                 i -= 1; // If the current list-item is removed, the list will get one object "smaller".
@@ -255,12 +247,8 @@ public class Game {
         return currentRoom.getAppliancesString();
     }
 
-    public String getInventory() {
-        return inventory.toString();
-    }
-
-    public String getActivity() {
-        return activityManager.toString();
+    public ActivityManager getActivity() {
+        return ActivityManager.getInstance();
     }
 
     public Room getCurrentRoom() {
@@ -325,7 +313,7 @@ public class Game {
     public int getPoints() {
         return points;
     }
-    
+
     // Method for setting the points value
     public void setPoints(int n) {
         this.points = n;
@@ -338,8 +326,8 @@ public class Game {
 
     // Attempt at making day system
     public boolean daySystem() {
-        for (int i = 0; i < activityManager.listOfActivities.size(); i++) {
-            if (!activityManager.listOfActivities.get(i).isActivityDone()) {
+        for (int i = 0; i < ActivityManager.getInstance().listOfActivities.size(); i++) {
+            if (!ActivityManager.getInstance().listOfActivities.get(i).isActivityDone()) {
                 return false;
             }
         }
@@ -347,9 +335,5 @@ public class Game {
         setPower(defaultPower + getRandomExtraPower());
         System.out.println("Your power is " + getPower());
         return true;
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 }

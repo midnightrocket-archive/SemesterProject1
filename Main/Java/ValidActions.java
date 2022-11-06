@@ -10,5 +10,5 @@ public interface ValidActions {
     boolean isAction(String aString);
 
     List<String> getActionWords();
-    
+
 }
