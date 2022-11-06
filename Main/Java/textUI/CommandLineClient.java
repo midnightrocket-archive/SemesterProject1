@@ -7,7 +7,7 @@
 package worldOfZuul.Main.Java.textUI;
 
 import worldOfZuul.Main.Java.Command;
-import worldOfZuul.Main.Java.Actions;
+import worldOfZuul.Main.Java.Action;
 import worldOfZuul.Main.Java.Game;
 
 /**
@@ -43,21 +43,19 @@ public class CommandLineClient {
     private void printWelcome() {
         System.out.println("\nWelcome to the Semesterproject 1 game!");
         System.out.println("In this game, your mission is to use your power efficiently.");
-        System.out.println("To get started, use the \"" + Actions.HELP + "\" command. Good luck!\n");
+        System.out.println("To get started, use the \"" + Action.HELP + "\" command. Good luck!\n");
         System.out.println(game.getRoomDescription());
     }
 
     private void printHelp() {
-        for (String str : game.getCommandDescriptions()) {
-            System.out.println(" - " + str);
-        }
+        System.out.println(Action.allValidToString());
     }
 
     // Controller
     public boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
-        Actions commandWord = command.getCommandName(); // holds command enum
+        Action commandWord = command.getCommandName(); // holds command enum
 
 
         switch (commandWord) {

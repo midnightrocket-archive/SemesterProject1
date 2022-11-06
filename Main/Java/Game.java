@@ -4,7 +4,6 @@ import worldOfZuul.Main.Java.Classes.*;
 import worldOfZuul.Main.Java.Utilities.Direction;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class Game {
 
@@ -15,7 +14,6 @@ public class Game {
     private int defaultPower; // can maybe be changed into a constant value
     private int points;
     private Room currentRoom;
-    private ValidActions commands; // holds all valid commands
     private Inventory inventory;
     private int maxDays;
     private ArrayList<Integer> extraPowerList = new ArrayList<>();
@@ -26,7 +24,6 @@ public class Game {
 
 
     private Game() {
-        this.commands = new ValidActionsImplementation();
         this.activityManager = new ActivityManager();
         //loader = new ConfigLoader(this.activityManager);
 
@@ -176,22 +173,13 @@ public class Game {
         return currentRoom;
     }
 
-    // Returns a CommandWords object which holds all valid commands.
-    public ValidActions getCommands() {
-        return commands;
-    }
-
-    // Returns List<String> of all valid command strings.
-    public List<String> getCommandDescriptions() {
-        return commands.getActionWords();
-    }
 
     /* This is used in the Parser class and takes the user input as arguments.
      * commands.getCommand(word1) returns the corresponding command enum to the first word in the user input.
      * Then returns a Command object with the evaluated enum and the command string.
      */
     public Command getCommand(String word1, String word2) {
-        return new CommandImplementation(commands.getAction(word1), word2);
+        return new CommandImplementation(Action.parse(word1), word2);
     }
 
     // Method for adding points
