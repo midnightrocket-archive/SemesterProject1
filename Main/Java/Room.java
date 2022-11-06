@@ -42,7 +42,7 @@ public class Room {
     }
 
     public void removeItem(String itemId) {
-        this.roomItems.remove(itemId);
+        this.roomItems.removeByAlias(itemId);
     }
 
     public boolean hasItem(String itemName) {
