@@ -14,7 +14,7 @@ public class Game {
     private int defaultPower; // can maybe be changed into a constant value
     private int points;
     private Room currentRoom;
-    private Inventory inventory;
+
     private int maxDays;
     private ArrayList<Integer> extraPowerList = new ArrayList<>();
     private ActivityManager activityManager = new ActivityManager(); // Placeholder object, until "real one" has been created.
@@ -27,7 +27,6 @@ public class Game {
         this.activityManager = new ActivityManager();
         //loader = new ConfigLoader(this.activityManager);
 
-        this.inventory = new Inventory();
 
         this.player = new Player("Tim");
         //this.player.addInventory(inventory);
@@ -110,15 +109,15 @@ public class Game {
 
         String item = command.getCommandValue();
 
-        if (!currentRoom.hasItem(item)) {
+        if (!this.currentRoom.hasItem(item)) {
             // item is not in room.
             return false;
         }
 
-        Item itemInRoom = currentRoom.getItem(item);
+        Item itemInRoom = this.currentRoom.getItem(item);
 
-        currentRoom.removeItem(itemInRoom.id());
-        inventory.add(itemInRoom);
+        this.currentRoom.removeItem(itemInRoom.id());
+        this.player.addItem(itemInRoom);
 
         return true; // command succeeded
     }
@@ -154,23 +153,23 @@ public class Game {
     }
 
     public String getRoomDescription() {
-        return currentRoom.getLongDescription();
+        return this.currentRoom.getLongDescription();
     }
 
     public String getAppliancesInRoom() {
-        return currentRoom.appliancesToString();
+        return this.currentRoom.appliancesToString();
     }
 
     public String getInventory() {
-        return inventory.toString();
+        return this.player.inventoryToString();
     }
 
     public String getActivity() {
-        return activityManager.toString();
+        return this.activityManager.toString();
     }
 
     public Room getCurrentRoom() {
-        return currentRoom;
+        return this.currentRoom;
     }
 
 
