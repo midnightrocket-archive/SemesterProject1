@@ -1,9 +1,6 @@
 package worldOfZuul.Main.Java.Utilities;
 
-import worldOfZuul.Main.Java.Classes.Activity;
-import worldOfZuul.Main.Java.Classes.ActivityManager;
-import worldOfZuul.Main.Java.Classes.Appliance;
-import worldOfZuul.Main.Java.Classes.Item;
+import worldOfZuul.Main.Java.Classes.*;
 import worldOfZuul.Main.Java.Room;
 
 import java.io.*;
@@ -29,7 +26,7 @@ public class ConfigLoader {
 
     private HashMap<String, Room> roomsHashMap = new HashMap<String, Room>();
     private HashMap<String, Appliance> appliancesHashMap = new HashMap<String, Appliance>();
-    private HashMap<String, Item> itemsHashMap = new HashMap<String, Item>();
+    private Inventory itemsStore = new Inventory();
     private ActivityManager activityManager = new ActivityManager();
 
 
@@ -168,7 +165,7 @@ public class ConfigLoader {
             String displayName = properties.getProperty("displayName");
 
             Item object = new Item(id, displayName);
-            this.itemsHashMap.put(id, object);
+            this.itemsStore.add(object);
         }
     }
 
@@ -217,7 +214,7 @@ public class ConfigLoader {
             String itemId = roomProperties.getProperty("itemId");
 
             if (!itemId.equals(ConfigLoader.NONE_KEYWORD)) {
-                Item item = this.itemsHashMap.get(itemId);
+                Item item = this.itemsStore.getByAlias(itemId);
                 roomObject.addItem(item);
             }
 
@@ -228,9 +225,9 @@ public class ConfigLoader {
                 roomObject.addAppliance(appliance);
             }
 
-            System.out.println(roomObject.getLongDescription());
+            //System.out.println(roomObject.getLongDescription());
         }
-        System.out.println(this.roomsHashMap);
+        //System.out.println(this.roomsHashMap);
     }
 
     private void setExitsInRoom(Room room, Properties properties) {
@@ -250,6 +247,10 @@ public class ConfigLoader {
 
     public ActivityManager getActivityManager() {
         return this.activityManager;
+    }
+
+    public Inventory getItemsStore() {
+        return this.itemsStore;
     }
 
 }

@@ -22,11 +22,11 @@ public class Game {
     private ActivityManager activityManager = new ActivityManager(); // Placeholder object, until "real one" has been created.
     private Player player;
 
-    //private ConfigLoader loader;
+    private final ConfigLoader configs;
 
 
     private Game() throws IOException {
-        ConfigLoader configs = new ConfigLoader();
+        configs = new ConfigLoader();
 
         this.activityManager = configs.getActivityManager();
 
@@ -177,7 +177,52 @@ public class Game {
         return this.currentRoom;
     }
 
+    public boolean useCommand(Command command) {
+        Appliance appliance = this.currentRoom.getAppliance(command.getCommandValue());
+        if (appliance == null){
+            System.out.printf("You can't use '%s'\n", command.getCommandValue());
+            return false;
+        }
 
+        String itemId = appliance.getItemId();
+        String activityId = appliance.getActivityId();
+        Activity activity = this.activityManager.getAllActivities().getByAlias(activityId);
+
+        // Using early returns, instead of if else. To avoid big if-else nesting.
+
+        if (activity.isDone()) {
+            System.out.println("You have already done that activity :-)");
+            return false;
+        }
+
+
+        if (this.power < activity.getPowerCost()) {
+            System.out.println("You don't have enough power :-(");
+            System.out.printf("This activity requires %d power \n", activity.getPowerCost());
+            return false;
+        }
+
+
+        if (!itemId.equals("none")) {
+            Item item = this.player.getItem(itemId);
+            if (item == null) {
+
+                Item referenceItem = this.configs.getItemsStore().getByAlias(itemId);
+                //Load referenceItem, so its displayName can be used to tell the use what item is missing.
+
+                System.out.printf("You don't have '%s' in your inventory\n", referenceItem.displayName());
+                return false;
+            }
+
+            this.player.removeItem(item);
+            System.out.printf("'%s' have been removed from your inventory\n", item.displayName());
+        }
+
+        this.removePower(activity.getPowerCost());
+        activity.setAsDone();
+        System.out.printf("You have finished activity '%s' \n", activity.getDisplayName());
+        return true;
+    }
 
     // Method for adding points
     public void addPoints(int pointsToAdd) {

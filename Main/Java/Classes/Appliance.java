@@ -34,6 +34,6 @@ public class Appliance implements Aliasable {
     }
 
     public String getItemId() {
-        return this.getItemId();
+        return this.itemId;
     }
 }

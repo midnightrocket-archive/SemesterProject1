@@ -27,27 +27,7 @@ public class Room {
         this.description = description;
     }
 
-    // Adds an appliance to a room
-    public void addAppliance(Appliance appliance) {
-        this.roomAppliances.add(appliance);
-    }
 
-    public boolean hasAppliance(String applianceId) {
-        return this.roomAppliances.containsByAlias(applianceId);
-    }
-
-    // Adds an item to a room
-    public void addItem(Item item) {
-        this.roomItems.add(item);
-    }
-
-    public void removeItem(String itemId) {
-        this.roomItems.removeByAlias(itemId);
-    }
-
-    public boolean hasItem(String itemName) {
-        return this.roomItems.containsByAlias(itemName);
-    }
 
     private String exitsToString() {
         StringBuilder stringBuilder = new StringBuilder("Exits:\n");
@@ -72,11 +52,6 @@ public class Room {
     public Room getExit(Direction direction) {
         return this.exits.get(direction);
     }
-
-    /*public Activity getApplianceActivity(Appliance appliance) {
-        return appliance.getActivityReference();
-    }*/
-
     public String getShortDescription() {
         return this.description;
     }
@@ -88,9 +63,19 @@ public class Room {
                 "\n" + exitsToString();
     }
 
-    public Appliance getAppliance(String applianceId) {
-        return this.roomAppliances.getByAlias(applianceId);
+    // Adds an appliance to a room
+    public void addAppliance(Appliance appliance) {
+        this.roomAppliances.add(appliance);
     }
+
+    public boolean hasAppliance(String alias) {
+        return this.roomAppliances.containsByAlias(alias);
+    }
+
+    public Appliance getAppliance(String alias) {
+        return this.roomAppliances.getByAlias(alias);
+    }
+
 
     public String appliancesToString() {
         //Guard clause
@@ -104,6 +89,20 @@ public class Room {
         }
 
         return stringBuilder.toString();
+    }
+
+
+    // Adds an item to a room
+    public void addItem(Item item) {
+        this.roomItems.add(item);
+    }
+
+    public void removeItem(String alias) {
+        this.roomItems.removeByAlias(alias);
+    }
+
+    public boolean hasItem(String itemName) {
+        return this.roomItems.containsByAlias(itemName);
     }
 
     public Item getItem(String itemId) {

@@ -35,6 +35,10 @@ public class Player {
         return this.inventory.remove(item);
     }
 
+    public Item getItem(String alias) {
+        return this.inventory.getByAlias(alias);
+    }
+
     public String inventoryToString() {
         return this.inventory.toString();
     }

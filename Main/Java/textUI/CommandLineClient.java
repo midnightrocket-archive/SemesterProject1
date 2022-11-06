@@ -75,7 +75,7 @@ public class CommandLineClient {
 
                 break;
             case USE:
-                //Missing implementation
+                game.useCommand(command);
                 break;
             case QUIT:
                 if (game.quit(command)) {
