@@ -1,6 +1,8 @@
 package worldOfZuul.Main.Java.Classes;
 
-public class Activity {
+import worldOfZuul.Main.Java.Interfaces.Aliasable;
+
+public class Activity implements Aliasable {
     private final String id;
     private final String displayName; // The name of the activity. Will show up in possible activities.
     private final boolean daily; // Determines if the task is daily (Daily=true, non-daily=false)
@@ -86,6 +88,11 @@ public class Activity {
         } else {
             return "not done";
         }
+    }
+
+    public boolean hasAlias(String alias) {
+        alias = alias.toLowerCase().trim();
+        return alias.equals(this.id.toLowerCase()) || alias.equals(this.displayName.toLowerCase());
     }
 
     @Override

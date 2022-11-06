@@ -1,7 +1,8 @@
 package worldOfZuul.Main.Java.Classes;
 
+import worldOfZuul.Main.Java.Interfaces.Aliasable;
 
-public class Appliance {
+public class Appliance implements Aliasable {
     private String id;
     private String displayName;
     private String activityId;
@@ -15,6 +16,10 @@ public class Appliance {
         this.itemId = itemId;
     }
 
+    public boolean hasAlias(String alias) {
+        alias = alias.toLowerCase().trim();
+        return alias.equals(this.id.toLowerCase()) || alias.equals(this.displayName.toLowerCase());
+    }
 
     public String getId() {
         return id;

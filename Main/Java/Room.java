@@ -1,6 +1,7 @@
 package worldOfZuul.Main.Java;
 
 import worldOfZuul.Main.Java.Classes.Appliance;
+import worldOfZuul.Main.Java.Classes.Inventory;
 import worldOfZuul.Main.Java.Classes.Item;
 import worldOfZuul.Main.Java.Utilities.Direction;
 
@@ -17,7 +18,7 @@ public class Room {
 
     private HashMap<Direction, Room> exits = new HashMap<Direction, Room>();
     private HashMap<String, Appliance> roomAppliances = new HashMap<>();
-    private HashMap<String, Item> roomItems = new HashMap<>();
+    private Inventory roomItems = new Inventory();
 
     public Room(String id, String displayName, String description) {
         this.id = id;
@@ -36,7 +37,7 @@ public class Room {
 
     // Adds an item to a room
     public void addItem(Item item) {
-        this.roomItems.put(item.id(), item);
+        this.roomItems.add(item);
     }
 
     public void removeItem(String itemId) {
@@ -44,7 +45,7 @@ public class Room {
     }
 
     public boolean hasItem(String itemName) {
-        return this.roomItems.containsKey(itemName);
+        return this.roomItems.containsByAlias(itemName);
     }
 
     private String exitsToString() {
@@ -106,22 +107,11 @@ public class Room {
     }
 
     public Item getItem(String itemId) {
-        return this.roomItems.get(itemId);
+        return this.roomItems.getByAlias(itemId);
     }
 
     public String itemsToString() {
-        //Guard clause
-        if (this.roomItems.isEmpty()) return "This room has no items.\n";
-
-
-        StringBuilder stringBuilder = new StringBuilder("In this room you can find: \n");
-
-        for (Map.Entry<String, Item> itemEntry : this.roomItems.entrySet()) {
-            Item item = itemEntry.getValue();
-            stringBuilder.append(String.format(" - %s\n", item.displayName()));
-        }
-
-        return stringBuilder.toString();
+        return this.roomItems.toString();
     }
 
     public String getDisplayName() {

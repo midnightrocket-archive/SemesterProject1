@@ -1,15 +1,17 @@
 package worldOfZuul.Main.Java.Classes;
 
+import worldOfZuul.Main.Java.Classes.ReferenceContainer;
+
 import java.util.ArrayList;
 
 public class ActivityManager {
-    private ArrayList<Activity> noneDailyActivities;
+    private ReferenceContainer<Activity> noneDailyActivities;
 
-    private ArrayList<Activity> dailyActivities;
+    private ReferenceContainer<Activity> dailyActivities;
 
 
-    private static void prettyFormatActivityList(StringBuilder stringBuilder, ArrayList<Activity> arrayList) {
-        for (Activity activity : arrayList) {
+    private static void prettyFormatActivityList(StringBuilder stringBuilder, ReferenceContainer<Activity> container) {
+        for (Activity activity : container) {
             stringBuilder.append(String.format(" - %s \t %s\n", activity.getDisplayName(), activity.doneToString()));
         }
     }
@@ -17,8 +19,8 @@ public class ActivityManager {
 
     // Constructor
     public ActivityManager() {
-        this.noneDailyActivities = new ArrayList<Activity>();
-        this.dailyActivities = new ArrayList<Activity>();
+        this.noneDailyActivities = new ReferenceContainer<Activity>();
+        this.dailyActivities = new ReferenceContainer<Activity>();
     }
 
 
@@ -51,8 +53,8 @@ public class ActivityManager {
         return true;
     }
 
-    public ArrayList<Activity> getMissingDailyActivities() {
-        ArrayList<Activity> output = new ArrayList<Activity>();
+    public ReferenceContainer<Activity> getMissingDailyActivities() {
+        ReferenceContainer<Activity> output = new ReferenceContainer<Activity>();
         for (Activity activity : this.dailyActivities) {
             if (!activity.isDone()) {
                 output.add(activity);
@@ -61,8 +63,8 @@ public class ActivityManager {
         return output;
     }
 
-    public ArrayList<Activity> getMissingNoneDailyActivities() {
-        ArrayList<Activity> output = new ArrayList<Activity>();
+    public ReferenceContainer<Activity> getMissingNoneDailyActivities() {
+        ReferenceContainer<Activity> output = new ReferenceContainer<Activity>();
         for (Activity activity : this.noneDailyActivities) {
             if (!activity.isDone()) {
                 output.add(activity);
@@ -71,8 +73,8 @@ public class ActivityManager {
         return output;
     }
 
-    public ArrayList<Activity> getAllMissingActivities() {
-        ArrayList<Activity> output = new ArrayList<Activity>();
+    public ReferenceContainer<Activity> getAllMissingActivities() {
+        ReferenceContainer<Activity> output = new ReferenceContainer<Activity>();
         output.addAll(this.getMissingDailyActivities());
         output.addAll(this.getMissingNoneDailyActivities());
         return output;
@@ -96,11 +98,11 @@ public class ActivityManager {
     }
 
 
-    public ArrayList<Activity> getAllActivities() {
-        ArrayList<Activity> arrayList = new ArrayList<Activity>();
-        arrayList.addAll(this.dailyActivities);
-        arrayList.addAll(this.noneDailyActivities);
-        return arrayList;
+    public ReferenceContainer<Activity> getAllActivities() {
+        ReferenceContainer<Activity> container = new ReferenceContainer<Activity>();
+        container.addAll(this.dailyActivities);
+        container.addAll(this.noneDailyActivities);
+        return container;
     }
 
     public String dailyActivitiesToString() {

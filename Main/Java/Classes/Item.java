@@ -1,8 +1,10 @@
 package worldOfZuul.Main.Java.Classes;
 
+import worldOfZuul.Main.Java.Interfaces.Aliasable;
+
 /**
  * @param id                 Name of the item
- * @param applianceReference Reference to the associated appliance
+ * @param displayName Reference to the associated appliance
  */
 /*
  * Using record
@@ -12,5 +14,9 @@ package worldOfZuul.Main.Java.Classes;
  * getter methods for each property is automatically generated.
  * *NOTE* the getter methods are named exactly the same as the property they refer to.
  */
-public record Item(String id, String displayName) {
+public record Item(String id, String displayName) implements Aliasable {
+    public boolean hasAlias(String alias) {
+        alias = alias.toLowerCase().trim();
+        return alias.equals(this.id.toLowerCase()) || alias.equals(this.displayName.toLowerCase());
+    }
 }
