@@ -165,11 +165,11 @@ public class Game {
         return this.currentRoom.appliancesToString();
     }
 
-    public String getInventory() {
+    public String inventoryToString() {
         return this.player.inventoryToString();
     }
 
-    public String getActivity() {
+    public String activitiesToString() {
         return this.activityManager.toString();
     }
 

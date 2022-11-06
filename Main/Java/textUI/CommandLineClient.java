@@ -87,7 +87,7 @@ public class CommandLineClient {
                 break;
             case INVENTORY:
                 System.out.println("\nYour inventory contains: ");
-                System.out.println(game.getInventory());
+                System.out.println(game.inventoryToString());
 
                 break;
             case PICKUP:
@@ -100,7 +100,7 @@ public class CommandLineClient {
                 break;
             case ACTIVITIES:
                 System.out.println("\nYou are still missing the following activities:");
-                System.out.println(game.getActivity());
+                System.out.println(game.activitiesToString());
 
                 break;
             case IMLOST:
