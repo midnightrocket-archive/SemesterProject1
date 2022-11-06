@@ -6,10 +6,11 @@
 
 package worldOfZuul.Main.Java.textUI;
 
-import java.util.Scanner;
-
+import worldOfZuul.Main.Java.Action;
 import worldOfZuul.Main.Java.Command;
-import worldOfZuul.Main.Java.Game;
+import worldOfZuul.Main.Java.CommandImplementation;
+
+import java.util.Scanner;
 
 public class Parser {
     private final Scanner reader;
@@ -18,25 +19,29 @@ public class Parser {
         this.reader = new Scanner(System.in);
     }
 
+    public String getRawInput(String prompt) {
+        System.out.print(prompt); // print prompt
+        return reader.nextLine(); // Returns whole line, when user presses enter.
+    }
+    public String getRawInput() { // Using default prompt
+        return this.getRawInput("> ");
+    }
+
     public Command getCommand() {
-        String inputLine; // holds the full input line
+
         String word1 = null;
-        String word2 = null;
+        String commandValue = null;
 
-        System.out.print("> "); // print prompt
-
-        inputLine = reader.nextLine(); // Asks for the next line
 
         // Find up to two words on the line. The rest of the input line is ignored.
-        Scanner tokenizer = new Scanner(inputLine);
+        Scanner tokenizer = new Scanner(this.getRawInput());
         if (tokenizer.hasNext()) {
             word1 = tokenizer.next().toLowerCase(); // get first word and lower case it for command processing
             if (tokenizer.hasNext()) {
-                word2 = tokenizer.nextLine().toLowerCase().strip();  // get the second word and lower case it for command processing
-                //System.out.println(word2);
+                commandValue = tokenizer.nextLine().strip(); // get the value for the command
             }
         }
 
-        return Game.getInstance().getCommand(word1, word2);
+        return new CommandImplementation(Action.parse(word1), commandValue);
     }
 }

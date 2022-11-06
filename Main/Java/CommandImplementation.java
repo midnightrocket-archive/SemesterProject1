@@ -21,7 +21,7 @@ package worldOfZuul.Main.Java;
 
 public class CommandImplementation implements Command {
 
-    private final Action commandName; // the first word in the command.
+    private final Action action; // the first word in the command.
     private final String commandValue; //the second word in the command.
 
     /*
@@ -31,15 +31,15 @@ public class CommandImplementation implements Command {
      * The second word aka the commandValue may be null if none is given.
      */
     public CommandImplementation(Action actionWord, String secondWord) {
-        this.commandName = actionWord;
+        this.action = actionWord;
         this.commandValue = secondWord;
     }
 
     // Returns the command enum
     // e.g. TAKE in "take map"
     @Override
-    public Action getCommandName() {
-        return commandName;
+    public Action getAction() {
+        return this.action;
     }
 
     // Returns the second word of the command.
@@ -47,18 +47,18 @@ public class CommandImplementation implements Command {
     // Returns null if there was no second word given.
     @Override
     public String getCommandValue() {
-        return commandValue;
+        return this.commandValue;
     }
 
     // Returns true if a second word is given as input.
     @Override
     public boolean hasCommandValue() {
-        return (commandValue != null);
+        return (this.commandValue != null);
     }
 
     // Returns true if the command enum is not valid.
     @Override
     public boolean isUnknown() {
-        return (commandName == Action.UNKNOWN);
+        return (this.action == Action.UNKNOWN);
     }
 }

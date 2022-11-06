@@ -55,10 +55,10 @@ public class CommandLineClient {
     public boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
-        Action commandWord = command.getCommandName(); // holds command enum
+        Action action = command.getAction(); // holds command enum
 
 
-        switch (commandWord) {
+        switch (action) {
             case HELP:
                 System.out.println("\nYou can use the following commands:");
                 printHelp();

@@ -173,13 +173,6 @@ public class Game {
     }
 
 
-    /* This is used in the Parser class and takes the user input as arguments.
-     * commands.getCommand(word1) returns the corresponding command enum to the first word in the user input.
-     * Then returns a Command object with the evaluated enum and the command string.
-     */
-    public Command getCommand(String word1, String word2) {
-        return new CommandImplementation(Action.parse(word1), word2);
-    }
 
     // Method for adding points
     public void addPoints(int pointsToAdd) {
