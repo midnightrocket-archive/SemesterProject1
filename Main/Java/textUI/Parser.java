@@ -7,6 +7,7 @@
 package worldOfZuul.Main.Java.textUI;
 
 import java.util.Scanner;
+
 import worldOfZuul.Main.Java.Command;
 import worldOfZuul.Main.Java.Game;
 
@@ -28,14 +29,14 @@ public class Parser {
 
         // Find up to two words on the line. The rest of the input line is ignored.
         Scanner tokenizer = new Scanner(inputLine);
-        if(tokenizer.hasNext()) {
+        if (tokenizer.hasNext()) {
             word1 = tokenizer.next().toLowerCase(); // get first word and lower case it for command processing
-            if(tokenizer.hasNext()) {
+            if (tokenizer.hasNext()) {
                 word2 = tokenizer.nextLine().toLowerCase().strip();  // get the second word and lower case it for command processing
                 //System.out.println(word2);
             }
         }
 
-        return Game.getInstance().getCommand(word1,word2);
+        return Game.getInstance().getCommand(word1, word2);
     }
 }

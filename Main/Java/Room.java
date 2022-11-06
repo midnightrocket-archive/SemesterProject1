@@ -3,6 +3,7 @@ package worldOfZuul.Main.Java;
 import worldOfZuul.Main.Java.Classes.Appliance;
 import worldOfZuul.Main.Java.Classes.Inventory;
 import worldOfZuul.Main.Java.Classes.Item;
+import worldOfZuul.Main.Java.Classes.ReferenceContainer;
 import worldOfZuul.Main.Java.Utilities.Direction;
 
 import java.util.Map;
@@ -17,7 +18,7 @@ public class Room {
 
 
     private HashMap<Direction, Room> exits = new HashMap<Direction, Room>();
-    private HashMap<String, Appliance> roomAppliances = new HashMap<>();
+    private ReferenceContainer<Appliance> roomAppliances = new ReferenceContainer<Appliance>();
     private Inventory roomItems = new Inventory();
 
     public Room(String id, String displayName, String description) {
@@ -28,11 +29,11 @@ public class Room {
 
     // Adds an appliance to a room
     public void addAppliance(Appliance appliance) {
-        this.roomAppliances.put(appliance.getId(), appliance);
+        this.roomAppliances.add(appliance);
     }
 
     public boolean hasAppliance(String applianceId) {
-        return this.roomAppliances.containsKey(applianceId);
+        return this.roomAppliances.containsByAlias(applianceId);
     }
 
     // Adds an item to a room
@@ -88,7 +89,7 @@ public class Room {
     }
 
     public Appliance getAppliance(String applianceId) {
-        return this.roomAppliances.get(applianceId);
+        return this.roomAppliances.getByAlias(applianceId);
     }
 
     public String appliancesToString() {
@@ -98,8 +99,7 @@ public class Room {
 
         StringBuilder stringBuilder = new StringBuilder("In this room you can use: \n");
 
-        for (Map.Entry<String, Appliance> applianceEntry : this.roomAppliances.entrySet()) {
-            Appliance appliance = applianceEntry.getValue();
+        for (Appliance appliance : this.roomAppliances) {
             stringBuilder.append(String.format(" - %s\n", appliance.getDisplayName()));
         }
 
