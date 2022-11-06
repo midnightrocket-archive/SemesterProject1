@@ -2,7 +2,7 @@ package worldOfZuul.Main.Java;
 
 import worldOfZuul.Main.Java.Classes.Appliance;
 import worldOfZuul.Main.Java.Classes.Item;
-import worldOfZuul.Main.Java.Classes.Utilities.Direction;
+import worldOfZuul.Main.Java.Utilities.Direction;
 
 import java.util.Map;
 import java.util.HashMap;

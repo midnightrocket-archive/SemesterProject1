@@ -1,7 +1,7 @@
 package worldOfZuul.Main.Java;
 
 import worldOfZuul.Main.Java.Classes.*;
-import worldOfZuul.Main.Java.Classes.Utilities.Direction;
+import worldOfZuul.Main.Java.Utilities.Direction;
 
 import java.util.ArrayList;
 import java.util.List;

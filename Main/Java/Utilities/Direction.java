@@ -1,4 +1,4 @@
-package worldOfZuul.Main.Java.Classes.Utilities;
+package worldOfZuul.Main.Java.Utilities;
 
 public enum Direction {
     NORTH,
