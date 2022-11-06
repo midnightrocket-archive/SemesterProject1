@@ -20,14 +20,18 @@ public class CommandLineClient {
     private Parser parser;
     private Game game;
 
-    public CommandLineClient() throws IOException {
-        game = Game.createInstance();
+    public CommandLineClient() {
         parser = new Parser();
     }
 
-    public void play() {
+    public void play() throws IOException{
+
+        game = Game.createInstance(this.greetPlayer());
+        parser.getRawInput("Press enter to continue\n> ");
+
         // Welcome message
         printWelcome();
+
 
         boolean finished = false;
 
@@ -42,10 +46,18 @@ public class CommandLineClient {
         // Game ends from here
     }
 
+    private String greetPlayer() {
+        String name = parser.getRawInput("Hello what is your name? ");
+        System.out.println();
+        System.out.printf("Hello %s nice to meet you!\nHope you are ready!\n", name);
+        return name;
+    }
+
     private void printWelcome() {
         System.out.println("\nWelcome to the Semesterproject 1 game!");
         System.out.println("In this game, your mission is to use your power efficiently.");
         System.out.println("To get started, use the \"" + Action.HELP + "\" command. Good luck!\n");
+        parser.getRawInput("Press enter to continue\n> ");
         System.out.println(game.getRoomDescription());
     }
 

@@ -25,7 +25,7 @@ public class Game {
     private final ConfigLoader configs;
 
 
-    private Game() throws IOException {
+    private Game(String name) throws IOException {
         configs = new ConfigLoader();
 
         this.activityManager = configs.getActivityManager();
@@ -33,8 +33,8 @@ public class Game {
         this.currentRoom = configs.getDefaultRoom();
 
 
-        this.player = new Player("Tim");
-        //this.player.addInventory(inventory);
+        this.player = new Player(name);
+
 
         this.maxDays = 7;
 
@@ -46,14 +46,13 @@ public class Game {
         this.power = defaultPower;
         this.points = 0;
 
-        //this.createRooms();
     }
 
-    public static Game createInstance() throws IOException {
+    public static Game createInstance(String name) throws IOException {
         if (Game.isInitialized) throw new IllegalStateException("Game is already initialized");
 
         Game.isInitialized = true;
-        return new Game();
+        return new Game(name);
     }
 
 
