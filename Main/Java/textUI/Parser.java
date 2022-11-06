@@ -32,7 +32,7 @@ public class Parser {
             word1 = tokenizer.next().toLowerCase(); // get first word and lower case it for command processing
             if(tokenizer.hasNext()) {
                 word2 = tokenizer.nextLine().toLowerCase().strip();  // get the second word and lower case it for command processing
-                System.out.println(word2);
+                //System.out.println(word2);
             }
         }
 

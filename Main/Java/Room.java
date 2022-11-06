@@ -111,7 +111,9 @@ public class Room {
     }
 
     public String itemsToString() {
-        return this.roomItems.toString();
+        String output = "In this room you can find: \n";
+
+        return output + this.roomItems.toString();
     }
 
     public String getDisplayName() {
