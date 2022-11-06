@@ -10,6 +10,8 @@ import worldOfZuul.Main.Java.Command;
 import worldOfZuul.Main.Java.Action;
 import worldOfZuul.Main.Java.Game;
 
+import java.io.IOException;
+
 /**
  * @author ancla
  */
@@ -18,8 +20,8 @@ public class CommandLineClient {
     private Parser parser;
     private Game game;
 
-    public CommandLineClient() {
-        game = Game.getInstance();
+    public CommandLineClient() throws IOException {
+        game = Game.createInstance();
         parser = new Parser();
     }
 

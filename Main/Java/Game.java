@@ -1,13 +1,15 @@
 package worldOfZuul.Main.Java;
 
 import worldOfZuul.Main.Java.Classes.*;
+import worldOfZuul.Main.Java.Utilities.ConfigLoader;
 import worldOfZuul.Main.Java.Utilities.Direction;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game {
 
-    private static Game instance = null;
+    private static boolean isInitialized = false;
 
     private int day;
     private int power;
@@ -23,9 +25,12 @@ public class Game {
     //private ConfigLoader loader;
 
 
-    private Game() {
-        this.activityManager = new ActivityManager();
-        //loader = new ConfigLoader(this.activityManager);
+    private Game() throws IOException {
+        ConfigLoader configs = new ConfigLoader();
+
+        this.activityManager = configs.getActivityManager();
+
+        this.currentRoom = configs.getDefaultRoom();
 
 
         this.player = new Player("Tim");
@@ -41,14 +46,14 @@ public class Game {
         this.power = defaultPower;
         this.points = 0;
 
-        this.createRooms();
+        //this.createRooms();
     }
 
-    public static Game getInstance() {
-        if (Game.instance == null) {
-            Game.instance = new Game();
-        }
-        return instance;
+    public static Game createInstance() throws IOException {
+        if (Game.isInitialized) throw new IllegalStateException("Game is already initialized");
+
+        Game.isInitialized = true;
+        return new Game();
     }
 
 
