@@ -219,6 +219,7 @@ public class Game {
 
         this.removePower(activity.getPowerCost());
         activity.setAsDone();
+        this.addPoints(activity.getSuccessPoints());
         System.out.printf("You have finished activity '%s' \n", activity.getDisplayName());
         return true;
     }
