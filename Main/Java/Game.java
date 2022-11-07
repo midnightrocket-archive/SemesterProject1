@@ -153,7 +153,7 @@ public class Game {
             return false;
         }
 
-        String activityId = appliance.getActivityId();
+        String activityId = appliance.activityId();
         Activity activity = this.activityManager.getAllActivities().getByAlias(activityId);
         String itemId = activity.getItemId();
 

@@ -85,7 +85,7 @@ public class Room {
         StringBuilder stringBuilder = new StringBuilder("In this room you can use: \n");
 
         for (Appliance appliance : this.roomAppliances) {
-            stringBuilder.append(String.format(" - %s\n", appliance.getDisplayName()));
+            stringBuilder.append(String.format(" - %s\n", appliance.displayName()));
         }
 
         return stringBuilder.toString();
