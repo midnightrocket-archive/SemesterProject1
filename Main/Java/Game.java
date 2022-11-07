@@ -39,7 +39,7 @@ public class Game {
         this.player = new Player(name);
 
 
-        this.maxDays = 1;
+        this.maxDays = 7;
         this.day = 0;
 
 
