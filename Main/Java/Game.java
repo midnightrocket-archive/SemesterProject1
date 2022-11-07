@@ -6,6 +6,7 @@ import worldOfZuul.Main.Java.Utilities.Direction;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Game {
 
@@ -42,10 +43,12 @@ public class Game {
         this.day = 0;
 
 
-
         this.defaultPower = activityManager.getDailyPowerRequirement();
         this.extraPowerList = activityManager.getExtraPowerLevels();
-        this.generatePowerForDay();
+
+        this.generateRandomPowerLevels(); //Random power levels for the whole game is precomputed.
+
+        this.getPowerForToday();
     }
 
     public static Game createInstance(String name) throws IOException {
@@ -134,26 +137,13 @@ public class Game {
     }
 
     // Returns a random int between 0 and the sum of extraPowerList. If last day, return remaining extra power.
-    public int getRandomExtraPower() {
-        int dailyExtra = 0;
-
-        if (isLastDay()) {
-            for (int i = 0; i < extraPowerList.size(); i++) {
-                dailyExtra += extraPowerList.size();
-            }
-            extraPowerList.clear();
-            return dailyExtra;
+    private void generateRandomPowerLevels() {
+        Random rand = new Random();
+        this.randomPowerLevels = new int[this.maxDays + 1];
+        for (int i : this.extraPowerList) {
+            this.randomPowerLevels[rand.nextInt(this.maxDays + 1)] += i;
         }
 
-        for (int i = 0; i < extraPowerList.size(); i++) {
-            if (Math.random() * 7 >= 6) {
-                dailyExtra += extraPowerList.get(i);
-                extraPowerList.remove(i);
-                i -= 1; // If the current list-item is removed, the list will get one object "smaller".
-            }
-        }
-
-        return dailyExtra;
     }
 
     public String getRoomDescription() {
@@ -178,7 +168,7 @@ public class Game {
 
     public boolean useCommand(Command command) {
         Appliance appliance = this.currentRoom.getAppliance(command.getCommandValue());
-        if (appliance == null){
+        if (appliance == null) {
             System.out.printf("You can't use '%s'\n", command.getCommandValue());
             return false;
         }
@@ -224,8 +214,6 @@ public class Game {
     }
 
 
-
-
     // Method for removing power
     public void removePower(int n) {
         this.power -= n;
@@ -264,14 +252,16 @@ public class Game {
     }
 
 
-    private void generatePowerForDay() {
-        this.power = this.defaultPower + this.getRandomExtraPower();
+    private void getPowerForToday() {
+        // Add defaultPower level with the random powerLevel of the current day
+        this.power = this.defaultPower + this.randomPowerLevels[this.getDay()];
     }
 
     private void advanceDay() {
         System.out.println(this.activityManager.missedDailyActivitiesToString());
-        this.day += 1;
         this.activityManager.settleDailyActivities();
+        this.day += 1;
+        this.getPowerForToday();
     }
 
     public boolean sleepCommand() {
@@ -289,6 +279,7 @@ public class Game {
         output.append(String.format("Your total points are %d", this.getPoints()));
         return output.toString();
     }
+
     public Player getPlayer() {
         return this.player;
     }
