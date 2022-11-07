@@ -11,6 +11,9 @@ public class Activity implements Aliasable {
     private int powerCost; // Amount of power required to complete the activity.
     private boolean done = false; // False if activity is not done, true if activity is done.
 
+    private int failedCounter = 0; //This is used to keep track of how many times an activity has been failed.
+    private int successCounter = 0;
+
     public Activity(String id, String displayName, int successPoints, int failurePoints, int powerCost, boolean daily) {
         this.id = id;
         this.displayName = displayName;
@@ -20,6 +23,49 @@ public class Activity implements Aliasable {
         this.setSuccessPoints(successPoints);
         this.setFailurePoints(failurePoints);
         this.setPowerCost(powerCost);
+    }
+
+    public int calculateResultingPoints() {
+        int totalSuccessPoints =  this.successCounter * this.successPoints;
+        int totalFailurePoints = this.failedCounter * this.failurePoints;
+        return totalSuccessPoints - totalFailurePoints;
+    }
+    public boolean isDaily() {
+        return this.daily;
+    }
+
+    public boolean isDone() {
+        return this.done;
+    }
+
+    public int setAsDone() {
+        if (!this.done) {
+            this.successCounter++;
+            this.done = true;
+        }
+        return this.successCounter;
+    }
+
+    // Settle, accounts for missing activities, and resets its done state back to false. Ready for stats or next day
+    public int settle() {
+        if (!this.done) {
+            this.failedCounter++;
+        }
+        this.done = false;
+        return this.failedCounter;
+    }
+
+    public String doneToString() {
+        if (this.done) {
+            return "done";
+        } else {
+            return "not done";
+        }
+    }
+
+    public boolean hasAlias(String alias) {
+        alias = alias.toLowerCase().trim();
+        return alias.equals(this.id.toLowerCase()) || alias.equals(this.displayName.toLowerCase());
     }
 
     public String getId() {
@@ -66,33 +112,11 @@ public class Activity implements Aliasable {
         }
     }
 
-    public boolean isDaily() {
-        return this.daily;
+    public int getFailedCounter() {
+        return this.failedCounter;
     }
-
-    public boolean isDone() {
-        return this.done;
-    }
-
-    public void setAsDone() {
-        this.setDoneState(true);
-    }
-
-    public void setDoneState(boolean state) {
-        this.done = state;
-    }
-
-    public String doneToString() {
-        if (this.done) {
-            return "done";
-        } else {
-            return "not done";
-        }
-    }
-
-    public boolean hasAlias(String alias) {
-        alias = alias.toLowerCase().trim();
-        return alias.equals(this.id.toLowerCase()) || alias.equals(this.displayName.toLowerCase());
+    public int getSuccessCounter() {
+        return this.successCounter;
     }
 
     @Override

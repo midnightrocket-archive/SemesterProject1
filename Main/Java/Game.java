@@ -12,13 +12,15 @@ public class Game {
     private static boolean isInitialized = false;
 
     private int day;
-    private int power;
-    private int defaultPower; // can maybe be changed into a constant value
-    private int points;
-    private Room currentRoom;
-
     private int maxDays;
-    private ArrayList<Integer> extraPowerList = new ArrayList<>();
+
+    private int defaultPower; // can maybe be changed into a constant value
+    private Room currentRoom;
+    private int power;
+    private ArrayList<Integer> extraPowerList;
+
+    private int[] randomPowerLevels;
+
     private ActivityManager activityManager = new ActivityManager(); // Placeholder object, until "real one" has been created.
     private Player player;
 
@@ -36,16 +38,14 @@ public class Game {
         this.player = new Player(name);
 
 
-        this.maxDays = 7;
-
-        this.defaultPower = activityManager.getDailyPowerRequirement();
-
+        this.maxDays = 1;
         this.day = 0;
 
-        this.extraPowerList = activityManager.getExtraPowerLevels();
-        this.power = defaultPower;
-        this.points = 0;
 
+
+        this.defaultPower = activityManager.getDailyPowerRequirement();
+        this.extraPowerList = activityManager.getExtraPowerLevels();
+        this.generatePowerForDay();
     }
 
     public static Game createInstance(String name) throws IOException {
@@ -219,20 +219,12 @@ public class Game {
 
         this.removePower(activity.getPowerCost());
         activity.setAsDone();
-        this.addPoints(activity.getSuccessPoints());
         System.out.printf("You have finished activity '%s' \n", activity.getDisplayName());
         return true;
     }
 
-    // Method for adding points
-    public void addPoints(int pointsToAdd) {
-        points += pointsToAdd;
-    }
 
-    // Method for removing points
-    public void removePoints(int n) {
-        this.points -= n;
-    }
+
 
     // Method for removing power
     public void removePower(int n) {
@@ -242,53 +234,62 @@ public class Game {
     // Method for checking last day
     public boolean isLastDay() {
         // Returns true, if day is higher than max days
-        return day > maxDays;
+        return this.day >= this.maxDays;
     }
 
     // Method for incrementing the day counter
     public void setNextDay() {
-        day += 1;
+        this.day += 1;
     }
 
     // Method for getting the power value
     public int getPower() {
-        return power;
+        return this.power;
     }
 
     // Method for setting the power value
-    public void setPower(int newPower) {
-        power = newPower;
+    public void setPower(int power) {
+        this.power = power;
     }
 
     // Method for getting the points value
     public int getPoints() {
-        return points;
+        return this.activityManager.calculatePoints();
     }
 
-    // Method for setting the points value
-    public void setPoints(int n) {
-        this.points = n;
-    }
 
     // Method for getting the day value
     public int getDay() {
-        return day;
+        return this.day;
     }
 
-    // Attempt at making day system
-    public boolean daySystem() {
-        for (int i = 0; i < activityManager.getAllActivities().size(); i++) {
-            if (!activityManager.getAllActivities().get(i).isDone()) {
-                return false;
-            }
+
+    private void generatePowerForDay() {
+        this.power = this.defaultPower + this.getRandomExtraPower();
+    }
+
+    private void advanceDay() {
+        System.out.println(this.activityManager.missedDailyActivitiesToString());
+        this.day += 1;
+        this.activityManager.settleDailyActivities();
+    }
+
+    public boolean sleepCommand() {
+        if (this.isLastDay()) {
+            return true;
         }
-        setNextDay();
-        setPower(defaultPower + getRandomExtraPower());
-        System.out.println("Your power is " + getPower());
-        return true;
+        this.advanceDay();
+        return false;
     }
 
+    public String generateGameStats() {
+        StringBuilder output = new StringBuilder();
+        output.append("This is an overview of your activities.");
+        output.append(this.activityManager.generateStats());
+        output.append(String.format("Your total points are %d", this.getPoints()));
+        return output.toString();
+    }
     public Player getPlayer() {
-        return player;
+        return this.player;
     }
 }

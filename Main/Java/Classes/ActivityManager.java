@@ -14,6 +14,11 @@ public class ActivityManager {
         }
     }
 
+    private static void prettyFormatStats(StringBuilder stringBuilder, ReferenceContainer<Activity> container) {
+        for (Activity activity : container) {
+            stringBuilder.append(String.format(" - %s \tYou finished it %d times. You missed it %d times\n", activity.getDisplayName(), activity.getSuccessCounter(), activity.getFailedCounter()));
+        }
+    }
 
     // Constructor
     public ActivityManager() {
@@ -21,7 +26,13 @@ public class ActivityManager {
         this.dailyActivities = new ReferenceContainer<Activity>();
     }
 
-
+    public int calculatePoints() {
+        int points = 0;
+        for (Activity activity : this.getAllActivities()) {
+            points += activity.calculateResultingPoints();
+        }
+        return points;
+    }
     public void add(Activity activity) {
         if (activity.isDaily()) {
             this.dailyActivities.add(activity);
@@ -38,14 +49,29 @@ public class ActivityManager {
         }
     }
 
-    public void resetAllDailyActivities() {
+
+    private void settleAllActivities() {
+        for (Activity activity : this.getAllActivities()) {
+            activity.settle();
+        }
+    }
+
+    // Settle daily activities. should be done at the end of day.
+    public void settleDailyActivities() {
         for (Activity activity : this.dailyActivities) {
-            activity.setDoneState(false);
+            activity.settle();
         }
     }
 
     public boolean areAllDone() {
         for (Activity activity : this.getAllActivities()) {
+            if (!activity.isDone()) return false;
+        }
+        return true;
+    }
+
+    public boolean areAllDailyDone() {
+        for (Activity activity : this.dailyActivities) {
             if (!activity.isDone()) return false;
         }
         return true;
@@ -105,7 +131,7 @@ public class ActivityManager {
 
     public String dailyActivitiesToString() {
         if (this.dailyActivities.isEmpty()) {
-            return "There are no more daily activities.";
+            return "There are no daily activities.";
         }
 
         StringBuilder stringBuilder = new StringBuilder("Your daily activities are:\n");
@@ -127,10 +153,56 @@ public class ActivityManager {
         return stringBuilder.toString();
     }
 
+    public String missedDailyActivitiesToString() {
+        if (this.areAllDailyDone()) {
+            return "You finished all your daily activities.\nBut are keeping up with your other activities?";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder("You missed these daily activities:\n");
+
+        ActivityManager.prettyFormatActivityList(stringBuilder, this.getMissingDailyActivities());
+
+        return stringBuilder.toString();
+    }
+
+    public String generateStatsForDaily() {
+        if (this.dailyActivities.isEmpty()) {
+            return "There were no daily activities.";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder("Your daily activities were:\n");
+
+        ActivityManager.prettyFormatStats(stringBuilder, this.dailyActivities);
+
+        return stringBuilder.toString();
+    }
+
+    public String generateStatsForNoneDaily() {
+        if (this.noneDailyActivities.isEmpty()) {
+            return "There were no additional activities.";
+        }
+
+        StringBuilder stringBuilder = new StringBuilder("Your additional activities were:\n");
+
+        ActivityManager.prettyFormatStats(stringBuilder, this.noneDailyActivities);
+
+        return stringBuilder.toString();
+    }
+    // For generating stats at end of game.
+    public String generateStats() {
+        this.settleAllActivities(); // Settle all activities before generating stat.
+        StringBuilder stringBuilder = new StringBuilder();
+
+        stringBuilder.append(this.generateStatsForDaily());
+        stringBuilder.append("\n");
+        stringBuilder.append(this.generateStatsForNoneDaily());
+
+        return stringBuilder.toString();
+    }
     @Override
     public String toString() {
         if (this.getAllActivities().isEmpty()) {
-            return "There are no more activities.";
+            return "There are no activities.";
         }
 
         StringBuilder stringBuilder = new StringBuilder();

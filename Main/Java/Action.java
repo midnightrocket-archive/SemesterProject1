@@ -16,13 +16,15 @@ public enum Action {
     IMLOST("imlost"),
     POWER("power"),
     USE("use"),
+    SLEEP("sleep"),
+    POINTS("points"),
     UNKNOWN("?");
 
     public static Action parse(String string) {
-        string = string.trim().toUpperCase(); //Format string so it is parsable by valueOf
         try {
+            string = string.trim().toUpperCase(); //Format string so it is parsable by valueOf
             return Action.valueOf(string);
-        } catch (IllegalArgumentException exception) {
+        } catch (IllegalArgumentException | NullPointerException exception) {
             //If string is not found then, return UNKNOWN.
             return Action.UNKNOWN;
         }

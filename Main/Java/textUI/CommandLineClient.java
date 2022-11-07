@@ -27,7 +27,7 @@ public class CommandLineClient {
     public void play() throws IOException{
 
         game = Game.createInstance(this.greetPlayer());
-        parser.getRawInput("Press enter to continue\n> ");
+        parser.getRawInput("Press enter to continue> ");
 
         // Welcome message
         printWelcome();
@@ -41,6 +41,8 @@ public class CommandLineClient {
             Command command = parser.getCommand();
             finished = processCommand(command); // finished is true, if "wantToQuit" becomes true.
         }
+
+        System.out.println(game.generateGameStats());
 
         System.out.println("\nThank you for playing.   Goodbye.");
         // Game ends from here
@@ -57,7 +59,7 @@ public class CommandLineClient {
         System.out.println("\nWelcome to the Semesterproject 1 game!");
         System.out.println("In this game, your mission is to use your power efficiently.");
         System.out.println("To get started, use the \"" + Action.HELP + "\" command. Good luck!\n");
-        parser.getRawInput("Press enter to continue\n> ");
+        parser.getRawInput("Press enter to continue> ");
         System.out.println(game.getRoomDescription());
     }
 
@@ -122,6 +124,21 @@ public class CommandLineClient {
             case POWER:
                 System.out.println("\nYour power is " + game.getPower());
 
+                break;
+            case SLEEP:
+                if (game.sleepCommand()) {
+                    System.out.println("This was your last day. Well done. Here are some stats for you:");
+                    wantToQuit = true;
+                } else {
+                    System.out.printf("Goodnight %s \n", game.getPlayer().getName());
+                    parser.getRawInput("Press enter to wake up> ");
+                    System.out.printf("Good morning! Day %d\n", game.getDay());
+                    System.out.printf("A new day means new power levels, run '%s' to see how much power you have today\n", Action.POWER);
+                    System.out.println(game.getPower());
+                }
+                break;
+            case POINTS:
+                System.out.printf("You have %d points\n", game.getPoints());
                 break;
             case UNKNOWN:
             default:
