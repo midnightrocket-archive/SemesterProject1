@@ -3,35 +3,19 @@ package worldOfZuul.Main.Java.Classes;
 import java.util.ArrayList;
 
 public class ActivityManager {
-    private ReferenceContainer<Activity> noneDailyActivities;
+    private ActivityContainer noneDailyActivities;
 
-    private ReferenceContainer<Activity> dailyActivities;
+    private ActivityContainer dailyActivities;
 
-
-    private static void prettyFormatActivityList(StringBuilder stringBuilder, ReferenceContainer<Activity> container) {
-        for (Activity activity : container) {
-            stringBuilder.append(String.format(" - %s \t %s\n", activity.getDisplayName(), activity.doneToString()));
-        }
-    }
-
-    private static void prettyFormatStats(StringBuilder stringBuilder, ReferenceContainer<Activity> container) {
-        for (Activity activity : container) {
-            stringBuilder.append(String.format(" - %s \tYou finished it %d times. You missed it %d times\n", activity.getDisplayName(), activity.getSuccessCounter(), activity.getFailedCounter()));
-        }
-    }
 
     // Constructor
     public ActivityManager() {
-        this.noneDailyActivities = new ReferenceContainer<Activity>();
-        this.dailyActivities = new ReferenceContainer<Activity>();
+        this.noneDailyActivities = new ActivityContainer();
+        this.dailyActivities = new ActivityContainer();
     }
 
     public int calculatePoints() {
-        int points = 0;
-        for (Activity activity : this.getAllActivities()) {
-            points += activity.calculateResultingPoints();
-        }
-        return points;
+        return this.getAllActivities().calculatePoints();
     }
     public void add(Activity activity) {
         if (activity.isDaily()) {
@@ -51,89 +35,56 @@ public class ActivityManager {
 
 
     private void settleAllActivities() {
-        for (Activity activity : this.getAllActivities()) {
-            activity.settle();
-        }
+        this.getAllActivities().settleAll();
     }
 
     // Settle daily activities. should be done at the end of day.
     public void settleDailyActivities() {
-        for (Activity activity : this.dailyActivities) {
-            activity.settle();
-        }
+        this.dailyActivities.settleAll();
     }
 
     public boolean areAllDone() {
-        for (Activity activity : this.getAllActivities()) {
-            if (!activity.isDone()) return false;
-        }
-        return true;
+        return this.getAllActivities().areAllDone();
     }
 
     public boolean areAllDailyDone() {
-        for (Activity activity : this.dailyActivities) {
-            if (!activity.isDone()) return false;
-        }
-        return true;
+        return this.dailyActivities.areAllDone();
     }
 
-    public ReferenceContainer<Activity> getMissingDailyActivities() {
-        ReferenceContainer<Activity> output = new ReferenceContainer<Activity>();
-        for (Activity activity : this.dailyActivities) {
-            if (!activity.isDone()) {
-                output.add(activity);
-            }
-        }
-        return output;
+    public ActivityContainer getMissingDailyActivities() {
+        return this.dailyActivities.getMissingActivities();
     }
 
-    public ReferenceContainer<Activity> getMissingNoneDailyActivities() {
-        ReferenceContainer<Activity> output = new ReferenceContainer<Activity>();
-        for (Activity activity : this.noneDailyActivities) {
-            if (!activity.isDone()) {
-                output.add(activity);
-            }
-        }
-        return output;
+    public ActivityContainer getMissingNoneDailyActivities() {
+        return this.noneDailyActivities.getMissingActivities();
     }
 
-    public ReferenceContainer<Activity> getAllMissingActivities() {
-        ReferenceContainer<Activity> output = new ReferenceContainer<Activity>();
-        output.addAll(this.getMissingDailyActivities());
-        output.addAll(this.getMissingNoneDailyActivities());
-        return output;
+    public ActivityContainer getAllMissingActivities() {
+        return this.getAllActivities().getMissingActivities();
     }
 
 
     public int getDailyPowerRequirement() {
-        int total = 0;
-        for (Activity activity : this.dailyActivities) {
-            total += activity.getPowerCost();
-        }
-        return total;
+        return this.dailyActivities.calculatePowerRequirements();
     }
 
     public ArrayList<Integer> getExtraPowerLevels() {
-        ArrayList<Integer> extra = new ArrayList<Integer>();
-        for (Activity activity : this.noneDailyActivities) {
-            extra.add(activity.getPowerCost());
-        }
-        return extra;
+        return this.noneDailyActivities.getPowerLevels();
     }
 
 
-    public ReferenceContainer<Activity> getAllActivities() {
-        ReferenceContainer<Activity> container = new ReferenceContainer<Activity>();
+    public ActivityContainer getAllActivities() {
+        ActivityContainer container = new ActivityContainer();
         container.addAll(this.dailyActivities);
         container.addAll(this.noneDailyActivities);
         return container;
     }
 
-    public ReferenceContainer<Activity> getAllDailyActivities() {
+    public ActivityContainer getAllDailyActivities() {
         return this.dailyActivities;
     }
 
-    public ReferenceContainer<Activity> getAllNonDailyActivities() {
+    public ActivityContainer getAllNonDailyActivities() {
         return this.noneDailyActivities;
     }
 
@@ -144,7 +95,7 @@ public class ActivityManager {
 
         StringBuilder stringBuilder = new StringBuilder("Your daily activities are:\n");
 
-        ActivityManager.prettyFormatActivityList(stringBuilder, this.dailyActivities);
+        stringBuilder.append(this.dailyActivities.toString());
 
         return stringBuilder.toString();
     }
@@ -156,7 +107,7 @@ public class ActivityManager {
 
         StringBuilder stringBuilder = new StringBuilder("Your additional activities are:\n");
 
-        ActivityManager.prettyFormatActivityList(stringBuilder, this.noneDailyActivities);
+        stringBuilder.append(this.noneDailyActivities.toString());
 
         return stringBuilder.toString();
     }
@@ -168,7 +119,7 @@ public class ActivityManager {
 
         StringBuilder stringBuilder = new StringBuilder("You missed these daily activities:\n");
 
-        ActivityManager.prettyFormatActivityList(stringBuilder, this.getMissingDailyActivities());
+        stringBuilder.append(this.getMissingDailyActivities().toString());
 
         return stringBuilder.toString();
     }
@@ -180,7 +131,7 @@ public class ActivityManager {
 
         StringBuilder stringBuilder = new StringBuilder("Your daily activities were:\n");
 
-        ActivityManager.prettyFormatStats(stringBuilder, this.dailyActivities);
+        stringBuilder.append(this.dailyActivities.generateStats());
 
         return stringBuilder.toString();
     }
@@ -192,7 +143,7 @@ public class ActivityManager {
 
         StringBuilder stringBuilder = new StringBuilder("Your additional activities were:\n");
 
-        ActivityManager.prettyFormatStats(stringBuilder, this.noneDailyActivities);
+        stringBuilder.append(this.noneDailyActivities.generateStats());
 
         return stringBuilder.toString();
     }
