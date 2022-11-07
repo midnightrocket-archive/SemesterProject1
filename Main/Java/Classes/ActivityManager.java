@@ -129,6 +129,14 @@ public class ActivityManager {
         return container;
     }
 
+    public ReferenceContainer<Activity> getAllDailyActivities() {
+        return this.dailyActivities;
+    }
+
+    public ReferenceContainer<Activity> getAllNonDailyActivities() {
+        return this.noneDailyActivities;
+    }
+
     public String dailyActivitiesToString() {
         if (this.dailyActivities.isEmpty()) {
             return "There are no daily activities.";

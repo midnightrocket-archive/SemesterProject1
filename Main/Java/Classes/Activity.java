@@ -5,6 +5,7 @@ import worldOfZuul.Main.Java.Interfaces.Aliasable;
 public class Activity implements Aliasable {
     private final String id;
     private final String displayName; // The name of the activity. Will show up in possible activities.
+    private final String itemId;
     private final boolean daily; // Determines if the task is daily (Daily=true, non-daily=false)
     private int successPoints; // Positive number for number of points to receive when completing the activity.
     private int failurePoints; // Positive number to subtract from points when not completing or failing the activity.
@@ -14,10 +15,11 @@ public class Activity implements Aliasable {
     private int failedCounter = 0; //This is used to keep track of how many times an activity has been failed.
     private int successCounter = 0;
 
-    public Activity(String id, String displayName, int successPoints, int failurePoints, int powerCost, boolean daily) {
+    public Activity(String id, String displayName, int successPoints, int failurePoints, int powerCost, boolean daily, String itemId) {
         this.id = id;
         this.displayName = displayName;
         this.daily = daily;
+        this.itemId = itemId;
 
         // successPoint, failurePoint and powerCost uses another method, which makes sure that all the values non-negative.
         this.setSuccessPoints(successPoints);
@@ -119,6 +121,9 @@ public class Activity implements Aliasable {
         return this.successCounter;
     }
 
+    public String getItemId() {
+        return this.itemId;
+    }
     @Override
     public String toString() {
         return String.format("'%s' power=%d %s", this.displayName, this.getPowerCost(), this.doneToString());

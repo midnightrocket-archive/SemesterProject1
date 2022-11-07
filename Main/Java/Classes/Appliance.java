@@ -6,14 +6,12 @@ public class Appliance implements Aliasable {
     private String id;
     private String displayName;
     private String activityId;
-    private String itemId;
 
 
-    public Appliance(String id, String displayName, String activityId, String itemId) {
+    public Appliance(String id, String displayName, String activityId) {
         this.id = id;
         this.displayName = displayName;
         this.activityId = activityId;
-        this.itemId = itemId;
     }
 
     public boolean hasAlias(String alias) {
@@ -31,9 +29,5 @@ public class Appliance implements Aliasable {
 
     public String getActivityId() {
         return activityId;
-    }
-
-    public String getItemId() {
-        return this.itemId;
     }
 }

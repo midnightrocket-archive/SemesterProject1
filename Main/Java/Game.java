@@ -59,26 +59,6 @@ public class Game {
     }
 
 
-    private void createRooms() {
-        Room entrance = new Room("entrance", "Entrance", "at the entrance");
-        Room hallway = new Room("hallway", "Hallway", "in the hallway");
-        entrance.setExit(Direction.NORTH, hallway);
-        Item shoes = new Item("shoesTest", "Shoes test");
-        hallway.addItem(shoes);
-
-        Appliance washer = new Appliance("washer", "Washing Machine", "washClothes", "dirtyClothes");
-
-        hallway.addAppliance(washer);
-
-        Activity testDaily = new Activity("daily", "Daily", 1, 1, 1, true);
-        Activity testNoneDaily = new Activity("none daily", "None Daily", 1, 1, 1, false);
-        testNoneDaily.setAsDone();
-        this.activityManager.add(testDaily);
-        this.activityManager.add(testNoneDaily);
-
-        // Also setting the current room to the entrance
-        currentRoom = entrance;
-    }
 
     public boolean goRoom(Command command) {
 
@@ -173,9 +153,9 @@ public class Game {
             return false;
         }
 
-        String itemId = appliance.getItemId();
         String activityId = appliance.getActivityId();
         Activity activity = this.activityManager.getAllActivities().getByAlias(activityId);
+        String itemId = activity.getItemId();
 
         // Using early returns, instead of if else. To avoid big if-else nesting.
 
