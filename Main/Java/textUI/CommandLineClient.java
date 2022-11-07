@@ -132,6 +132,7 @@ public class CommandLineClient {
                 } else {
                     System.out.printf("Goodnight %s \n", game.getPlayer().getName());
                     parser.getRawInput("Press enter to wake up> ");
+                    System.out.println();
                     System.out.printf("Good morning! Day %d\n", game.getDay());
                     System.out.printf("A new day means new power levels, run '%s' to see how much power you have today\n", Action.POWER);
                 }

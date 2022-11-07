@@ -3,10 +3,12 @@ package worldOfZuul.Main.Java.Utilities;
 import worldOfZuul.Main.Java.Classes.*;
 import worldOfZuul.Main.Java.Room;
 
-import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FilenameFilter;
+import java.io.IOException;
+import java.util.*;
 
 public class ConfigLoader {
     private static final String NONE_KEYWORD = "none";
@@ -150,9 +152,9 @@ public class ConfigLoader {
             Properties properties = this.readProperties(ConfigLoader.APPLIANCES_DIR_PATH, n);
             String displayName = properties.getProperty("displayName");
             String activityId = properties.getProperty("activityId");
-            String itemId = properties.getProperty("itemId");
 
-            Appliance object = new Appliance(id, displayName, activityId, itemId);
+
+            Appliance object = new Appliance(id, displayName, activityId);
             this.appliancesHashMap.put(id, object);
         }
     }
@@ -179,8 +181,9 @@ public class ConfigLoader {
             int failurePoints = Integer.parseInt(properties.getProperty("failurePoints"));
             int powerCost = Integer.parseInt(properties.getProperty("powerCost"));
             boolean daily = Boolean.parseBoolean(properties.getProperty("daily"));
+            String itemId = properties.getProperty("itemId");
 
-            Activity object = new Activity(id, displayName, successPoints, failurePoints, powerCost, daily);
+            Activity object = new Activity(id, displayName, successPoints, failurePoints, powerCost, daily, itemId);
             this.activityManager.add(object);
         }
     }
@@ -253,4 +256,17 @@ public class ConfigLoader {
         return this.itemsStore;
     }
 
+    public void repopulateDailyNeededItems() {
+        Collection<Room> roomsCollection = this.roomsHashMap.values();
+        int numberOfRooms = roomsCollection.size();
+        Room[] roomsArray = roomsCollection.toArray(new Room[numberOfRooms]);
+        Random random = new Random();
+
+        for (Activity a : this.activityManager.getAllDailyActivities()) {
+            String itemId = a.getItemId();
+            Item item = this.itemsStore.getByAlias(itemId);
+
+            roomsArray[random.nextInt(numberOfRooms)].addItem(item);
+        }
+    }
 }

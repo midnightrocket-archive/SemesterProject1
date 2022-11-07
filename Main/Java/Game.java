@@ -241,6 +241,7 @@ public class Game {
         System.out.println(this.activityManager.missedDailyActivitiesToString());
         this.activityManager.settleDailyActivities();
         this.day += 1;
+        this.configs.repopulateDailyNeededItems();
         this.getPowerForToday();
     }
 
