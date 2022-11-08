@@ -21,7 +21,6 @@ public class ActivityManager {
         return instance;
     }
 
-
     public void addActivity(Activity activity) {
         listOfActivities.add(activity);
     }
