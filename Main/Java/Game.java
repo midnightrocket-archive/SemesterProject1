@@ -23,13 +23,12 @@ public class Game {
 
         this.maxDays = 7;
         this.day = 0;
+        createRooms();
 
         this.defaultPower = calcDefaultPower();
         makeExtraPowerList();
         this.power = defaultPower;
         this.points = 0;
-
-        createRooms();
     }
 
     public static Game getInstance() {
@@ -73,7 +72,7 @@ public class Game {
 
         Appliance hairdryer, washingMachine, dryer,
                 oven, dishwasher, kettle,
-                tv, gameConsole, computer, computer_work;
+                tv, gameConsole, computer, computerWork;
 
         Item dirtyCloths, wetCloths, ovenFood,
                 stoveFood, dirtyDishes;
@@ -152,7 +151,7 @@ public class Game {
         tv = livingRoom.createAppliance("tv", watchTV);
         gameConsole = livingRoom.createAppliance("game_console", playConsoleGames);
         computer = homeOffice.createAppliance("computer", playPCGames);
-        computer_work = homeOffice.createAppliance("computer_work", doWork);
+        computerWork = homeOffice.createAppliance("computer_work", doWork);
 
 
         // Adding all items to their rooms
@@ -169,8 +168,8 @@ public class Game {
     public boolean goRoom(Command command) {
 
         if (!command.hasCommandValue()) {
-            //No direction on command.
-            //Can't continue with GO command.
+            // No direction on command.
+            // Can't continue with GO command.
             return false;
         }
 
@@ -189,8 +188,8 @@ public class Game {
     public boolean pickupItem(Command command) {
 
         if (!command.hasCommandValue()) {
-            //No item on command.
-            //Can't continue with PICKUP command.
+            // No item on command.
+            // Can't continue with PICKUP command.
             return false;
         }
 

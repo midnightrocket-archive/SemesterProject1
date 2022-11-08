@@ -39,6 +39,7 @@ class InventoryTest {
     @Test
     @DisplayName("Test Inventory - AddItem")
     public void testAddItem() {
+        inventory.clearInventory();
         inventory.addItem(item1);
         inventory.addItem(item2);
 
@@ -61,11 +62,11 @@ class InventoryTest {
     @DisplayName("Test Inventory - IsEmpty")
     public void testIsEmpty() {
         inventory.clearInventory();
-        assertEquals(inventory.isEmpty(), true);
+        assertTrue(inventory.isEmpty());
         inventory.addItem(item1);
         inventory.addItem(item2);
         inventory.addItem(item2);
-        assertEquals(inventory.isEmpty(), false);
+        assertFalse(inventory.isEmpty());
     }
 
     @Test
