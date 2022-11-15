@@ -1,119 +1,125 @@
 package worldOfZuul.Main.Java;
 
-import worldOfZuul.Main.Java.Classes.Activity;
 import worldOfZuul.Main.Java.Classes.Appliance;
+import worldOfZuul.Main.Java.Classes.Inventory;
 import worldOfZuul.Main.Java.Classes.Item;
+import worldOfZuul.Main.Java.Classes.ReferenceContainer;
+import worldOfZuul.Main.Java.Utilities.Direction;
 
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.Map;
 import java.util.HashMap;
 
 public class Room {
     private final String description;
-    private HashMap<String, Room> exits;
 
-    private HashMap<String, Appliance> roomAppliances = new HashMap<>();
-    private HashMap<String, Item> roomItems = new HashMap<>();
+    private final String displayName;
 
-    public Room(String description) {
+    private final String id;
+
+
+    private HashMap<Direction, Room> exits = new HashMap<Direction, Room>();
+    private ReferenceContainer<Appliance> roomAppliances = new ReferenceContainer<Appliance>();
+    private Inventory roomItems = new Inventory();
+
+    public Room(String id, String displayName, String description) {
+        this.id = id;
+        this.displayName = displayName;
         this.description = description;
-        exits = new HashMap<>();
     }
 
-    // Adds an appliance to a room
-    public Appliance createAppliance(String name, Activity activityReference) {
-        Appliance appliance = new Appliance(name, this, activityReference);
-        roomAppliances.put(name, appliance);
-        return appliance;
-    }
 
-    public boolean hasAppliance(String applianceName) {
-        return roomAppliances.containsKey(applianceName);
-    }
 
-    // Adds an item to a room
-    public Item createItem(String name, Appliance applianceReference) {
-        Item item = new Item(name, applianceReference);
-        roomItems.put(name, item);
-        return item;
-    }
+    private String exitsToString() {
+        StringBuilder stringBuilder = new StringBuilder("Exits:\n");
 
-    public void removeItem(String itemName) {
-        roomItems.remove(itemName);
-    }
-
-    public boolean hasItem(String itemName) {
-        return roomItems.containsKey(itemName);
-    }
-
-    private String getExitString() {
-        String returnString = "Exits:\n";
-        Set<String> keys = exits.keySet();
-
-        for (String exit : keys) {
-            returnString += " - " + exit + "\n";
+        for (Map.Entry<Direction, Room> exit : this.exits.entrySet()) {
+            Direction direction = exit.getKey();
+            Room nextRoom = exit.getValue();
+            stringBuilder.append(String.format(" - %s: '%s'\n", direction, nextRoom.getDisplayName()));
         }
 
-        return returnString;
+        return stringBuilder.toString();
     }
 
     // Sets an exit for a room
-    public void setExit(String direction, Room neighbor) {
-        exits.put(direction, neighbor);
+    public void setExit(Direction direction, Room neighbor) {
+        this.exits.put(direction, neighbor);
+
+        //By pass setExit() method, to avoid infinite recursion.
+        neighbor.exits.put(direction.opposite(), this);
     }
 
-    public Room getExit(String direction) {
-        return exits.get(direction);
+    public Room getExit(Direction direction) {
+        return this.exits.get(direction);
     }
-
-    public Activity getApplianceActivity(Appliance appliance) {
-        return appliance.getActivityReference();
-    }
-
     public String getShortDescription() {
-        return description;
+        return this.description;
     }
 
     public String getLongDescription() {
-        return "\nYou are " + description +
-                ".\n\n" + getAppliancesString() +
-                "\n" + getItemsString() +
-                "\n" + getExitString();
+        return "\nYou are " + this.description +
+                ".\n\n" + appliancesToString() +
+                "\n" + itemsToString() +
+                "\n" + exitsToString();
     }
 
-    public Appliance getAppliance(String applianceKey) {
-        if (roomAppliances.get(applianceKey) == null) {
-            return null;
+    // Adds an appliance to a room
+    public void addAppliance(Appliance appliance) {
+        this.roomAppliances.add(appliance);
+    }
+
+    public boolean hasAppliance(String alias) {
+        return this.roomAppliances.containsByAlias(alias);
+    }
+
+    public Appliance getAppliance(String alias) {
+        return this.roomAppliances.getByAlias(alias);
+    }
+
+
+    public String appliancesToString() {
+        //Guard clause
+        if (this.roomAppliances.isEmpty()) return "This room has no appliances.\n";
+
+
+        StringBuilder stringBuilder = new StringBuilder("In this room you can use: \n");
+
+        for (Appliance appliance : this.roomAppliances) {
+            stringBuilder.append(String.format(" - %s\n", appliance.displayName()));
         }
 
-        return roomAppliances.get(applianceKey);
+        return stringBuilder.toString();
     }
 
-    public String getAppliancesString() {
-        String appliancesString = new String("In this room you can use: \n");
-        if (roomAppliances.isEmpty()) {
-            appliancesString += "Nothing. This room has no appliances.\n";
-        } else {
-            for (String applianceName : roomAppliances.keySet()) {
-                appliancesString += " - " + applianceName + "\n";
-            }
-        }
-        return appliancesString;
+
+    // Adds an item to a room
+    public void addItem(Item item) {
+        this.roomItems.add(item);
     }
 
-    public Item getItem(String itemKey) {
-        return roomItems.get(itemKey);
+    public void removeItem(String alias) {
+        this.roomItems.removeByAlias(alias);
     }
 
-    public String getItemsString() {
-        String itemsString = "In this room you can find: \n";
-        if (roomItems.isEmpty()) {
-            itemsString += "Nothing. This room has no items.\n";
-        } else {
-            for (String itemName : roomItems.keySet()) {
-                itemsString += " - " + itemName + "\n";
-            }
-        }
-        return itemsString;
+    public boolean hasItem(String itemName) {
+        return this.roomItems.containsByAlias(itemName);
+    }
+
+    public Item getItem(String itemId) {
+        return this.roomItems.getByAlias(itemId);
+    }
+
+    public String itemsToString() {
+        String output = "In this room you can find: \n";
+
+        return output + this.roomItems.toString();
+    }
+
+    public String getDisplayName() {
+        return this.displayName;
+    }
+
+    public String getId() {
+        return id;
     }
 }

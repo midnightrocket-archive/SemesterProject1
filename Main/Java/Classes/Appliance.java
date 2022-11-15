@@ -1,27 +1,20 @@
 package worldOfZuul.Main.Java.Classes;
 
-import worldOfZuul.Main.Java.Room;
+import worldOfZuul.Main.Java.Interfaces.Aliasable;
 
-public class Appliance {
-    private final String name; // Name of the appliance
-    private final Room roomReference; // Room the appliance is inside
-    private final Activity activityReference; // Reference to associated activity
 
-    public Appliance(String name, Room roomReference, Activity activityReference) {
-        this.name = name;
-        this.roomReference = roomReference;
-        this.activityReference = activityReference;
-    }
+/*
+ * Using record
+ * https://dzone.com/articles/what-are-java-records
+ * Records are class like constructs, but with immutable properties.
+ * Methods can still be implemented if needed, as long they do not modifier the properties.
+ * getter methods for each property is automatically generated.
+ * *NOTE* the getter methods are named exactly the same as the property they refer to.
+ */
+public record Appliance(String id, String displayName, String activityId) implements Aliasable {
 
-    public String getName() {
-        return name;
-    }
-
-    public Room getRoomReference() {
-        return roomReference;
-    }
-
-    public Activity getActivityReference() {
-        return activityReference;
+    public boolean hasAlias(String alias) {
+        alias = alias.toLowerCase().trim();
+        return alias.equals(this.id.toLowerCase()) || alias.equals(this.displayName.toLowerCase());
     }
 }

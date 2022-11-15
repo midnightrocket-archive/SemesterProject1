@@ -6,11 +6,11 @@
 
 package worldOfZuul.Main.Java.textUI;
 
-import worldOfZuul.Main.Java.Classes.Inventory;
-import worldOfZuul.Main.Java.Classes.Player;
 import worldOfZuul.Main.Java.Command;
-import worldOfZuul.Main.Java.Actions;
+import worldOfZuul.Main.Java.Action;
 import worldOfZuul.Main.Java.Game;
+
+import java.io.IOException;
 
 /**
  * @author ancla
@@ -18,17 +18,20 @@ import worldOfZuul.Main.Java.Game;
 public class CommandLineClient {
 
     private Parser parser;
+    private Game game;
 
     public CommandLineClient() {
-        // Instantiates the Game class as a singleton
-        Game.getInstance();
-
         parser = new Parser();
     }
 
-    public void play() {
+    public void play() throws IOException{
+
+        game = Game.createInstance(this.greetPlayer());
+        parser.getRawInput("Press enter to continue> ");
+
         // Welcome message
         printWelcome();
+
 
         boolean finished = false;
 
@@ -39,69 +42,109 @@ public class CommandLineClient {
             finished = processCommand(command); // finished is true, if "wantToQuit" becomes true.
         }
 
+        System.out.println(game.generateGameStats());
+
         System.out.println("\nThank you for playing.   Goodbye.");
         // Game ends from here
+    }
+
+    private String greetPlayer() {
+        String name = parser.getRawInput("Hello what is your name? ");
+        System.out.println();
+        System.out.printf("Hello %s nice to meet you!\nHope you are ready!\n", name);
+        return name;
     }
 
     private void printWelcome() {
         System.out.println("\nWelcome to the Semesterproject 1 game!");
         System.out.println("In this game, your mission is to use your power efficiently.");
-        System.out.println("To get started, use the \"" + Actions.HELP + "\" command. Good luck!\n");
-        System.out.println(Game.getInstance().getRoomDescription());
+        System.out.println("To get started, use the \"" + Action.HELP + "\" command. Good luck!\n");
+        parser.getRawInput("Press enter to continue> ");
+        System.out.println(game.getRoomDescription());
     }
 
     private void printHelp() {
-        for (String str : Game.getInstance().getCommandDescriptions()) {
-            System.out.println(" - " + str);
-        }
+        System.out.println(Action.allValidToString());
     }
 
     // Controller
     public boolean processCommand(Command command) {
         boolean wantToQuit = false;
 
-        Actions commandWord = command.getCommandName(); // holds command enum
+        Action action = command.getAction(); // holds command enum
 
-        // Checks if the command is invalid.
-        if (commandWord == Actions.UNKNOWN) {
-            System.out.println("\nI don't know what you mean...");
-            return false;
+
+        switch (action) {
+            case HELP:
+                System.out.println("\nYou can use the following commands:");
+                printHelp();
+
+                break;
+            case GO:
+                if (game.goRoom(command)) {
+                    System.out.println(game.getRoomDescription());
+                } else {
+                    System.out.println("\nCan't walk in that direction.");
+                }
+
+                break;
+            case USE:
+                game.useCommand(command);
+                break;
+            case QUIT:
+                if (game.quit(command)) {
+                    wantToQuit = true;
+                } else {
+                    System.out.println("\nQuit what?");
+                }
+
+                break;
+            case INVENTORY:
+                System.out.println("\nYour inventory contains: ");
+                System.out.println(game.inventoryToString());
+
+                break;
+            case PICKUP:
+                if (game.pickupItem(command)) {
+                    System.out.println("\nThis item has been added to your inventory!");
+                } else {
+                    System.out.println("\nThat item does not exist in this room...");
+                }
+
+                break;
+            case ACTIVITIES:
+                System.out.println("\nYou are still missing the following activities:");
+                System.out.println(game.activitiesToString());
+
+                break;
+            case IMLOST:
+                System.out.println(game.getRoomDescription());
+
+                break;
+            case POWER:
+                System.out.println("\nYour power is " + game.getPower());
+
+                break;
+            case SLEEP:
+                if (game.sleepCommand()) {
+                    System.out.println("This was your last day. Well done. Here are some stats for you:");
+                    wantToQuit = true;
+                } else {
+                    System.out.printf("Goodnight %s \n", game.getPlayer().getName());
+                    parser.getRawInput("Press enter to wake up> ");
+                    System.out.println();
+                    System.out.printf("Good morning! Day %d\n", game.getDay());
+                    System.out.printf("A new day means new power levels, run '%s' to see how much power you have today\n", Action.POWER);
+                }
+                break;
+            case POINTS:
+                System.out.printf("You have %d points\n", game.getPoints());
+                break;
+            case UNKNOWN:
+            default:
+                System.out.println("\nI don't know what you mean... \n type 'help', to get help");
         }
 
-        if (commandWord == Actions.HELP) { // HELP COMMAND
-            System.out.println("\nYou can use the following commands:");
-            printHelp();
-        } else if (commandWord == Actions.GO) { // GO COMMAND
-            if (Game.getInstance().goRoom(command)) {
-                System.out.println(Game.getInstance().getRoomDescription());
-            } else {
-                System.out.println("\nCan't walk in that direction.");
-            }
-        } else if (commandWord == Actions.QUIT) { // QUIT COMMAND
-            if (Game.getInstance().quit(command)) {
-                wantToQuit = true;
-            } else {
-                System.out.println("\nQuit what?");
-            }
-        } else if (commandWord == Actions.INVENTORY) { // INVENTORY COMMAND
-            System.out.println("\nYour inventory contains: ");
-            System.out.println(Inventory.getInstance());
-        } else if (commandWord == Actions.PICKUP) { // PICKUP COMMAND
-            if (Game.getInstance().pickupItem(command)) {
-                System.out.println("\nThis item has been added to your inventory!");
-            } else {
-                System.out.println("\nThat item does not exist in this room...");
-            }
-        } else if (commandWord == Actions.ACTIVITIES) { // ACTIVITIES COMMAND
-            System.out.println("\nYou are still missing the following activities:");
-            System.out.println(Game.getInstance().getActivity());
-        } else if (commandWord == Actions.IMLOST) { // IMLOST COMMAND
-            System.out.println(Game.getInstance().getRoomDescription());
-        } else if (commandWord == Actions.POWER) { // POWER COMMAND
-            System.out.println("\nYour power is " + Game.getInstance().getPower());
-        } else if (commandWord == Actions.USE) { // USE COMMAND
-            Player.getInstance().use(command);
-        }
 
         return wantToQuit;
     }

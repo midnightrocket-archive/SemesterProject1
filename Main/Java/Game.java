@@ -1,179 +1,80 @@
 package worldOfZuul.Main.Java;
 
 import worldOfZuul.Main.Java.Classes.*;
+import worldOfZuul.Main.Java.Utilities.ConfigLoader;
+import worldOfZuul.Main.Java.Utilities.Direction;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Random;
 
 public class Game {
 
-    private static Game instance = null;
+    private static boolean isInitialized = false;
 
     private int day;
-    private int power;
-    private int defaultPower; // can maybe be changed into a constant value
-    private int points;
-    private Room currentRoom;
-    private ValidActions commands; // holds all valid commands
     private int maxDays;
-    private ArrayList<Integer> extraPowerList = new ArrayList<>();
 
-    private Game() {
-        this.commands = new ValidActionsImplementation();
+    private int defaultPower; // can maybe be changed into a constant value
+    private Room currentRoom;
+    private int power;
+    private ArrayList<Integer> extraPowerList;
+
+    private int[] randomPowerLevels;
+
+    private ActivityManager activityManager = new ActivityManager(); // Placeholder object, until "real one" has been created.
+    private Player player;
+
+    private final ConfigLoader configs;
+
+
+    private Game(String name) throws IOException {
+        configs = new ConfigLoader();
+
+        this.activityManager = configs.getActivityManager();
+
+        this.currentRoom = configs.getDefaultRoom();
+
+
+        this.player = new Player(name);
+
 
         this.maxDays = 7;
         this.day = 0;
-        createRooms();
 
-        this.defaultPower = calcDefaultPower();
-        makeExtraPowerList();
-        this.power = defaultPower;
-        this.points = 0;
+
+        this.defaultPower = activityManager.getDailyPowerRequirement();
+        this.extraPowerList = activityManager.getExtraPowerLevels();
+
+        this.generateRandomPowerLevels(); //Random power levels for the whole game is precomputed.
+
+        this.getPowerForToday();
     }
 
-    public static Game getInstance() {
-        if (instance == null) {
-            instance = new Game();
-        }
+    public static Game createInstance(String name) throws IOException {
+        if (Game.isInitialized) throw new IllegalStateException("Game is already initialized");
 
-        return instance;
+        Game.isInitialized = true;
+        return new Game(name);
     }
 
-    // Calculates daily minimum power
-    private int calcDefaultPower() {
-        int tempPower = 0;
-        for (int i = 0; i < ActivityManager.getInstance().listOfActivities.size(); i++) {
-            if (ActivityManager.getInstance().listOfActivities.get(i).isDaily()) {
-                tempPower += ActivityManager.getInstance().listOfActivities.get(i).getPowerCost();
-            }
-        }
-        return tempPower;
-    }
 
-    // Makes list of "extra" activities' power costs
-    private void makeExtraPowerList() {
-        // Make list of extra power costs:
-        for (int i = 0; i < ActivityManager.getInstance().listOfActivities.size(); i++) {
-            if (!ActivityManager.getInstance().listOfActivities.get(i).isDaily()) {
-                extraPowerList.add(ActivityManager.getInstance().listOfActivities.get(i).getPowerCost());
-            }
-        }
-    }
-
-    private void createRooms() {
-        Room homeOffice, livingRoom, bedroom,
-                kitchen, diningRoom, laundryRoom,
-                bathroom, hallway, entrance;
-
-        Activity dryHair, washCloths, dryCloths,
-                makeFood, washDishes, boilWater,
-                watchTV, playConsoleGames, playPCGames,
-                doWork;
-
-        Appliance hairdryer, washingMachine, dryer,
-                oven, dishwasher, kettle,
-                tv, gameConsole, computer, computerWork;
-
-        Item dirtyCloths, wetCloths, ovenFood,
-                stoveFood, dirtyDishes;
-
-
-        // Defining the rooms
-        homeOffice = new Room("in the home office");
-        livingRoom = new Room("in the living room");
-        bedroom = new Room("in your bedroom");
-        kitchen = new Room("in the kitchen");
-        diningRoom = new Room("in the dining room");
-        laundryRoom = new Room("in the laundry room");
-        bathroom = new Room("in the bathroom");
-        hallway = new Room("in the hallway");
-        entrance = new Room("at the entrance");
-
-
-        // Setting the room exits
-        homeOffice.setExit("east", livingRoom);
-
-        livingRoom.setExit("west", homeOffice);
-        livingRoom.setExit("east", bedroom);
-        livingRoom.setExit("south", diningRoom);
-
-        bedroom.setExit("west", livingRoom);
-
-        kitchen.setExit("east", diningRoom);
-
-        diningRoom.setExit("north", livingRoom);
-        diningRoom.setExit("west", kitchen);
-        diningRoom.setExit("east", laundryRoom);
-        diningRoom.setExit("south", hallway);
-
-        laundryRoom.setExit("west", diningRoom);
-
-        bathroom.setExit("east", hallway);
-
-        hallway.setExit("north", diningRoom);
-        hallway.setExit("west", bathroom);
-        hallway.setExit("east", entrance);
-
-        entrance.setExit("west", hallway);
-
-
-        // Adding all activities
-        dryHair = new Activity("Dry hair", 1, 1, 1, false);
-        washCloths = new Activity("Wash cloths", 1, 1, 1, false);
-        dryCloths = new Activity("Dry cloths", 1, 1, 1, false);
-        makeFood = new Activity("Make food", 1, 1, 1, true);
-        washDishes = new Activity("Wash dishes", 1, 1, 1, false);
-        boilWater = new Activity("Boil water", 1, 1, 1, false);
-        watchTV = new Activity("Watch TV", 1, 1, 1, false);
-        playConsoleGames = new Activity("Play console games", 1, 1, 1, false);
-        playPCGames = new Activity("Play PC games", 1, 1, 1, false);
-        doWork = new Activity("Do work", 1, 1, 1, false);
-
-        ActivityManager.getInstance().addActivity(dryHair);
-        ActivityManager.getInstance().addActivity(washCloths);
-        ActivityManager.getInstance().addActivity(dryCloths);
-        ActivityManager.getInstance().addActivity(makeFood);
-        ActivityManager.getInstance().addActivity(washDishes);
-        ActivityManager.getInstance().addActivity(boilWater);
-        ActivityManager.getInstance().addActivity(watchTV);
-        ActivityManager.getInstance().addActivity(playConsoleGames);
-        ActivityManager.getInstance().addActivity(playPCGames);
-        ActivityManager.getInstance().addActivity(doWork);
-
-
-        // Adding all appliances to their rooms
-        hairdryer = bathroom.createAppliance("hairdryer", dryHair);
-        washingMachine = laundryRoom.createAppliance("washing_machine", washCloths);
-        dryer = laundryRoom.createAppliance("dryer", dryCloths);
-        oven = kitchen.createAppliance("oven", makeFood);
-        dishwasher = kitchen.createAppliance("dishwasher", washDishes);
-        kettle = kitchen.createAppliance("kettle", boilWater);
-        tv = livingRoom.createAppliance("tv", watchTV);
-        gameConsole = livingRoom.createAppliance("game_console", playConsoleGames);
-        computer = homeOffice.createAppliance("computer", playPCGames);
-        computerWork = homeOffice.createAppliance("computer_work", doWork);
-
-
-        // Adding all items to their rooms
-        dirtyCloths = bedroom.createItem("dirty_cloths", washingMachine);
-        wetCloths = laundryRoom.createItem("wet_cloths", dryer);
-        ovenFood = kitchen.createItem("oven_food", oven);
-        dirtyDishes = diningRoom.createItem("dirty_dishes", dishwasher);
-
-
-        // Also setting the current room to the entrance
-        currentRoom = entrance;
-    }
 
     public boolean goRoom(Command command) {
 
         if (!command.hasCommandValue()) {
-            // No direction on command.
-            // Can't continue with GO command.
+            //No direction on command.
+            //Can't continue with GO command.
             return false;
         }
 
-        String direction = command.getCommandValue();
+        Direction direction;
+
+        try {
+            direction = Direction.parse(command.getCommandValue());
+        } catch (IllegalArgumentException exception) {
+            return false;
+        }
 
         Room nextRoom = currentRoom.getExit(direction);
 
@@ -188,22 +89,22 @@ public class Game {
     public boolean pickupItem(Command command) {
 
         if (!command.hasCommandValue()) {
-            // No item on command.
-            // Can't continue with PICKUP command.
+            //No item on command.
+            //Can't continue with PICKUP command.
             return false;
         }
 
         String item = command.getCommandValue();
 
-        if (!currentRoom.hasItem(item)) {
+        if (!this.currentRoom.hasItem(item)) {
             // item is not in room.
             return false;
         }
 
-        Item itemInRoom = currentRoom.getItem(item);
+        Item itemInRoom = this.currentRoom.getItem(item);
 
-        currentRoom.removeItem(itemInRoom.getName());
-        Inventory.getInstance().addItem(itemInRoom);
+        this.currentRoom.removeItem(itemInRoom.id());
+        this.player.addItem(itemInRoom);
 
         return true; // command succeeded
     }
@@ -216,71 +117,82 @@ public class Game {
     }
 
     // Returns a random int between 0 and the sum of extraPowerList. If last day, return remaining extra power.
-    public int getRandomExtraPower() {
-        int dailyExtra = 0;
-
-        if (isLastDay()) {
-            for (int i = 0; i < extraPowerList.size(); i++) {
-                dailyExtra += extraPowerList.size();
-            }
-            extraPowerList.clear();
-            return dailyExtra;
+    private void generateRandomPowerLevels() {
+        Random rand = new Random();
+        this.randomPowerLevels = new int[this.maxDays + 1];
+        for (int i : this.extraPowerList) {
+            this.randomPowerLevels[rand.nextInt(this.maxDays + 1)] += i;
         }
 
-        for (int i = 0; i < extraPowerList.size(); i++) {
-            if (Math.random() * 7 >= 6) {
-                dailyExtra += extraPowerList.get(i);
-                extraPowerList.remove(i);
-                i -= 1; // If the current list-item is removed, the list will get one object "smaller".
-            }
-        }
-
-        return dailyExtra;
     }
 
     public String getRoomDescription() {
-        return currentRoom.getLongDescription();
+        return this.currentRoom.getLongDescription();
     }
 
     public String getAppliancesInRoom() {
-        return currentRoom.getAppliancesString();
+        return this.currentRoom.appliancesToString();
     }
 
-    public ActivityManager getActivity() {
-        return ActivityManager.getInstance();
+    public String inventoryToString() {
+        return this.player.inventoryToString();
+    }
+
+    public String activitiesToString() {
+        return this.activityManager.toString();
     }
 
     public Room getCurrentRoom() {
-        return currentRoom;
+        return this.currentRoom;
     }
 
-    // Returns a CommandWords object which holds all valid commands.
-    public ValidActions getCommands() {
-        return commands;
+    public boolean useCommand(Command command) {
+        Appliance appliance = this.currentRoom.getAppliance(command.getCommandValue());
+        if (appliance == null) {
+            System.out.printf("You can't use '%s'\n", command.getCommandValue());
+            return false;
+        }
+
+        String activityId = appliance.activityId();
+        Activity activity = this.activityManager.getAllActivities().getByAlias(activityId);
+        String itemId = activity.getItemId();
+
+        // Using early returns, instead of if else. To avoid big if-else nesting.
+
+        if (activity.isDone()) {
+            System.out.println("You have already done that activity :-)");
+            return false;
+        }
+
+
+        if (this.power < activity.getPowerCost()) {
+            System.out.println("You don't have enough power :-(");
+            System.out.printf("This activity requires %d power \n", activity.getPowerCost());
+            return false;
+        }
+
+
+        if (!itemId.equals("none")) {
+            Item item = this.player.getItem(itemId);
+            if (item == null) {
+
+                Item referenceItem = this.configs.getItemsStore().getByAlias(itemId);
+                //Load referenceItem, so its displayName can be used to tell the use what item is missing.
+
+                System.out.printf("You don't have '%s' in your inventory\n", referenceItem.displayName());
+                return false;
+            }
+
+            this.player.removeItem(item);
+            System.out.printf("'%s' have been removed from your inventory\n", item.displayName());
+        }
+
+        this.removePower(activity.getPowerCost());
+        activity.setAsDone();
+        System.out.printf("You have finished activity '%s' \n", activity.getDisplayName());
+        return true;
     }
 
-    // Returns List<String> of all valid command strings.
-    public List<String> getCommandDescriptions() {
-        return commands.getActionWords();
-    }
-
-    /* This is used in the Parser class and takes the user input as arguments.
-     * commands.getCommand(word1) returns the corresponding command enum to the first word in the user input.
-     * Then returns a Command object with the evaluated enum and the command string.
-     */
-    public Command getCommand(String word1, String word2) {
-        return new CommandImplementation(commands.getAction(word1), word2);
-    }
-
-    // Method for adding points
-    public void addPoints(int pointsToAdd) {
-        points += pointsToAdd;
-    }
-
-    // Method for removing points
-    public void removePoints(int n) {
-        this.points -= n;
-    }
 
     // Method for removing power
     public void removePower(int n) {
@@ -290,49 +202,66 @@ public class Game {
     // Method for checking last day
     public boolean isLastDay() {
         // Returns true, if day is higher than max days
-        return day > maxDays;
+        return this.day >= this.maxDays;
     }
 
     // Method for incrementing the day counter
     public void setNextDay() {
-        day += 1;
+        this.day += 1;
     }
 
     // Method for getting the power value
     public int getPower() {
-        return power;
+        return this.power;
     }
 
     // Method for setting the power value
-    public void setPower(int newPower) {
-        power = newPower;
+    public void setPower(int power) {
+        this.power = power;
     }
 
     // Method for getting the points value
     public int getPoints() {
-        return points;
+        return this.activityManager.calculatePoints();
     }
 
-    // Method for setting the points value
-    public void setPoints(int n) {
-        this.points = n;
-    }
 
     // Method for getting the day value
     public int getDay() {
-        return day;
+        return this.day;
     }
 
-    // Attempt at making day system
-    public boolean daySystem() {
-        for (int i = 0; i < ActivityManager.getInstance().listOfActivities.size(); i++) {
-            if (!ActivityManager.getInstance().listOfActivities.get(i).isActivityDone()) {
-                return false;
-            }
+
+    private void getPowerForToday() {
+        // Add defaultPower level with the random powerLevel of the current day
+        this.power = this.defaultPower + this.randomPowerLevels[this.getDay()];
+    }
+
+    private void advanceDay() {
+        System.out.println(this.activityManager.missedDailyActivitiesToString());
+        this.activityManager.settleDailyActivities();
+        this.day += 1;
+        this.configs.repopulateDailyNeededItems();
+        this.getPowerForToday();
+    }
+
+    public boolean sleepCommand() {
+        if (this.isLastDay()) {
+            return true;
         }
-        setNextDay();
-        setPower(defaultPower + getRandomExtraPower());
-        System.out.println("Your power is " + getPower());
-        return true;
+        this.advanceDay();
+        return false;
+    }
+
+    public String generateGameStats() {
+        StringBuilder output = new StringBuilder();
+        output.append("This is an overview of your activities.");
+        output.append(this.activityManager.generateStats());
+        output.append(String.format("Your total points are %d", this.getPoints()));
+        return output.toString();
+    }
+
+    public Player getPlayer() {
+        return this.player;
     }
 }

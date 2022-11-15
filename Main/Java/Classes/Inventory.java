@@ -1,56 +1,19 @@
 package worldOfZuul.Main.Java.Classes;
 
-import java.util.ArrayList;
 
-public class Inventory {
-    private static Inventory instance;
-
-    private ArrayList<Item> listOfItems; // Dynamic array to hold items within an inventory list.
-
-    private Inventory() {
-        listOfItems = new ArrayList<>();
-    }
-
-    public static Inventory getInstance() {
-        if (instance == null) {
-            instance = new Inventory();
-        }
-        return instance;
-    }
-
-    public void addItem(Item item) {
-        listOfItems.add(item);
-    }
-
-    public void removeItem(Item item) {
-        listOfItems.remove(item);
-    }
-
-    public void clearInventory() {
-        listOfItems.clear();
-    }
-
-    public ArrayList<Item> getInventoryList() {
-        return listOfItems;
-    }
-
-    public boolean isEmpty() {
-        // Returns true, if the listOfItems is empty.
-        return listOfItems.isEmpty();
-    }
-
+public class Inventory extends ReferenceContainer<Item> {
     @Override
     public String toString() {
-        String inventoryString = "";
-
-        if (listOfItems.isEmpty()) {
-            return "Your inventory is empty.";
+        if (this.isEmpty()) {
+            return "Nothing";
         }
 
-        for (Item item : listOfItems) {
-            inventoryString += " - " + item.getName() + "\n";
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (Item item : this) {
+            stringBuilder.append(String.format(" - %s\n", item.displayName()));
         }
 
-        return inventoryString;
+        return stringBuilder.toString();
     }
 }
