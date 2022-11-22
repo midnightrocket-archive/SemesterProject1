@@ -183,7 +183,7 @@ public class ConfigLoader {
             boolean daily = Boolean.parseBoolean(properties.getProperty("daily"));
             String itemId = properties.getProperty("itemId");
 
-            Activity object = new Activity(id, displayName, successPoints, failurePoints, powerCost, daily, itemId);
+            Activity object = new Activity(id, displayName, daily, itemId, successPoints, failurePoints, powerCost);
             this.activityManager.add(object);
         }
     }
