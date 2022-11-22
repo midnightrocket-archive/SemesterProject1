@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="textCli" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="com.example.semester1.core.textUI.WorldOfZuulApplication" />
+    <module name="Semester1" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
