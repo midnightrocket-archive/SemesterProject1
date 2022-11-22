@@ -214,23 +214,27 @@ public class ConfigLoader {
             Properties roomProperties = this.readProperties(ConfigLoader.ROOMS_DIR_PATH, entry.getKey());
             this.setExitsInRoom(roomObject, roomProperties);
 
-            String itemId = roomProperties.getProperty("itemId");
 
-            if (!itemId.equals(ConfigLoader.NONE_KEYWORD)) {
-                Item item = this.itemsStore.getByAlias(itemId);
-                roomObject.addItem(item);
+
+            String[] itemIds = roomProperties.getProperty("itemId").split(",");
+
+            for (String itemId : itemIds) {
+                if (!itemId.equals(ConfigLoader.NONE_KEYWORD)) {
+                    Item item = this.itemsStore.getByAlias(itemId);
+                    roomObject.addItem(item);
+                }
             }
 
-            String applianceId = roomProperties.getProperty("applianceId");
 
-            if (!applianceId.equals(ConfigLoader.NONE_KEYWORD)) {
-                Appliance appliance = this.appliancesHashMap.get(applianceId);
-                roomObject.addAppliance(appliance);
+            String[] applianceIds = roomProperties.getProperty("applianceId").split(",");
+
+            for (String applianceId : applianceIds) {
+                if (!applianceId.equals(ConfigLoader.NONE_KEYWORD)) {
+                    Appliance appliance = this.appliancesHashMap.get(applianceId);
+                    roomObject.addAppliance(appliance);
+                }
             }
-
-            //System.out.println(roomObject.getLongDescription());
         }
-        //System.out.println(this.roomsHashMap);
     }
 
     private void setExitsInRoom(Room room, Properties properties) {
