@@ -3,52 +3,69 @@ package worldOfZuul.Test.Java.Classes;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import worldOfZuul.Main.Java.Classes.Appliance;
-import worldOfZuul.Main.Java.Classes.Inventory;
 import worldOfZuul.Main.Java.Classes.Item;
 import worldOfZuul.Main.Java.Classes.Player;
-import worldOfZuul.Main.Java.Classes.Activity;
-import worldOfZuul.Main.Java.Room;
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-/*
-    Activity activity;
-    Appliance appliance;
-    Room room;
-    Item item;
-    Inventory inventory;
+
     Player player;
+    Item item;
 
     @BeforeEach
-    @DisplayName("Test Player - setup")
+    @DisplayName("Test Player - Setup")
     public void setup() {
-        activity = new Activity("test", 5, 5, 5, false);
-        room = new Room("TestRoom");
-        appliance = new Appliance("TestAppliance", room, activity);
-        item = new Item("TestItem", appliance);
-        inventory = new Inventory();
-        player = new Player(inventory);
+        player = new Player("nameOfPlayer");
+        item = new Item("testId", "testDisplayname");
     }
 
+
     @Test
-    @DisplayName("Test Player - AddItemToInventory and RemoveItemFromInventory")
-    public void testAddAndRemoveItemsFromInventory() {
-        ArrayList<Item> expected = new ArrayList<>();
+    @DisplayName("Test Player - AddItem and RemoveItem")
+    public void testAddItemAndRemoveItem() {
+        player.addItem(item);
 
-        assertEquals(player.getInventory(), new ArrayList<>());
+        assertTrue(player.hasItem("testId"));
+        assertTrue(player.hasItem("testDisplayname"));
+        assertTrue(player.hasItem(item));
 
-        player.addItemToInventory(item);
-        expected.add(item);
+        // Test with removing Item as a object
+        player.removeItem(item);
+        assertFalse(player.hasItem(item));
 
-        assertEquals(player.getInventory(), expected);
 
-        player.removeItemFromInventory(item);
-        expected.remove(item);
+        // Test with removing Item as a string
+        player.addItem(item);
+        assertTrue(player.hasItem(item));
+        player.removeItem(item.displayName());
+        assertFalse(player.hasItem(item));
+    }
 
-        assertEquals(player.getInventory(), new ArrayList<>());
-    }*/
+
+    @Test
+    @DisplayName("Test Player - GetName")
+    public void testGetName() {
+        assertEquals("nameOfPlayer", player.getName());
+    }
+
+
+    @Test
+    @DisplayName("Test Player - GetItem")
+    public void testGetItem() {
+        player.addItem(item);
+
+        assertEquals(item, player.getItem(item.displayName()));
+    }
+
+
+    @Test
+    @DisplayName("Test Player - InventoryToString")
+    public void testInventoryToString() {
+        assertEquals("Nothing", player.inventoryToString());
+
+        player.addItem(item);
+
+        assertEquals(" - testDisplayname\n", player.inventoryToString());
+    }
 }

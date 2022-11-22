@@ -12,10 +12,10 @@ public class Activity implements Aliasable {
     private int powerCost; // Amount of power required to complete the activity.
     private boolean done = false; // False if activity is not done, true if activity is done.
 
-    private int failedCounter = 0; //This is used to keep track of how many times an activity has been failed.
+    private int failedCounter = 0; // This is used to keep track of how many times an activity has been failed.
     private int successCounter = 0;
 
-    public Activity(String id, String displayName, int successPoints, int failurePoints, int powerCost, boolean daily, String itemId) {
+    public Activity(String id, String displayName, boolean daily, String itemId, int successPoints, int failurePoints, int powerCost) {
         this.id = id;
         this.displayName = displayName;
         this.daily = daily;
@@ -32,6 +32,7 @@ public class Activity implements Aliasable {
         int totalFailurePoints = this.failedCounter * this.failurePoints;
         return totalSuccessPoints - totalFailurePoints;
     }
+
     public boolean isDaily() {
         return this.daily;
     }
@@ -117,6 +118,7 @@ public class Activity implements Aliasable {
     public int getFailedCounter() {
         return this.failedCounter;
     }
+
     public int getSuccessCounter() {
         return this.successCounter;
     }
@@ -124,6 +126,7 @@ public class Activity implements Aliasable {
     public String getItemId() {
         return this.itemId;
     }
+
     @Override
     public String toString() {
         return String.format("'%s' power=%d %s", this.displayName, this.getPowerCost(), this.doneToString());

@@ -17,6 +17,7 @@ public class ActivityManager {
     public int calculatePoints() {
         return this.getAllActivities().calculatePoints();
     }
+
     public void add(Activity activity) {
         if (activity.isDaily()) {
             this.dailyActivities.add(activity);
@@ -32,7 +33,6 @@ public class ActivityManager {
             this.noneDailyActivities.remove(activity);
         }
     }
-
 
     private void settleAllActivities() {
         this.getAllActivities().settleAll();
@@ -63,7 +63,6 @@ public class ActivityManager {
         return this.getAllActivities().getMissingActivities();
     }
 
-
     public int getDailyPowerRequirement() {
         return this.dailyActivities.calculatePowerRequirements();
     }
@@ -71,7 +70,6 @@ public class ActivityManager {
     public ArrayList<Integer> getExtraPowerLevels() {
         return this.noneDailyActivities.getPowerLevels();
     }
-
 
     public ActivityContainer getAllActivities() {
         ActivityContainer container = new ActivityContainer();
@@ -147,6 +145,7 @@ public class ActivityManager {
 
         return stringBuilder.toString();
     }
+
     // For generating stats at end of game.
     public String generateStats() {
         this.settleAllActivities(); // Settle all activities before generating stat.
@@ -158,6 +157,7 @@ public class ActivityManager {
 
         return stringBuilder.toString();
     }
+
     @Override
     public String toString() {
         if (this.getAllActivities().isEmpty()) {

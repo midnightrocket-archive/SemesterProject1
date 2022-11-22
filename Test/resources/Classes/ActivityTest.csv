@@ -1,0 +1,5 @@
+test1,testDisplay1,itemId,false,2,3,0
+test2,testDisplay2,itemId,true,-2147483648,2147483647,-5
+test3,testDisplay3,itemId,true,-500,1453,9
+test4,testDisplay4,itemId,false,234,-23,-3
+test5,testDisplay5,itemId,true,0,234,-3

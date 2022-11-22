@@ -29,16 +29,15 @@ public class Player {
         return this.inventory.remove(item);
     }
 
+    public String getName() {
+        return this.name;
+    }
+
     public Item getItem(String alias) {
         return this.inventory.getByAlias(alias);
     }
 
     public String inventoryToString() {
         return this.inventory.toString();
-    }
-
-
-    public String getName() {
-        return this.name;
     }
 }
