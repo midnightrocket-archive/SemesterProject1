@@ -232,6 +232,10 @@ public class Game {
         return this.day;
     }
 
+    public ActivityManager getActivityManager(){
+        return activityManager;
+    }
+
 
     private void getPowerForToday() {
         // Add defaultPower level with the random powerLevel of the current day
