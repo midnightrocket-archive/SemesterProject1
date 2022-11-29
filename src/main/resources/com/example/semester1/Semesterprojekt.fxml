@@ -48,7 +48,7 @@
                      </font></Label>
                   <Label fx:id="powerLabel" maxHeight="25.0" text="Power">
                      <VBox.margin>
-                        <Insets bottom="7" />
+                        <Insets bottom="10.0" />
                      </VBox.margin>
                      <font>
                         <Font size="14.0" />
@@ -63,7 +63,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <ListView fx:id="activitiesList1" maxHeight="142.0" maxWidth="200.0" minHeight="142.0" minWidth="200.0" prefHeight="142.0" prefWidth="200.0" />
+            <ListView fx:id="activitiesList1" maxHeight="132.0" maxWidth="200.0" minHeight="132.0" minWidth="200.0" prefHeight="132.0" prefWidth="200.0" />
             <Label alignment="TOP_CENTER" maxHeight="32.0" maxWidth="200.0" minHeight="32.0" minWidth="200.0" prefHeight="32.0" prefWidth="200.0" text="Ekstra opgaver">
                <font>
                   <Font size="18.0" />
@@ -72,11 +72,15 @@
                   <Insets top="15.0" />
                </VBox.margin>
             </Label>
-            <ListView fx:id="activitiesList2" maxHeight="142.0" maxWidth="200.0" minHeight="142.0" minWidth="200.0" prefHeight="142.0" prefWidth="200.0" />
-            <Label fx:id="consoleArea" alignment="TOP_LEFT" prefHeight="97.0" prefWidth="173.0">
+            <ListView fx:id="activitiesList2" maxHeight="132.0" maxWidth="200.0" minHeight="132.0" minWidth="200.0" prefHeight="132.0" prefWidth="200.0" />
+            <StackPane maxHeight="105.0" maxWidth="200.0" minHeight="105.0" minWidth="200.0" prefHeight="105.0" prefWidth="200.0" style="-fx-background-color: #dddddd">
+               <children>
+                  <Label fx:id="consoleArea" alignment="TOP_LEFT" maxHeight="105.0" maxWidth="200.0" minHeight="105.0" minWidth="200.0" prefHeight="105.0" prefWidth="200.0" style="-fx-padding: 10 10 10 10" GridPane.columnIndex="1" />
+               </children>
                <VBox.margin>
                   <Insets top="15.0" />
-               </VBox.margin></Label>
+               </VBox.margin>
+            </StackPane>
          </children>
       </VBox>
    </children>

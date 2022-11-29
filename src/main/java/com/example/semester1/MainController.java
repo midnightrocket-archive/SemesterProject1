@@ -185,7 +185,6 @@ public class MainController {
         }
     }
 
-
     // Inventory
     @FXML
     HBox inventory;
@@ -221,6 +220,4 @@ public class MainController {
             System.out.println("DEBUG: For mange items i inventory");
         }
     }
-
-
 }
