@@ -16,16 +16,16 @@
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Pane maxHeight="400.0" minHeight="400.0" prefHeight="400.0" prefWidth="200.0" />
-            <Label alignment="CENTER" prefHeight="27.0" prefWidth="746.0" text="Inventory" textAlignment="CENTER">
+            <Pane maxHeight="400.0" maxWidth="570.0" minHeight="400.0" minWidth="570.0" prefHeight="400.0" prefWidth="570.0" />
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="746.0" style="-fx-border-color:#11111199; -fx-border-width: 4 0 0 0; -fx-border-style: solid; -fx-padding: 10 0 0 0" text="Inventory" textAlignment="CENTER">
                <font>
-                  <Font size="18.0" />
+                  <Font size="24.0" />
                </font>
             </Label>
-            <HBox fx:id="inventory" maxHeight="173.0" minHeight="173.0" prefHeight="173.0" prefWidth="500.0" />
+            <HBox fx:id="inventory" maxHeight="150.0" minHeight="150.0" prefHeight="150.0" prefWidth="570.0" style="-fx-padding: 10 0 0 0; -fx-border-insets: 10 0 0 0" />
          </children>
       </VBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1">
+      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color:#11111199; -fx-border-width: 0 0 0 4; -fx-border-style: solid; -fx-padding: 0 0 0 10" GridPane.columnIndex="1">
          <children>
             <VBox prefHeight="26.0" prefWidth="300.0">
                <children>
@@ -48,7 +48,7 @@
                      </font></Label>
                   <Label fx:id="powerLabel" maxHeight="25.0" text="Power">
                      <VBox.margin>
-                        <Insets bottom="15.0" />
+                        <Insets bottom="7" />
                      </VBox.margin>
                      <font>
                         <Font size="14.0" />
@@ -58,13 +58,13 @@
                   <Insets />
                </opaqueInsets>
             </VBox>
-            <Label alignment="TOP_CENTER" contentDisplay="TOP" prefHeight="27.0" prefWidth="138.0" text="Daglige opgaver:">
+            <Label alignment="TOP_CENTER" contentDisplay="TOP" maxHeight="32.0" maxWidth="200.0" minHeight="32.0" minWidth="200.0" prefHeight="32.0" prefWidth="200.0" text="Daglige opgaver">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
             <ListView fx:id="activitiesList1" maxHeight="142.0" maxWidth="200.0" minHeight="142.0" minWidth="200.0" prefHeight="142.0" prefWidth="200.0" />
-            <Label alignment="TOP_CENTER" prefHeight="27.0" prefWidth="122.0" text="Ekstra opgaver:">
+            <Label alignment="TOP_CENTER" maxHeight="32.0" maxWidth="200.0" minHeight="32.0" minWidth="200.0" prefHeight="32.0" prefWidth="200.0" text="Ekstra opgaver">
                <font>
                   <Font size="18.0" />
                </font>

@@ -6,12 +6,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +41,8 @@ public class MainController {
         this.updatePower();
         this.updatePoints();
 
+        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
+        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
         addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
         addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
         addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
@@ -194,11 +198,19 @@ public class MainController {
                 File file = new File(imageLink);
                 Image image = new Image(file.toURI().toString());
                 ImageView imageView = new ImageView(image);
+                StackPane stackPane = new StackPane();
 
                 imageView.setFitWidth(50);
                 imageView.setFitHeight(50);
 
-                inventory.getChildren().add(imageView);
+                stackPane.setPrefSize(50, 50);
+                stackPane.setMaxHeight(50);
+                stackPane.setMaxWidth(50);
+                stackPane.setAlignment(Pos.TOP_LEFT);
+                stackPane.setStyle("-fx-border-color:#11111199; -fx-border-width: 2 2 2 2; -fx-border-style: solid; -fx-padding: 0 0 0 0; -fx-border-insets: 0 0 0 10");
+
+                stackPane.getChildren().add(imageView);
+                inventory.getChildren().add(stackPane);
                 itemsInInventory++;
 
 
