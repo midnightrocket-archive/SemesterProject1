@@ -8,8 +8,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 
+import java.io.File;
 import java.io.IOException;
 
 public class MainController {
@@ -19,26 +23,37 @@ public class MainController {
     @FXML
     public void initialize() throws IOException {
         powerLabel.setOnMouseClicked(writeInConsoleAreaTester);
-        writeInConsoleArea("Hello World!");
+        dayLabel.setOnMouseClicked(dayTester);
 
         game = Game.createInstance("Player name");
 
         // Related to activities:
         // Sets activitiesList to "observe" currentActivities, and display all of its items.
-        activitiesList.setItems(currentActivities);
-        activitiesList.setFocusTraversable(false);
-        this.updateActivities();
+        activitiesList1.setItems(currentActivities1);
+        activitiesList1.setFocusTraversable(false);
+        activitiesList2.setItems(currentActivities2);
+        activitiesList2.setFocusTraversable(false);
         this.updateActivities();
 
         this.updateDay();
         this.updatePower();
         this.updatePoints();
-    }
-    
-    // Activities
-    ObservableList<String> currentActivities = FXCollections.observableArrayList();
 
-    @FXML ListView activitiesList = new ListView();
+        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
+        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
+        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
+        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
+    }
+
+    // Activities
+    ObservableList<String> currentActivities1 = FXCollections.observableArrayList();
+    ObservableList<String> currentActivities2 = FXCollections.observableArrayList();
+
+    @FXML
+    ListView activitiesList1 = new ListView();
+
+    @FXML
+    ListView activitiesList2 = new ListView();
 
     @FXML
     Label activities;
@@ -46,10 +61,10 @@ public class MainController {
     //Stats declare
     @FXML
     Label dayLabel;
-    
+
     @FXML
     Label pointsLabel;
-    
+
     @FXML
     Label powerLabel;
 
@@ -68,7 +83,6 @@ public class MainController {
     }
 
     // Day overlay
-    //@FXML
 
 
     // Console area
@@ -83,6 +97,16 @@ public class MainController {
         public void handle(MouseEvent mouseEvent) {
             i++;
             writeInConsoleArea("POWER " + i);
+        }
+    };
+
+    EventHandler<MouseEvent> dayTester = new EventHandler<>() {
+        @Override
+        public void handle(MouseEvent mouseEvent) {
+            game.sleepCommand();
+            updateDay();
+            updatePoints();
+            updatePower();
         }
     };
 
@@ -121,7 +145,7 @@ public class MainController {
                 if (i == 4) {
                     existingTextArray[i] = text + "\n";
                 } else {
-                    existingTextArray[i] = existingTextArray[i+1];
+                    existingTextArray[i] = existingTextArray[i + 1];
                 }
             }
         }
@@ -138,21 +162,53 @@ public class MainController {
 
         consoleArea.setText(output.toString());
     }
-    
+
     // Method to show current activities: Should be updated everytime a new day begins OR an activity has been completed.
     public void updateActivities() {
-        currentActivities.removeAll(); // Clears Observable List
+        activitiesList1.getItems().clear();
+        activitiesList2.getItems().clear();
 
         // Daily:
         ActivityContainer missingDailyActivities = game.getActivityManager().getMissingDailyActivities();
         for (int i = 0; i < missingDailyActivities.size(); i++) {
-            currentActivities.add(missingDailyActivities.get(i).getDisplayName());
+            currentActivities1.add(missingDailyActivities.get(i).getDisplayName());
         }
 
         // Extra:
         ActivityContainer missingExtraActivities = game.getActivityManager().getMissingNoneDailyActivities();
         for (int i = 0; i < missingExtraActivities.size(); i++) {
-            currentActivities.add(missingExtraActivities.get(i).getDisplayName());
+            currentActivities2.add(missingExtraActivities.get(i).getDisplayName());
         }
     }
+
+
+    // Inventory
+    @FXML
+    HBox inventory;
+
+    static int itemsInInventory;
+
+    public void addItemToInventory(String imageLink) {
+        if (itemsInInventory < 9) {
+            try {
+                File file = new File(imageLink);
+                Image image = new Image(file.toURI().toString());
+                ImageView imageView = new ImageView(image);
+
+                imageView.setFitWidth(50);
+                imageView.setFitHeight(50);
+
+                inventory.getChildren().add(imageView);
+                itemsInInventory++;
+
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage() + " | " + e.getClass());
+            }
+        } else {
+            System.out.println("DEBUG: For mange items i inventory");
+        }
+    }
+
+
 }

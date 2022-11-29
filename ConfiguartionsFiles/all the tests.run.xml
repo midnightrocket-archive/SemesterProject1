@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="all the tests" type="JUnit" factoryName="JUnit">
-    <module name="Semester1" />
+    <module name="SemesterProject1" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="resources.*" />
