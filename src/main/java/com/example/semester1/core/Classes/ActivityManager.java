@@ -3,15 +3,15 @@ package com.example.semester1.core.Classes;
 import java.util.ArrayList;
 
 public class ActivityManager {
-    private ActivityContainer noneDailyActivities;
+    private ActivityList noneDailyActivities;
 
-    private ActivityContainer dailyActivities;
+    private ActivityList dailyActivities;
 
 
     // Constructor
     public ActivityManager() {
-        this.noneDailyActivities = new ActivityContainer();
-        this.dailyActivities = new ActivityContainer();
+        this.noneDailyActivities = new ActivityList();
+        this.dailyActivities = new ActivityList();
     }
 
     public int calculatePoints() {
@@ -51,15 +51,15 @@ public class ActivityManager {
         return this.dailyActivities.areAllDone();
     }
 
-    public ActivityContainer getMissingDailyActivities() {
+    public ActivityList getMissingDailyActivities() {
         return this.dailyActivities.getMissingActivities();
     }
 
-    public ActivityContainer getMissingNoneDailyActivities() {
+    public ActivityList getMissingNoneDailyActivities() {
         return this.noneDailyActivities.getMissingActivities();
     }
 
-    public ActivityContainer getAllMissingActivities() {
+    public ActivityList getAllMissingActivities() {
         return this.getAllActivities().getMissingActivities();
     }
 
@@ -71,18 +71,18 @@ public class ActivityManager {
         return this.noneDailyActivities.getPowerLevels();
     }
 
-    public ActivityContainer getAllActivities() {
-        ActivityContainer container = new ActivityContainer();
+    public ActivityList getAllActivities() {
+        ActivityList container = new ActivityList();
         container.addAll(this.dailyActivities);
         container.addAll(this.noneDailyActivities);
         return container;
     }
 
-    public ActivityContainer getAllDailyActivities() {
+    public ActivityList getAllDailyActivities() {
         return this.dailyActivities;
     }
 
-    public ActivityContainer getAllNonDailyActivities() {
+    public ActivityList getAllNonDailyActivities() {
         return this.noneDailyActivities;
     }
 

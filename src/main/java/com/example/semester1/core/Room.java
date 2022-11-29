@@ -5,7 +5,7 @@ package com.example.semester1.core;
 import com.example.semester1.core.Classes.Appliance;
 import com.example.semester1.core.Classes.Inventory;
 import com.example.semester1.core.Classes.Item;
-import com.example.semester1.core.Classes.ReferenceContainer;
+import com.example.semester1.core.Classes.ReferenceList;
 import com.example.semester1.core.Utilities.Direction;
 
 import java.util.Map;
@@ -20,7 +20,7 @@ public class Room {
 
 
     private HashMap<Direction, Room> exits = new HashMap<Direction, Room>();
-    private ReferenceContainer<Appliance> roomAppliances = new ReferenceContainer<Appliance>();
+    private ReferenceList<Appliance> roomAppliances = new ReferenceList<Appliance>();
     private Inventory roomItems = new Inventory();
 
     public Room(String id, String displayName, String description) {

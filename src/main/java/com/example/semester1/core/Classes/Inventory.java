@@ -1,7 +1,7 @@
 package com.example.semester1.core.Classes;
 
 
-public class Inventory extends ReferenceContainer<Item> {
+public class Inventory extends ReferenceList<Item> {
     @Override
     public String toString() {
         if (this.isEmpty()) {

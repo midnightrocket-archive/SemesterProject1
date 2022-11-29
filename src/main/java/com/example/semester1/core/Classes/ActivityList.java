@@ -4,7 +4,7 @@ package com.example.semester1.core.Classes;
 import java.util.ArrayList;
 
 //package private class.
-public class ActivityContainer extends ReferenceContainer<Activity> {
+public class ActivityList extends ReferenceList<Activity> {
 
     public boolean areAllDone() {
         for (Activity activity : this) {
@@ -13,8 +13,8 @@ public class ActivityContainer extends ReferenceContainer<Activity> {
         return true;
     }
 
-    public ActivityContainer getMissingActivities() {
-        ActivityContainer output = new ActivityContainer();
+    public ActivityList getMissingActivities() {
+        ActivityList output = new ActivityList();
         for (Activity activity : this) {
             if (!activity.isDone()) {
                 output.add(activity);
