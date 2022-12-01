@@ -206,11 +206,6 @@ public class Game {
         return this.day >= this.maxDays;
     }
 
-    // Method for incrementing the day counter
-    public void setNextDay() {
-        this.day += 1;
-    }
-
     // Method for getting the power value
     public int getPower() {
         return this.power;
@@ -230,6 +225,10 @@ public class Game {
     // Method for getting the day value
     public int getDay() {
         return this.day;
+    }
+
+    public ActivityManager getActivityManager(){
+        return activityManager;
     }
 
 
