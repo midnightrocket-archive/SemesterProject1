@@ -18,7 +18,7 @@ import javafx.scene.layout.StackPane;
 import java.io.File;
 import java.io.IOException;
 
-public class MainController {
+public class GameController {
 
     Game game;
 

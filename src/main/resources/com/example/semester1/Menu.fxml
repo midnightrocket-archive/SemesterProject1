@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.semester1.MenuController" fx:id="menuPane">
+   <children>
+      <VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0">
+         <children>
+            <Label text="Semesterprojekt 1">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="362.0" layoutY="289.0" text="Udviklet af gruppe 1.3">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <VBox.margin>
+                  <Insets bottom="100.0" top="15.0" />
+               </VBox.margin>
+            </Label>
+            <Button mnemonicParsing="false" onAction="#startGame" text="Start">
+               <VBox.margin>
+                  <Insets bottom="150.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</GridPane>
