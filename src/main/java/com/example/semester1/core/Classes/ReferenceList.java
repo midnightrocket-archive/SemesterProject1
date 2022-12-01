@@ -8,7 +8,7 @@ import com.example.semester1.core.Interfaces.Aliasable;
 // https://docs.oracle.com/javase/tutorial/java/generics/bounded.html
 // https://docs.oracle.com/javase/tutorial/java//generics/types.html
 // Using a generic bounded type, which requires objects to implement the Aliasable interface.
-public class ReferenceContainer<E extends Aliasable> extends ArrayList<E> {
+public class ReferenceList<E extends Aliasable> extends ArrayList<E> {
 
     public E getByAlias(String alias) {
         for (E i : this) {

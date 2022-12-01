@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ActivityManagerTest {
 
     ActivityManager activityManager;
-    ActivityContainer activityContainer;
+    ActivityList activityContainer;
     Activity activity1;
     Activity activity2;
 
@@ -20,7 +20,7 @@ class ActivityManagerTest {
     @DisplayName("Test ActivityManager - Setup")
     public void setup() {
         activityManager = new ActivityManager();
-        activityContainer = new ActivityContainer();
+        activityContainer = new ActivityList();
         activity1 = new Activity("test", "displaytest", false, "itemtest", 5, 10, 15);
         activity2 = new Activity("test", "displaytest", true, "itemtest", 5, 10, 15);
     }
