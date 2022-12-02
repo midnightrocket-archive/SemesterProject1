@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.semester1.GameController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="570.0" minWidth="10.0" prefWidth="570.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="414.66668701171875" minWidth="10.0" prefWidth="230.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Pane maxHeight="400.0" maxWidth="570.0" minHeight="400.0" minWidth="570.0" prefHeight="400.0" prefWidth="570.0" />
+            <Label alignment="CENTER" prefHeight="27.0" prefWidth="746.0" style="-fx-border-color:#11111199; -fx-border-width: 4 0 0 0; -fx-border-style: solid; -fx-padding: 10 0 0 0" text="Inventory" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <HBox fx:id="inventory" maxHeight="150.0" minHeight="150.0" prefHeight="150.0" prefWidth="570.0" style="-fx-padding: 10 0 0 0; -fx-border-insets: 10 0 0 0" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color:#11111199; -fx-border-width: 0 0 0 4; -fx-border-style: solid; -fx-padding: 0 0 0 10" GridPane.columnIndex="1">
+         <children>
+            <VBox prefHeight="26.0" prefWidth="300.0">
+               <children>
+                  <Label fx:id="dayLabel" maxHeight="25.0" text="Day">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="7.0" top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label fx:id="pointsLabel" maxHeight="25.0" text="Points">
+                     <VBox.margin>
+                        <Insets bottom="7.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+                  <Label fx:id="powerLabel" maxHeight="25.0" text="Power">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="14.0" />
+                     </font></Label>
+               </children>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </VBox>
+            <Label alignment="TOP_CENTER" contentDisplay="TOP" maxHeight="32.0" maxWidth="200.0" minHeight="32.0" minWidth="200.0" prefHeight="32.0" prefWidth="200.0" text="Daglige opgaver">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ListView fx:id="activitiesList1" maxHeight="132.0" maxWidth="200.0" minHeight="132.0" minWidth="200.0" prefHeight="132.0" prefWidth="200.0" />
+            <Label alignment="TOP_CENTER" maxHeight="32.0" maxWidth="200.0" minHeight="32.0" minWidth="200.0" prefHeight="32.0" prefWidth="200.0" text="Ekstra opgaver">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </Label>
+            <ListView fx:id="activitiesList2" maxHeight="132.0" maxWidth="200.0" minHeight="132.0" minWidth="200.0" prefHeight="132.0" prefWidth="200.0" />
+            <StackPane maxHeight="105.0" maxWidth="200.0" minHeight="105.0" minWidth="200.0" prefHeight="105.0" prefWidth="200.0" style="-fx-background-color: #dddddd">
+               <children>
+                  <Label fx:id="consoleArea" alignment="TOP_LEFT" maxHeight="105.0" maxWidth="200.0" minHeight="105.0" minWidth="200.0" prefHeight="105.0" prefWidth="200.0" style="-fx-padding: 10 10 10 10" GridPane.columnIndex="1" />
+               </children>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </StackPane>
+         </children>
+      </VBox>
+   </children>
+</GridPane>
