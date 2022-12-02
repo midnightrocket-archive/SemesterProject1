@@ -22,7 +22,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <HBox fx:id="inventory" maxHeight="150.0" minHeight="150.0" prefHeight="150.0" prefWidth="570.0" style="-fx-padding: 10 0 0 0; -fx-border-insets: 10 0 0 0" />
+            <HBox fx:id="inventoryHBox" maxHeight="150.0" minHeight="150.0" prefHeight="150.0" prefWidth="570.0" style="-fx-padding: 10 0 0 0; -fx-border-insets: 10 0 0 0" />
          </children>
       </VBox>
       <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color:#11111199; -fx-border-width: 0 0 0 4; -fx-border-style: solid; -fx-padding: 0 0 0 10" GridPane.columnIndex="1">
@@ -73,7 +73,7 @@
                </VBox.margin>
             </Label>
             <ListView fx:id="activitiesList2" maxHeight="132.0" maxWidth="200.0" minHeight="132.0" minWidth="200.0" prefHeight="132.0" prefWidth="200.0" />
-            <StackPane maxHeight="105.0" maxWidth="200.0" minHeight="105.0" minWidth="200.0" prefHeight="105.0" prefWidth="200.0" style="-fx-background-color: #dddddd">
+            <StackPane maxHeight="105.0" maxWidth="200.0" minHeight="105.0" minWidth="200.0" prefHeight="105.0" prefWidth="200.0" style="-fx-background-color: #dddddd;">
                <children>
                   <Label fx:id="consoleArea" alignment="TOP_LEFT" maxHeight="105.0" maxWidth="200.0" minHeight="105.0" minWidth="200.0" prefHeight="105.0" prefWidth="200.0" style="-fx-padding: 10 10 10 10" GridPane.columnIndex="1" />
                </children>

@@ -1,6 +1,7 @@
 package com.example.semester1;
 
-import com.example.semester1.core.Classes.ActivityContainer;
+import com.example.semester1.core.Classes.ActivityList;
+import com.example.semester1.core.Classes.Inventory;
 import com.example.semester1.core.Game;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,17 +37,11 @@ public class GameController {
         activitiesList2.setItems(currentActivities2);
         activitiesList2.setFocusTraversable(false);
         this.updateActivities();
+        this.updateInventory();
 
         this.updateDay();
         this.updatePower();
         this.updatePoints();
-
-        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
-        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
-        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
-        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
-        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
-        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
     }
 
     // Activities
@@ -101,6 +96,7 @@ public class GameController {
         public void handle(MouseEvent mouseEvent) {
             i++;
             writeInConsoleArea("POWER " + i);
+            updateInventory();
         }
     };
 
@@ -173,13 +169,13 @@ public class GameController {
         activitiesList2.getItems().clear();
 
         // Daily:
-        ActivityContainer missingDailyActivities = game.getActivityManager().getMissingDailyActivities();
+        ActivityList missingDailyActivities = game.getActivityManager().getMissingDailyActivities();
         for (int i = 0; i < missingDailyActivities.size(); i++) {
             currentActivities1.add(missingDailyActivities.get(i).getDisplayName());
         }
 
         // Extra:
-        ActivityContainer missingExtraActivities = game.getActivityManager().getMissingNoneDailyActivities();
+        ActivityList missingExtraActivities = game.getActivityManager().getMissingNoneDailyActivities();
         for (int i = 0; i < missingExtraActivities.size(); i++) {
             currentActivities2.add(missingExtraActivities.get(i).getDisplayName());
         }
@@ -187,37 +183,46 @@ public class GameController {
 
     // Inventory
     @FXML
-    HBox inventory;
+    HBox inventoryHBox;
 
-    static int itemsInInventory;
+    public void updateInventory() {
+        // Deletes all items in the visual inventory
+        inventoryHBox.getChildren().clear();
 
-    public void addItemToInventory(String imageLink) {
-        if (itemsInInventory < 9) {
-            try {
-                File file = new File(imageLink);
+        // Gets all items in the inventory
+        Inventory inventory = game.getPlayer().getInventory();
+
+        // Try-catch statement, for loading a file
+        try {
+            for (int i = 0; i < inventory.size(); i++) {
+                // Gets the image and loads it
+                File file = new File("src/main/resources/com/example/semester1/" + "/assets/game/items/" + inventory.get(i).displayName() + ".png");
                 Image image = new Image(file.toURI().toString());
+
+                // Creates a imageView and a stackPane
                 ImageView imageView = new ImageView(image);
                 StackPane stackPane = new StackPane();
 
+                // Setting up the imageView
                 imageView.setFitWidth(50);
                 imageView.setFitHeight(50);
 
+                // Setting up the stackPane
                 stackPane.setPrefSize(50, 50);
                 stackPane.setMaxHeight(50);
                 stackPane.setMaxWidth(50);
                 stackPane.setAlignment(Pos.TOP_LEFT);
-                stackPane.setStyle("-fx-border-color:#11111199; -fx-border-width: 2 2 2 2; -fx-border-style: solid; -fx-padding: 0 0 0 0; -fx-border-insets: 0 0 0 10");
+                stackPane.setStyle("-fx-border-color:#11111199; -fx-border-width: 2 2 2 2; -fx-border-style: solid; -fx-border-insets: 0 0 0 10");
 
+                // Adds the imageView to the stackPane
                 stackPane.getChildren().add(imageView);
-                inventory.getChildren().add(stackPane);
-                itemsInInventory++;
 
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage() + " | " + e.getClass());
+                // Adds the stackPane to the visual inventory
+                inventoryHBox.getChildren().add(stackPane);
             }
-        } else {
-            System.out.println("DEBUG: For mange items i inventory");
+        } catch (Exception e) {
+            // Message if an exception happens in the try area
+            System.out.println(e.getMessage() + " | " + e.getClass());
         }
     }
 }
