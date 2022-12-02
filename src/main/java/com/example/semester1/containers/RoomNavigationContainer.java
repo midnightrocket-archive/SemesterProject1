@@ -1,21 +1,19 @@
 package com.example.semester1.containers;
 
+
 import com.example.semester1.core.Room;
 import com.example.semester1.core.Utilities.Direction;
 import com.example.semester1.events.GameEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -145,5 +143,9 @@ public class RoomNavigationContainer extends GridPane {
         for (Map.Entry<Direction, Room> exit : room.getAllExits().entrySet()) {
             this.setExitButton(exit.getKey(), exit.getValue().getDisplayName());
         }
+    }
+
+    public void updateView() {
+        this.roomView.updateView();
     }
 }

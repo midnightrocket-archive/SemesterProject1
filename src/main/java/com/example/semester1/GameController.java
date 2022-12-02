@@ -74,6 +74,14 @@ public class GameController {
             Command command = event.getCommand();
 
             System.out.println("Use appliance event received!");
+
+            /*
+             * Handle the event properly
+             */
+
+
+            // Should update the view after changes
+            this.roomNavigationContainer.updateView();
         });
         this.roomNavigationContainer.addEventHandler(GameEvent.PICKUP_ITEM, event -> {
             String itemId = event.getValue();
@@ -82,6 +90,14 @@ public class GameController {
             Command command = event.getCommand();
 
             System.out.println("Pickup item event received!");
+
+            /*
+             * Handle the event properly
+             */
+
+
+            // Should update the view after changes
+            this.roomNavigationContainer.updateView();
         });
     }
 
