@@ -46,12 +46,12 @@ public class MainController {
         this.updatePower();
         this.updatePoints();
 
-        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
-        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
-        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
-        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
-        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
-        addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
+        addItemToInventory("assets/UI/placeholderImage.png");
+        addItemToInventory("assets/UI/placeholderImage.png");
+        addItemToInventory("assets/UI/placeholderImage.png");
+        addItemToInventory("assets/UI/placeholderImage.png");
+        addItemToInventory("assets/UI/placeholderImage.png");
+        addItemToInventory("assets/UI/placeholderImage.png");
 
 
 
@@ -216,29 +216,22 @@ public class MainController {
 
     public void addItemToInventory(String imageLink) {
         if (itemsInInventory < 9) {
-            try {
-                File file = new File(imageLink);
-                Image image = new Image(file.toURI().toString());
-                ImageView imageView = new ImageView(image);
-                StackPane stackPane = new StackPane();
+            Image image = new Image(ResourceLoader.loadAsInputStream(imageLink));
+            ImageView imageView = new ImageView(image);
+            StackPane stackPane = new StackPane();
 
-                imageView.setFitWidth(50);
-                imageView.setFitHeight(50);
+            imageView.setFitWidth(50);
+            imageView.setFitHeight(50);
 
-                stackPane.setPrefSize(50, 50);
-                stackPane.setMaxHeight(50);
-                stackPane.setMaxWidth(50);
-                stackPane.setAlignment(Pos.TOP_LEFT);
-                stackPane.setStyle("-fx-border-color:#11111199; -fx-border-width: 2 2 2 2; -fx-border-style: solid; -fx-padding: 0 0 0 0; -fx-border-insets: 0 0 0 10");
+            stackPane.setPrefSize(50, 50);
+            stackPane.setMaxHeight(50);
+            stackPane.setMaxWidth(50);
+            stackPane.setAlignment(Pos.TOP_LEFT);
+            stackPane.setStyle("-fx-border-color:#11111199; -fx-border-width: 2 2 2 2; -fx-border-style: solid; -fx-padding: 0 0 0 0; -fx-border-insets: 0 0 0 10");
 
-                stackPane.getChildren().add(imageView);
-                inventory.getChildren().add(stackPane);
-                itemsInInventory++;
-
-
-            } catch (Exception e) {
-                System.out.println(e.getMessage() + " | " + e.getClass());
-            }
+            stackPane.getChildren().add(imageView);
+            inventory.getChildren().add(stackPane);
+            itemsInInventory++;
         } else {
             System.out.println("DEBUG: For mange items i inventory");
         }
