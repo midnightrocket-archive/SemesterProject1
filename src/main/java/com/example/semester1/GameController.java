@@ -1,6 +1,6 @@
 package com.example.semester1;
 
-import com.example.semester1.core.Classes.ActivityContainer;
+import com.example.semester1.core.Classes.ActivityList;
 import com.example.semester1.core.Game;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -173,13 +173,13 @@ public class GameController {
         activitiesList2.getItems().clear();
 
         // Daily:
-        ActivityContainer missingDailyActivities = game.getActivityManager().getMissingDailyActivities();
+        ActivityList missingDailyActivities = game.getActivityManager().getMissingDailyActivities();
         for (int i = 0; i < missingDailyActivities.size(); i++) {
             currentActivities1.add(missingDailyActivities.get(i).getDisplayName());
         }
 
         // Extra:
-        ActivityContainer missingExtraActivities = game.getActivityManager().getMissingNoneDailyActivities();
+        ActivityList missingExtraActivities = game.getActivityManager().getMissingNoneDailyActivities();
         for (int i = 0; i < missingExtraActivities.size(); i++) {
             currentActivities2.add(missingExtraActivities.get(i).getDisplayName());
         }
