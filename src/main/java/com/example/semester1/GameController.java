@@ -2,6 +2,7 @@ package com.example.semester1;
 
 import com.example.semester1.containers.RoomNavigationContainer;
 import com.example.semester1.core.Classes.ActivityList;
+import com.example.semester1.core.Command;
 import com.example.semester1.core.Game;
 import com.example.semester1.events.GameEvent;
 import javafx.collections.FXCollections;
@@ -61,6 +62,26 @@ public class GameController {
         this.roomNavigationContainer.addEventHandler(GameEvent.CHANGE_ROOM, event -> {
             game.goRoom(event.getCommand());
             this.roomNavigationContainer.setRoom(game.getCurrentRoom());
+        });
+
+        /*
+         * Fill these eventhandlers
+         */
+        this.roomNavigationContainer.addEventHandler(GameEvent.USE_APPLIANCE, event -> {
+            String applianceId = event.getValue();
+
+            // get command to pass to game.useAppliance method
+            Command command = event.getCommand();
+
+            System.out.println("Use appliance event received!");
+        });
+        this.roomNavigationContainer.addEventHandler(GameEvent.PICKUP_ITEM, event -> {
+            String itemId = event.getValue();
+
+            // get command to pass to game.pickupItem method
+            Command command = event.getCommand();
+
+            System.out.println("Pickup item event received!");
         });
     }
 

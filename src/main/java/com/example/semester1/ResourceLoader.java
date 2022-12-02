@@ -13,7 +13,7 @@ public class ResourceLoader {
         if (!path.startsWith("/")) {
             path = ResourceLoader.BASE_PATH + path;
         }
-        System.out.println(path);
+        //System.out.println(path);
         if (ResourceLoader.class.getResource(path) == null) {
             return ResourceLoader.class.getResourceAsStream(fallBack);
         } else {

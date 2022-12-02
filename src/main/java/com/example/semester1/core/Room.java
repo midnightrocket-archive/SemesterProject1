@@ -128,4 +128,11 @@ public class Room {
     public HashMap<Direction, Room> getAllExits() {
         return this.exits;
     }
+
+    public ReferenceList<Appliance> getAllAppliances() {
+        return this.roomAppliances;
+    }
+    public Inventory getAllItems() {
+        return this.roomItems;
+    }
 }
