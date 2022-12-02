@@ -1,7 +1,11 @@
 package com.example.semester1;
 
+import com.example.semester1.containers.RoomNavigationContainer;
+import com.example.semester1.core.Action;
 import com.example.semester1.core.Classes.ActivityList;
+import com.example.semester1.core.CommandImplementation;
 import com.example.semester1.core.Game;
+import com.example.semester1.events.GameEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -12,6 +16,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
@@ -47,11 +52,29 @@ public class MainController {
         addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
         addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
         addItemToInventory("src/main/resources/com/example/semester1/placeholderImage.png");
+
+
+
+
+        this.roomNavigationContainer = new RoomNavigationContainer();
+        this.roomOuterAnchorPane.getChildren().add(this.roomNavigationContainer);
+
+        this.roomNavigationContainer.setRoom(game.getCurrentRoom());
+        this.roomNavigationContainer.addEventHandler(GameEvent.CHANGE_ROOM, event -> {
+            game.goRoom(event.getCommand());
+            this.roomNavigationContainer.setRoom(game.getCurrentRoom());
+        });
     }
 
     // Activities
     ObservableList<String> currentActivities1 = FXCollections.observableArrayList();
     ObservableList<String> currentActivities2 = FXCollections.observableArrayList();
+
+
+    @FXML
+    private AnchorPane roomOuterAnchorPane;
+
+    private RoomNavigationContainer roomNavigationContainer;
 
     @FXML
     ListView activitiesList1 = new ListView();

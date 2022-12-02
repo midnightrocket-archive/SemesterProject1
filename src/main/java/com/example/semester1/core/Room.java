@@ -124,4 +124,8 @@ public class Room {
     public String getId() {
         return id;
     }
+
+    public HashMap<Direction, Room> getAllExits() {
+        return this.exits;
+    }
 }

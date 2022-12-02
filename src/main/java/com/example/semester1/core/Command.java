@@ -7,6 +7,4 @@ public interface Command {
     String getCommandValue();
 
     boolean hasCommandValue();
-
-    boolean isUnknown();
 }
