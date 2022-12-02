@@ -104,7 +104,7 @@ public class Game {
 
         Item itemInRoom = this.currentRoom.getItem(item);
 
-        this.currentRoom.removeItem(itemInRoom.id());
+        this.currentRoom.removeItem(itemInRoom.getId());
         this.player.addItem(itemInRoom);
 
         return true; // command succeeded
@@ -154,7 +154,7 @@ public class Game {
             return false;
         }
 
-        String activityId = appliance.activityId();
+        String activityId = appliance.getActivityId();
         Activity activity = this.activityManager.getAllActivities().getByAlias(activityId);
         String itemId = activity.getItemId();
 
@@ -178,14 +178,14 @@ public class Game {
             if (item == null) {
 
                 Item referenceItem = this.configs.getItemsStore().getByAlias(itemId);
-                //Load referenceItem, so its displayName can be used to tell the use what item is missing.
+                //Load referenceItem, so its getDisplayName can be used to tell the use what item is missing.
 
-                System.out.printf("You don't have '%s' in your inventory\n", referenceItem.displayName());
+                System.out.printf("You don't have '%s' in your inventory\n", referenceItem.getDisplayName());
                 return false;
             }
 
             this.player.removeItem(item);
-            System.out.printf("'%s' have been removed from your inventory\n", item.displayName());
+            System.out.printf("'%s' have been removed from your inventory\n", item.getDisplayName());
         }
 
         this.removePower(activity.getPowerCost());
