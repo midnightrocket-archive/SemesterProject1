@@ -1,9 +1,7 @@
 package com.example.semester1;
 
 import com.example.semester1.containers.RoomNavigationContainer;
-import com.example.semester1.core.Action;
 import com.example.semester1.core.Classes.ActivityList;
-import com.example.semester1.core.CommandImplementation;
 import com.example.semester1.core.Game;
 import com.example.semester1.events.GameEvent;
 import javafx.collections.FXCollections;
@@ -23,7 +21,7 @@ import javafx.scene.layout.StackPane;
 import java.io.File;
 import java.io.IOException;
 
-public class MainController {
+public class GameController {
 
     Game game;
 
