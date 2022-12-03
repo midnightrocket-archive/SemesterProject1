@@ -87,7 +87,7 @@ public class Room {
         StringBuilder stringBuilder = new StringBuilder("In this room you can use: \n");
 
         for (Appliance appliance : this.roomAppliances) {
-            stringBuilder.append(String.format(" - %s\n", appliance.displayName()));
+            stringBuilder.append(String.format(" - %s\n", appliance.getDisplayName()));
         }
 
         return stringBuilder.toString();
@@ -123,5 +123,16 @@ public class Room {
 
     public String getId() {
         return id;
+    }
+
+    public HashMap<Direction, Room> getAllExits() {
+        return this.exits;
+    }
+
+    public ReferenceList<Appliance> getAllAppliances() {
+        return this.roomAppliances;
+    }
+    public Inventory getAllItems() {
+        return this.roomItems;
     }
 }

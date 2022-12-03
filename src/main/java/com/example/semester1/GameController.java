@@ -1,8 +1,12 @@
 package com.example.semester1;
 
+import com.example.semester1.containers.RoomNavigationContainer;
 import com.example.semester1.core.Classes.ActivityList;
 import com.example.semester1.core.Classes.Inventory;
+import com.example.semester1.core.Classes.Appliance;
+import com.example.semester1.core.Command;
 import com.example.semester1.core.Game;
+import com.example.semester1.events.GameEvent;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -13,6 +17,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
@@ -25,7 +30,6 @@ public class GameController {
 
     @FXML
     public void initialize() throws IOException {
-        powerLabel.setOnMouseClicked(writeInConsoleAreaTester);
         dayLabel.setOnMouseClicked(dayTester);
 
         game = Game.createInstance("Player name");
@@ -42,11 +46,59 @@ public class GameController {
         this.updateDay();
         this.updatePower();
         this.updatePoints();
+
+
+        this.roomNavigationContainer = new RoomNavigationContainer();
+        this.roomOuterAnchorPane.getChildren().add(this.roomNavigationContainer);
+
+        this.roomNavigationContainer.setRoom(game.getCurrentRoom());
+        this.roomNavigationContainer.addEventHandler(GameEvent.CHANGE_ROOM, event -> {
+            game.goRoom(event.getCommand());
+            this.roomNavigationContainer.setRoom(game.getCurrentRoom());
+        });
+
+        this.roomNavigationContainer.addEventHandler(GameEvent.USE_APPLIANCE, event -> {
+            String applianceId = event.getValue();
+
+            // get command to pass to game.useAppliance method
+            Command command = event.getCommand();
+
+            System.out.println("Appliance: " + applianceId);
+            if (game.useCommand(command)) {
+                writeInConsoleArea("You have completed: " + game.getActivityManager().getAllActivities().getByAlias(game.getCurrentRoom().getAppliance(applianceId).getActivityId()).getDisplayName());
+
+                // Updates everything on the GUI
+                this.updateAll();
+            } else {
+                writeInConsoleArea("You can't do that");
+            }
+        });
+        this.roomNavigationContainer.addEventHandler(GameEvent.PICKUP_ITEM, event -> {
+            String itemId = event.getValue();
+
+            // Get command to pass to game.pickupItem method
+            Command command = event.getCommand();
+
+            if (game.pickupItem(command)) {
+                writeInConsoleArea("Picked up " + game.getPlayer().getItem(itemId).getDisplayName());
+
+                // Updates everything on the GUI
+                this.updateAll();
+            } else {
+                writeInConsoleArea("You can't do that");
+            }
+        });
     }
 
     // Activities
     ObservableList<String> currentActivities1 = FXCollections.observableArrayList();
     ObservableList<String> currentActivities2 = FXCollections.observableArrayList();
+
+
+    @FXML
+    private AnchorPane roomOuterAnchorPane;
+
+    private RoomNavigationContainer roomNavigationContainer;
 
     @FXML
     ListView activitiesList1 = new ListView();
@@ -69,6 +121,15 @@ public class GameController {
 
     //Stats methods
 
+    public void updateAll() {
+        this.updatePower();
+        this.updateDay();
+        this.updatePoints();
+        this.updateActivities();
+        this.roomNavigationContainer.updateView();
+        //this.updateInventory();
+    }
+
     public void updatePower() {
         powerLabel.setText("Current Power: " + game.getPower());
     }
@@ -90,23 +151,11 @@ public class GameController {
 
     static int i;
 
-
-    EventHandler<MouseEvent> writeInConsoleAreaTester = new EventHandler<>() {
-        @Override
-        public void handle(MouseEvent mouseEvent) {
-            i++;
-            writeInConsoleArea("POWER " + i);
-            updateInventory();
-        }
-    };
-
     EventHandler<MouseEvent> dayTester = new EventHandler<>() {
         @Override
         public void handle(MouseEvent mouseEvent) {
             game.sleepCommand();
-            updateDay();
-            updatePoints();
-            updatePower();
+            updateAll();
         }
     };
 

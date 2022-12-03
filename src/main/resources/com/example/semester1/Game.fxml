@@ -16,7 +16,7 @@
    <children>
       <VBox prefHeight="200.0" prefWidth="100.0">
          <children>
-            <Pane maxHeight="400.0" maxWidth="570.0" minHeight="400.0" minWidth="570.0" prefHeight="400.0" prefWidth="570.0" />
+            <AnchorPane fx:id="roomOuterAnchorPane" maxHeight="400.0" maxWidth="570.0" minHeight="400.0" minWidth="570.0" prefHeight="400.0" prefWidth="570.0" />
             <Label alignment="CENTER" prefHeight="27.0" prefWidth="746.0" style="-fx-border-color:#11111199; -fx-border-width: 4 0 0 0; -fx-border-style: solid; -fx-padding: 10 0 0 0" text="Inventory" textAlignment="CENTER">
                <font>
                   <Font size="24.0" />

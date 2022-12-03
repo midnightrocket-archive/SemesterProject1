@@ -55,10 +55,4 @@ public class CommandImplementation implements Command {
     public boolean hasCommandValue() {
         return (this.commandValue != null);
     }
-
-    // Returns true if the command enum is not valid.
-    @Override
-    public boolean isUnknown() {
-        return (this.action == Action.UNKNOWN);
-    }
 }

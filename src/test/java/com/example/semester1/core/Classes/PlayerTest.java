@@ -37,7 +37,7 @@ class PlayerTest {
         // Test with removing Item as a string
         player.addItem(item);
         assertTrue(player.hasItem(item));
-        player.removeItem(item.displayName());
+        player.removeItem(item.getDisplayName());
         assertFalse(player.hasItem(item));
     }
 
@@ -54,7 +54,7 @@ class PlayerTest {
     public void testGetItem() {
         player.addItem(item);
 
-        assertEquals(item, player.getItem(item.displayName()));
+        assertEquals(item, player.getItem(item.getDisplayName()));
     }
 
 

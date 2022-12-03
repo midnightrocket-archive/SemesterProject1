@@ -11,7 +11,7 @@ public class Inventory extends ReferenceList<Item> {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (Item item : this) {
-            stringBuilder.append(String.format(" - %s\n", item.displayName()));
+            stringBuilder.append(String.format(" - %s\n", item.getDisplayName()));
         }
 
         return stringBuilder.toString();
