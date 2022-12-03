@@ -3,7 +3,6 @@ package com.example.semester1;
 import com.example.semester1.containers.RoomNavigationContainer;
 import com.example.semester1.core.Classes.ActivityList;
 import com.example.semester1.core.Classes.Inventory;
-import com.example.semester1.core.Classes.Appliance;
 import com.example.semester1.core.Command;
 import com.example.semester1.core.Game;
 import com.example.semester1.events.GameEvent;
@@ -21,7 +20,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
-import java.io.File;
 import java.io.IOException;
 
 public class GameController {
@@ -63,9 +61,8 @@ public class GameController {
             // get command to pass to game.useAppliance method
             Command command = event.getCommand();
 
-            System.out.println("Appliance: " + applianceId);
             if (game.useCommand(command)) {
-                writeInConsoleArea("You have completed: " + game.getActivityManager().getAllActivities().getByAlias(game.getCurrentRoom().getAppliance(applianceId).getActivityId()).getDisplayName());
+                writeInConsoleArea("Task completed: " + game.getActivityManager().getAllActivities().getByAlias(game.getCurrentRoom().getAppliance(applianceId).getActivityId()).getDisplayName());
 
                 // Updates everything on the GUI
                 this.updateAll();
@@ -80,7 +77,7 @@ public class GameController {
             Command command = event.getCommand();
 
             if (game.pickupItem(command)) {
-                writeInConsoleArea("Picked up " + game.getPlayer().getItem(itemId).getDisplayName());
+                writeInConsoleArea("Picked up: " + game.getPlayer().getItem(itemId).getDisplayName());
 
                 // Updates everything on the GUI
                 this.updateAll();
@@ -127,7 +124,7 @@ public class GameController {
         this.updatePoints();
         this.updateActivities();
         this.roomNavigationContainer.updateView();
-        //this.updateInventory();
+        this.updateInventory();
     }
 
     public void updatePower() {
@@ -245,8 +242,7 @@ public class GameController {
         try {
             for (int i = 0; i < inventory.size(); i++) {
                 // Gets the image and loads it
-                File file = new File("src/main/resources/com/example/semester1/" + "/assets/game/items/" + inventory.get(i).displayName() + ".png");
-                Image image = new Image(file.toURI().toString());
+                Image image = new Image(ResourceLoader.loadAsInputStream("assets/game/items/" + inventory.get(i).getId() + ".png"));
 
                 // Creates a imageView and a stackPane
                 ImageView imageView = new ImageView(image);
