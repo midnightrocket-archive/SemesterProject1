@@ -2,6 +2,7 @@ package com.example.semester1;
 
 import com.example.semester1.containers.RoomNavigationContainer;
 import com.example.semester1.core.Classes.ActivityList;
+import com.example.semester1.core.Classes.Appliance;
 import com.example.semester1.core.Command;
 import com.example.semester1.core.Game;
 import com.example.semester1.events.GameEvent;
@@ -28,7 +29,6 @@ public class GameController {
 
     @FXML
     public void initialize() throws IOException {
-        powerLabel.setOnMouseClicked(writeInConsoleAreaTester);
         dayLabel.setOnMouseClicked(dayTester);
 
         game = Game.createInstance("Player name");
@@ -53,8 +53,6 @@ public class GameController {
         addItemToInventory("assets/UI/placeholderImage.png");
 
 
-
-
         this.roomNavigationContainer = new RoomNavigationContainer();
         this.roomOuterAnchorPane.getChildren().add(this.roomNavigationContainer);
 
@@ -64,40 +62,36 @@ public class GameController {
             this.roomNavigationContainer.setRoom(game.getCurrentRoom());
         });
 
-        /*
-         * Fill these eventhandlers
-         */
         this.roomNavigationContainer.addEventHandler(GameEvent.USE_APPLIANCE, event -> {
             String applianceId = event.getValue();
 
             // get command to pass to game.useAppliance method
             Command command = event.getCommand();
 
-            System.out.println("Use appliance event received!");
+            System.out.println("Appliance: " + applianceId);
+            if (game.useCommand(command)) {
+                writeInConsoleArea("You have completed: " + game.getActivityManager().getAllActivities().getByAlias(game.getCurrentRoom().getAppliance(applianceId).getActivityId()).getDisplayName());
 
-            /*
-             * Handle the event properly
-             */
-
-
-            // Should update the view after changes
-            this.roomNavigationContainer.updateView();
+                // Updates everything on the GUI
+                this.updateAll();
+            } else {
+                writeInConsoleArea("You can't do that");
+            }
         });
         this.roomNavigationContainer.addEventHandler(GameEvent.PICKUP_ITEM, event -> {
             String itemId = event.getValue();
 
-            // get command to pass to game.pickupItem method
+            // Get command to pass to game.pickupItem method
             Command command = event.getCommand();
 
-            System.out.println("Pickup item event received!");
+            if (game.pickupItem(command)) {
+                writeInConsoleArea("Picked up " + game.getPlayer().getItem(itemId).getDisplayName());
 
-            /*
-             * Handle the event properly
-             */
-
-
-            // Should update the view after changes
-            this.roomNavigationContainer.updateView();
+                // Updates everything on the GUI
+                this.updateAll();
+            } else {
+                writeInConsoleArea("You can't do that");
+            }
         });
     }
 
@@ -132,6 +126,15 @@ public class GameController {
 
     //Stats methods
 
+    public void updateAll() {
+        this.updatePower();
+        this.updateDay();
+        this.updatePoints();
+        this.updateActivities();
+        this.roomNavigationContainer.updateView();
+        //this.updateInventory();
+    }
+
     public void updatePower() {
         powerLabel.setText("Current Power: " + game.getPower());
     }
@@ -153,22 +156,11 @@ public class GameController {
 
     static int i;
 
-
-    EventHandler<MouseEvent> writeInConsoleAreaTester = new EventHandler<>() {
-        @Override
-        public void handle(MouseEvent mouseEvent) {
-            i++;
-            writeInConsoleArea("POWER " + i);
-        }
-    };
-
     EventHandler<MouseEvent> dayTester = new EventHandler<>() {
         @Override
         public void handle(MouseEvent mouseEvent) {
             game.sleepCommand();
-            updateDay();
-            updatePoints();
-            updatePower();
+            updateAll();
         }
     };
 
