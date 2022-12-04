@@ -1,11 +1,7 @@
 package com.example.semester1.core.Classes;
 
-import com.example.semester1.core.Interfaces.Aliasable;
 
-
-public class Activity implements Aliasable {
-    private final String id;
-    private final String displayName; // The name of the activity. Will show up in possible activities.
+public class Activity extends AliasableImplementation {
     private final String itemId;
     private final boolean daily; // Determines if the task is daily (Daily=true, non-daily=false)
     private int successPoints; // Positive number for number of points to receive when completing the activity.
@@ -17,8 +13,7 @@ public class Activity implements Aliasable {
     private int successCounter = 0;
 
     public Activity(String id, String displayName, boolean daily, String itemId, int successPoints, int failurePoints, int powerCost) {
-        this.id = id;
-        this.displayName = displayName;
+        super(id, displayName);
         this.daily = daily;
         this.itemId = itemId;
 
@@ -67,18 +62,6 @@ public class Activity implements Aliasable {
         }
     }
 
-    public boolean hasAlias(String alias) {
-        alias = alias.toLowerCase().trim();
-        return alias.equals(this.id.toLowerCase()) || alias.equals(this.displayName.toLowerCase());
-    }
-
-    public String getId() {
-        return this.id;
-    }
-
-    public String getDisplayName() {
-        return this.displayName;
-    }
 
     public int getSuccessPoints() {
         return this.successPoints;
@@ -130,6 +113,6 @@ public class Activity implements Aliasable {
 
     @Override
     public String toString() {
-        return String.format("'%s' power=%d %s", this.displayName, this.getPowerCost(), this.doneToString());
+        return String.format("'%s' power=%d %s", this.getDisplayName(), this.getPowerCost(), this.doneToString());
     }
 }
