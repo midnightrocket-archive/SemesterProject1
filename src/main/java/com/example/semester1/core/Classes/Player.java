@@ -37,6 +37,10 @@ public class Player {
         return this.inventory.getByAlias(alias);
     }
 
+    public Inventory getInventory() {
+        return inventory;
+    }
+
     public String inventoryToString() {
         return this.inventory.toString();
     }
