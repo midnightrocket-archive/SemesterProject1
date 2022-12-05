@@ -1,6 +1,6 @@
 package com.example.semester1.core.Classes;
 
-public class Appliance extends AliasableImplementation {
+public class Appliance extends Item {
     private final String activityId;
 
     public Appliance(String id, String displayName, String activityId) {
