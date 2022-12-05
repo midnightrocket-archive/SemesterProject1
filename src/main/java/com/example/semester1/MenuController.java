@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class MenuController {
-
     @FXML
     GridPane menuPane;
 

@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class Game {
 
-    private static boolean isInitialized = false;
+    private static Game instance;
 
     private int day;
     private int maxDays;
@@ -41,7 +41,7 @@ public class Game {
 
 
         this.maxDays = 7;
-        this.day = 0;
+        this.day = 1;
 
 
         this.defaultPower = activityManager.getDailyPowerRequirement();
@@ -53,12 +53,16 @@ public class Game {
     }
 
     public static Game createInstance(String name) throws IOException {
-        if (Game.isInitialized) throw new IllegalStateException("Game is already initialized");
+        if (Game.instance != null) throw new IllegalStateException("Game is already initialized");
 
-        Game.isInitialized = true;
-        return new Game(name);
+        return instance = new Game(name);
     }
 
+    public static Game getInstance() throws IOException {
+        if (Game.instance == null) throw new IllegalStateException("Game is not initialized");
+
+        return instance;
+    }
 
 
     public boolean goRoom(Command command) {

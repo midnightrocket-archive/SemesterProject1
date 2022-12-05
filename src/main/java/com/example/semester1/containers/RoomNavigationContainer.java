@@ -1,6 +1,5 @@
 package com.example.semester1.containers;
 
-
 import com.example.semester1.core.Room;
 import com.example.semester1.core.Utilities.Direction;
 import com.example.semester1.events.GameEvent;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 /*
  * Class to contain room view and buttons to change to other rooms.
  */
@@ -26,7 +24,7 @@ public class RoomNavigationContainer extends GridPane {
 
     private static Node getArrowNode(Direction direction) {
         // Just using rectangle as placeholder
-        Node node = new Rectangle(10,20);
+        Node node = new Rectangle(10, 20);
 
         node.setRotate(90 * switch (direction) {
             case NORTH -> 0;
@@ -43,22 +41,15 @@ public class RoomNavigationContainer extends GridPane {
     private ArrayList<Node> exitButtonNodes = new ArrayList<>();
 
     public RoomNavigationContainer() {
-
-
-
         this.roomView = new RoomView();
         this.add(this.roomView, 1, 1);
-
 
         this.setGridLinesVisible(false);
 
         Color color = Color.GREEN;
-        BorderStroke borderStroke = new BorderStroke(color, BorderStrokeStyle.DOTTED,CornerRadii.EMPTY ,BorderWidths.DEFAULT);
+        BorderStroke borderStroke = new BorderStroke(color, BorderStrokeStyle.DOTTED, CornerRadii.EMPTY, BorderWidths.DEFAULT);
         Border border = new Border(borderStroke);
         this.setBorder(border);
-
-
-
 
         this.setGridConstraints(25);
         this.setAnchors(0);
@@ -70,13 +61,13 @@ public class RoomNavigationContainer extends GridPane {
     }
 
 
-
     private void setAnchors(double value) {
         AnchorPane.setTopAnchor(this, value);
         AnchorPane.setRightAnchor(this, value);
         AnchorPane.setBottomAnchor(this, value);
         AnchorPane.setLeftAnchor(this, value);
     }
+
     private void setGridConstraints(int size) {
         ColumnConstraints outerColConstraints = new ColumnConstraints(size);
         ColumnConstraints innerColConstraints = new ColumnConstraints();
@@ -88,8 +79,6 @@ public class RoomNavigationContainer extends GridPane {
         colConstraints.add(innerColConstraints);
         colConstraints.add(outerColConstraints);
 
-
-
         RowConstraints outerRowConstraints = new RowConstraints(size);
         RowConstraints innerRowConstraints = new RowConstraints();
         innerRowConstraints.setVgrow(Priority.ALWAYS);
@@ -100,8 +89,6 @@ public class RoomNavigationContainer extends GridPane {
         rowConstraints.add(innerRowConstraints);
         rowConstraints.add(outerRowConstraints);
     }
-
-
 
     private void setExitButton(Direction direction, String roomName) {
         Node node = RoomNavigationContainer.getArrowNode(direction);
@@ -122,7 +109,7 @@ public class RoomNavigationContainer extends GridPane {
         GridPane.setHalignment(node, HPos.CENTER);
         GridPane.setValignment(node, VPos.CENTER);
 
-        node.addEventHandler(MouseEvent.MOUSE_CLICKED, (event)-> {
+        node.addEventHandler(MouseEvent.MOUSE_CLICKED, (event) -> {
             GameEvent gameEvent = new GameEvent(GameEvent.CHANGE_ROOM);
             gameEvent.setValue(direction.toString());
             node.fireEvent(gameEvent);
@@ -135,7 +122,6 @@ public class RoomNavigationContainer extends GridPane {
             children.remove(node);
         }
     }
-
 
     public void setRoom(Room room) {
         this.roomView.setRoom(room);
