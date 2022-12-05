@@ -25,6 +25,8 @@ public class ConfigLoader {
     private final String configDirPath;
     private Properties gameProperties = new Properties();
 
+    private HashMap<String, Properties> allRoomProperties = new HashMap<>();
+
 
     private HashMap<String, Room> roomsHashMap = new HashMap<String, Room>();
     private HashMap<String, Appliance> appliancesHashMap = new HashMap<String, Appliance>();
@@ -69,13 +71,6 @@ public class ConfigLoader {
     public ConfigLoader() throws IOException {
         this(ConfigLoader.getDefaultConfigDirPath());
     }
-
-
-    /*public static void main(String[] args) throws IOException {
-        ConfigLoader loader = new ConfigLoader(new ActivityManager());
-
-
-    }*/
 
 
     private String getFullPathFromPathArray(boolean appendExtension, String... pathArray) {
@@ -197,7 +192,8 @@ public class ConfigLoader {
 
             String roomId = ConfigLoader.stripExtension(roomFile);
 
-            //System.out.println(roomProperties);
+
+            this.allRoomProperties.put(roomId, roomProperties);
 
 
             String displayName = roomProperties.getProperty("displayName");
@@ -208,31 +204,39 @@ public class ConfigLoader {
         }
     }
 
-    private void configureAllRooms() throws IOException {
+    private void configureAllRooms() {
         for (Map.Entry<String, Room> entry : this.roomsHashMap.entrySet()) {
             Room roomObject = entry.getValue();
-            Properties roomProperties = this.readProperties(ConfigLoader.ROOMS_DIR_PATH, entry.getKey());
+
+            Properties roomProperties = this.allRoomProperties.get(entry.getKey());
             this.setExitsInRoom(roomObject, roomProperties);
 
 
+            this.setItems(roomObject, roomProperties);
 
-            String[] itemIds = roomProperties.getProperty("itemId").split(",");
 
-            for (String itemId : itemIds) {
-                if (!itemId.equals(ConfigLoader.NONE_KEYWORD)) {
-                    Item item = this.itemsStore.getByAlias(itemId);
-                    roomObject.addItem(item);
-                }
+            this.setAppliances(roomObject, roomProperties);
+        }
+    }
+
+    private void setAppliances(Room roomObject, Properties roomProperties) {
+        String[] applianceIds = roomProperties.getProperty("applianceId").split(",");
+
+        for (String applianceId : applianceIds) {
+            if (!applianceId.equals(ConfigLoader.NONE_KEYWORD)) {
+                Appliance appliance = this.appliancesHashMap.get(applianceId);
+                roomObject.addAppliance(appliance);
             }
+        }
+    }
 
+    private void setItems(Room roomObject, Properties roomProperties) {
+        String[] itemIds = roomProperties.getProperty("itemId").split(",");
 
-            String[] applianceIds = roomProperties.getProperty("applianceId").split(",");
-
-            for (String applianceId : applianceIds) {
-                if (!applianceId.equals(ConfigLoader.NONE_KEYWORD)) {
-                    Appliance appliance = this.appliancesHashMap.get(applianceId);
-                    roomObject.addAppliance(appliance);
-                }
+        for (String itemId : itemIds) {
+            if (!itemId.equals(ConfigLoader.NONE_KEYWORD)) {
+                Item item = this.itemsStore.getByAlias(itemId);
+                roomObject.addItem(item);
             }
         }
     }
