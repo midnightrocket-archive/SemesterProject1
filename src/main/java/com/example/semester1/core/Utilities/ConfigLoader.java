@@ -268,9 +268,12 @@ public class ConfigLoader {
 
         for (Activity a : this.activityManager.getAllDailyActivities()) {
             String itemId = a.getItemId();
-            Item item = this.itemsStore.getByAlias(itemId);
 
-            roomsArray[random.nextInt(numberOfRooms)].addItem(item);
+            if (!itemId.equals(ConfigLoader.NONE_KEYWORD)) {
+                Item item = this.itemsStore.getByAlias(itemId);
+
+                roomsArray[random.nextInt(numberOfRooms)].addItem(item);
+            }
         }
     }
 }
