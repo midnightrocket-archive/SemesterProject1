@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -18,14 +19,19 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class GameController {
 
     // FXML variables
+    @FXML
+    GridPane gamePane;
+
     @FXML
     Label dayLabel;
 
@@ -69,7 +75,11 @@ public class GameController {
 
 
         // Creates an instance of Game
-        game = Game.createInstance("Insert player name here");
+        try {
+            game = Game.createInstance("Insert player name here");
+        } catch (IllegalStateException e) {
+            game = Game.getInstance();
+        }
 
 
         // Related to activities:
@@ -98,13 +108,23 @@ public class GameController {
             // get command to pass to game.useAppliance method
             Command command = event.getCommand();
 
-            if (game.useCommand(command)) {
-                writeInConsoleArea("Task completed: " + game.getActivityManager().getAllActivities().getByAlias(game.getCurrentRoom().getAppliance(applianceId).getActivityId()).getDisplayName());
+            if (Objects.equals(applianceId, "bed")) {
+                writeInConsoleArea("Ending day");
 
-                // Updates everything on the GUI
-                this.updateAll();
+                try {
+                    this.goToBed();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
-                writeInConsoleArea("You can't do that");
+                if (game.useCommand(command)) {
+                    writeInConsoleArea("Task completed: " + game.getActivityManager().getAllActivities().getByAlias(game.getCurrentRoom().getAppliance(applianceId).getActivityId()).getDisplayName());
+
+                    // Updates everything on the GUI
+                    this.updateAll();
+                } else {
+                    writeInConsoleArea("You can't do that");
+                }
             }
         });
 
@@ -261,6 +281,12 @@ public class GameController {
         }
 
         consoleArea.setText(output.toString());
+    }
+
+
+    public void goToBed() throws IOException {
+        GridPane sleepGridPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(("Sleep.fxml"))));
+        gamePane.getChildren().setAll(sleepGridPane);
     }
 
 

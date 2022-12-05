@@ -5,8 +5,6 @@ import com.example.semester1.core.Command;
 import javafx.event.Event;
 import javafx.event.EventType;
 
-
-
 /*
  * Custom GameEvent which handles custom game events.
  */
@@ -18,14 +16,10 @@ public class GameEvent extends Event {
     public static final EventType<GameEvent> USE_APPLIANCE = new EventType<>(GameEvent.ANY, "USE_APPLIANCE");
     public static final EventType<GameEvent> PICKUP_ITEM = new EventType<>(GameEvent.ANY, "PICKUP_ITEM");
 
-
-
     private String value;
     public GameEvent(EventType<? extends GameEvent> eventType) {
         super(eventType);
     }
-
-
 
     public void setValue(String value) {
         this.value = value;

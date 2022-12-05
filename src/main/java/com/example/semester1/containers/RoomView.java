@@ -72,7 +72,7 @@ public class RoomView extends AnchorPane {
         this.setAnchorsOnGridPane(1);
 
         Color color = Color.BLACK;
-        BorderStroke borderStroke = new BorderStroke(color, BorderStrokeStyle.SOLID, CornerRadii.EMPTY , BorderWidths.DEFAULT);
+        BorderStroke borderStroke = new BorderStroke(color, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT);
         Border border = new Border(borderStroke);
         this.setBorder(border);
     }
@@ -134,7 +134,6 @@ public class RoomView extends AnchorPane {
             this.grid.addRow(1, node);
         }
     }
-
 
     private void setBackground() {
         Image image = new Image(ResourceLoader.loadGameAssetAsInputStream("rooms", this.room.getId()));
