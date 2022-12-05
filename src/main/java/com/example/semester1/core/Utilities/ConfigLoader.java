@@ -3,61 +3,30 @@ package com.example.semester1.core.Utilities;
 import com.example.semester1.core.Classes.*;
 import com.example.semester1.core.Room;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.*;
 
 public class ConfigLoader {
     private static final String NONE_KEYWORD = "none";
-    private static final String EXTENSION = ".properties";
-    private static final String GAME_CONFIG_PATH = "game" + ConfigLoader.EXTENSION;
-
-    //Sub folders
-    private static final String ITEMS_DIR_PATH = "items";
-    private static final String ACTIVITIES_DIR_PATH = "activities";
-    private static final String APPLIANCES_DIR_PATH = "appliances";
-    private static final String ROOMS_DIR_PATH = "rooms";
-
-
-    private final String configDirPath;
-    private Properties gameProperties = new Properties();
+    private Properties gameProperties;
 
     private HashMap<String, Properties> allRoomProperties = new HashMap<>();
 
 
-    private HashMap<String, Room> roomsHashMap = new HashMap<String, Room>();
-    private HashMap<String, Appliance> appliancesHashMap = new HashMap<String, Appliance>();
+    private HashMap<String, Room> roomsHashMap = new HashMap<>();
+    private HashMap<String, Appliance> appliancesHashMap = new HashMap<>();
     private Inventory itemsStore = new Inventory();
     private ActivityManager activityManager = new ActivityManager();
 
+    private PropertiesLoader propertiesLoader;
 
-    public static String getDefaultConfigDirPath() {
-        StringBuilder path = new StringBuilder();
-        path.append(System.getProperty("user.dir"));
-
-        path.append(File.separatorChar);
-        path.append("gameConfigs");
-        return path.toString();
-    }
-
-    public static String stripExtension(String path) {
-        if (path.endsWith(ConfigLoader.EXTENSION)) {
-            return path.substring(0, path.length() - ConfigLoader.EXTENSION.length());
-        } else {
-            return path;
-        }
-    }
 
     /*
      *      ** Constructors **
      */
-
     public ConfigLoader(String configDirPath) throws IOException {
-        this.configDirPath = configDirPath;
-        this.gameProperties = this.readProperties(ConfigLoader.GAME_CONFIG_PATH);
+        this.propertiesLoader = new PropertiesLoader(configDirPath);
+        this.gameProperties = propertiesLoader.loadGameProperties();
 
         this.initAllRooms();
         this.loadActivities();
@@ -69,82 +38,15 @@ public class ConfigLoader {
     }
 
     public ConfigLoader() throws IOException {
-        this(ConfigLoader.getDefaultConfigDirPath());
+        this(PropertiesLoader.getDefaultConfigDirPath());
     }
-
-
-    private String getFullPathFromPathArray(boolean appendExtension, String... pathArray) {
-        //Using variable arguments (...varargs)
-        //https://www.geeksforgeeks.org/variable-arguments-varargs-in-java/
-
-        StringBuilder filePath = new StringBuilder(this.configDirPath);
-        /*
-        Constructing file path from pathArray, using the proper file separators for the system.
-        This enables better compatibility between DOS and UNIX systems.
-         */
-        for (String section : pathArray) {
-            filePath.append(File.separatorChar);
-            filePath.append(section);
-        }
-
-        String filePathString = filePath.toString();
-
-        if (!filePathString.endsWith(ConfigLoader.EXTENSION) && appendExtension) {
-            filePathString += ConfigLoader.EXTENSION;
-        }
-
-        return filePathString;
-    }
-
-    private String getFullPathFromPathArray(String... pathArray) {
-        return this.getFullPathFromPathArray(true, pathArray);
-    }
-
-    private Properties readProperties(String... pathArray) throws IOException {
-        //Using variable arguments (...varargs)
-        //https://www.geeksforgeeks.org/variable-arguments-varargs-in-java/
-
-        Properties properties = new Properties(this.loadDefaultProperties(pathArray.clone()));
-
-        File file = new File(this.getFullPathFromPathArray(pathArray));
-        //Using the try-with-resource construct, so that it auto closes the FileReader on IOException.
-        try (FileReader fileReader = new FileReader(file)) {
-            properties.load(fileReader);
-        }
-
-        return properties;
-    }
-
-
-    private Properties loadDefaultProperties(String... pathArray) throws IOException {
-        pathArray[pathArray.length - 1] = "default";
-        Properties properties = new Properties();
-
-        File file = new File(this.getFullPathFromPathArray(pathArray));
-
-
-        try (FileReader fileReader = new FileReader(file)) {
-            properties.load(fileReader);
-        } catch (FileNotFoundException exception) {
-            //ignore.Pass empty properties instead.
-            //System.out.println("No default properties found, continuing with empty properties");
-        }
-        return properties;
-    }
-
-    private String[] getContentsOfDir(String... pathArray) {
-        String path = this.getFullPathFromPathArray(false, pathArray);
-        FilenameFilter ignoreFilter = new IgnoreFilenamesFilter(true, "default.properties");
-        return new File(path).list(ignoreFilter);
-    }
-
 
 
     private void loadAppliances() throws IOException {
-        String[] fileNames = this.getContentsOfDir(ConfigLoader.APPLIANCES_DIR_PATH);
-        for (String n : fileNames) {
-            String id = ConfigLoader.stripExtension(n);
-            Properties properties = this.readProperties(ConfigLoader.APPLIANCES_DIR_PATH, n);
+        HashMap<String, Properties> allProperties = this.propertiesLoader.loadAppliancesProperties();
+        for (Map.Entry<String, Properties> n : allProperties.entrySet()) {
+            String id = n.getKey();
+            Properties properties = n.getValue();
             String displayName = properties.getProperty("displayName");
             String activityId = properties.getProperty("activityId");
 
@@ -155,10 +57,10 @@ public class ConfigLoader {
     }
 
     private void loadItems() throws IOException {
-        String[] fileNames = this.getContentsOfDir(ConfigLoader.ITEMS_DIR_PATH);
-        for (String n : fileNames) {
-            String id = ConfigLoader.stripExtension(n);
-            Properties properties = this.readProperties(ConfigLoader.ITEMS_DIR_PATH, n);
+        HashMap<String, Properties> allProperties = this.propertiesLoader.loadItemProperties();
+        for (Map.Entry<String, Properties> n : allProperties.entrySet()) {
+            String id = n.getKey();
+            Properties properties = n.getValue();
             String displayName = properties.getProperty("displayName");
 
             Item object = new Item(id, displayName);
@@ -167,10 +69,11 @@ public class ConfigLoader {
     }
 
     private void loadActivities() throws IOException {
-        String[] fileNames = this.getContentsOfDir(ConfigLoader.ACTIVITIES_DIR_PATH);
-        for (String n : fileNames) {
-            String id = ConfigLoader.stripExtension(n);
-            Properties properties = this.readProperties(ConfigLoader.ACTIVITIES_DIR_PATH, n);
+        HashMap<String, Properties> allProperties = this.propertiesLoader.loadActivitiesProperties();
+        for (Map.Entry<String, Properties> n : allProperties.entrySet()) {
+            String id = n.getKey();
+            Properties properties = n.getValue();
+
             String displayName = properties.getProperty("displayName");
             int successPoints = Integer.parseInt(properties.getProperty("successPoints"));
             int failurePoints = Integer.parseInt(properties.getProperty("failurePoints"));
@@ -185,22 +88,19 @@ public class ConfigLoader {
 
 
     private void initAllRooms() throws IOException {
-        String[] roomFiles = this.getContentsOfDir(ConfigLoader.ROOMS_DIR_PATH);
-        for (String roomFile : roomFiles) {
-            Properties roomProperties = this.readProperties(ConfigLoader.ROOMS_DIR_PATH, roomFile);
+        HashMap<String, Properties> allProperties = this.propertiesLoader.loadRoomProperties();
+        this.allRoomProperties = allProperties;
+
+        for (Map.Entry<String, Properties> n : allProperties.entrySet()) {
+            String id = n.getKey();
+            Properties properties = n.getValue();
 
 
-            String roomId = ConfigLoader.stripExtension(roomFile);
+            String displayName = properties.getProperty("displayName");
+            String description = properties.getProperty("description");
 
-
-            this.allRoomProperties.put(roomId, roomProperties);
-
-
-            String displayName = roomProperties.getProperty("displayName");
-            String description = roomProperties.getProperty("description");
-
-            Room roomObject = new Room(roomId, displayName, description);
-            this.roomsHashMap.put(roomId, roomObject);
+            Room roomObject = new Room(id, displayName, description);
+            this.roomsHashMap.put(id, roomObject);
         }
     }
 
@@ -263,6 +163,7 @@ public class ConfigLoader {
     public Inventory getItemsStore() {
         return this.itemsStore;
     }
+
 
     public void repopulateDailyNeededItems() {
         Collection<Room> roomsCollection = this.roomsHashMap.values();
