@@ -1,6 +1,7 @@
 package com.example.semester1;
 
 import com.example.semester1.containers.RoomNavigationContainer;
+import com.example.semester1.core.Classes.Activity;
 import com.example.semester1.core.Classes.ActivityList;
 import com.example.semester1.core.Classes.Inventory;
 import com.example.semester1.core.Classes.Item;
@@ -94,6 +95,14 @@ public class GameController {
         // Setup for the roomNavigation:
         this.roomNavigationContainer = new RoomNavigationContainer();
         this.roomOuterAnchorPane.getChildren().add(this.roomNavigationContainer);
+
+
+        this.roomNavigationContainer.setApplianceTooltipGenerator(appliance -> {
+            Activity activity = game.getActivityManager().getAllActivities().getByAlias(appliance.getActivityId());
+            return new Tooltip(String.format("%s\n Kræver: %d", appliance.getDisplayName(), activity.getPowerCost()));
+        });
+
+
 
         this.roomNavigationContainer.setRoom(game.getCurrentRoom());
         this.roomNavigationContainer.addEventHandler(GameEvent.CHANGE_ROOM, event -> {
