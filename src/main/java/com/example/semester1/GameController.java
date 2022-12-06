@@ -74,7 +74,7 @@ public class GameController {
     public void initialize() throws IOException {
         // Creates an instance of Game
         try {
-            game = Game.createInstance("Insert player name here");
+            game = Game.createInstance("Playername");
         } catch (IllegalStateException e) {
             game = Game.getInstance();
         }
@@ -115,7 +115,7 @@ public class GameController {
             Command command = event.getCommand();
 
             if (Objects.equals(applianceId, "bed")) {
-                writeInConsoleArea("Ending day");
+                writeInConsoleArea("Slutter dag");
 
                 try {
                     this.goToBed();
@@ -124,12 +124,12 @@ public class GameController {
                 }
             } else {
                 if (game.useCommand(command)) {
-                    writeInConsoleArea("Task completed: " + game.getActivityManager().getAllActivities().getByAlias(game.getCurrentRoom().getAppliance(applianceId).getActivityId()).getDisplayName());
+                    writeInConsoleArea("Opgave klaret: " + game.getActivityManager().getAllActivities().getByAlias(game.getCurrentRoom().getAppliance(applianceId).getActivityId()).getDisplayName());
 
                     // Updates everything on the GUI
                     this.updateAll();
                 } else {
-                    writeInConsoleArea("You can't do that");
+                    writeInConsoleArea("Det kan du ikke gøre");
                 }
             }
         });
@@ -141,12 +141,12 @@ public class GameController {
             Command command = event.getCommand();
 
             if (game.pickupItem(command)) {
-                writeInConsoleArea("Picked up: " + game.getPlayer().getItem(itemId).getDisplayName());
+                writeInConsoleArea("Samlede op: " + game.getPlayer().getItem(itemId).getDisplayName());
 
                 // Updates everything on the GUI
                 this.updateAll();
             } else {
-                writeInConsoleArea("You can't do that");
+                writeInConsoleArea("Det kan du ikke gøre");
             }
         });
 
@@ -166,16 +166,16 @@ public class GameController {
         this.updateInventory();
     }
 
-    public void updatePower() {
-        powerLabel.setText("Current Power: " + game.getPower());
+    public void updateDay() {
+        dayLabel.setText("Dag nr: " + game.getDay());
     }
 
-    public void updateDay() {
-        dayLabel.setText("Day Number: " + game.getDay());
+    public void updatePower() {
+        powerLabel.setText("Nuværende power: " + game.getPower());
     }
 
     public void updatePoints() {
-        pointsLabel.setText("Current points: " + game.getPoints());
+        pointsLabel.setText("Nuværende point: " + game.getPoints());
     }
 
     public void updateActivities() { // Method to show current activities: Should be updated everytime a new day begins OR an activity has been completed.
