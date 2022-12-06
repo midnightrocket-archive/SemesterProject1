@@ -57,10 +57,4 @@
          </children>
       </VBox>
    </children>
-   <columnConstraints>
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-   </rowConstraints>
 </GridPane>
