@@ -21,8 +21,8 @@ class ActivityManagerTest {
     public void setup() {
         activityManager = new ActivityManager();
         activityContainer = new ActivityList();
-        activity1 = new Activity("test", "displaytest", false, "itemtest", 5, 10, 15);
-        activity2 = new Activity("test", "displaytest", true, "itemtest", 5, 10, 15);
+        activity1 = new Activity("test", "displaytest", false, "itemtest", 5, 15);
+        activity2 = new Activity("test", "displaytest", true, "itemtest", 5, 15);
     }
 
 

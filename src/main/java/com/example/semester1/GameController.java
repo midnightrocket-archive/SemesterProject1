@@ -70,10 +70,6 @@ public class GameController {
     // FXML initialize
     @FXML
     public void initialize() throws IOException {
-        // DEBUG:
-        dayLabel.setOnMouseClicked(dayTester);
-
-
         // Creates an instance of Game
         try {
             game = Game.createInstance("Insert player name here");
@@ -288,16 +284,4 @@ public class GameController {
         GridPane sleepGridPane = FXMLLoader.load(Objects.requireNonNull(getClass().getResource(("Sleep.fxml"))));
         gamePane.getChildren().setAll(sleepGridPane);
     }
-
-
-
-
-    // DEBUG EVENT HANDLER
-    EventHandler<MouseEvent> dayTester = new EventHandler<>() {
-        @Override
-        public void handle(MouseEvent mouseEvent) {
-            game.sleepCommand();
-            updateAll();
-        }
-    };
 }
