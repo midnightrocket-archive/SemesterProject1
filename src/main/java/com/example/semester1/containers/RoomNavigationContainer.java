@@ -1,5 +1,6 @@
 package com.example.semester1.containers;
 
+import com.example.semester1.TooltipFactory;
 import com.example.semester1.core.Room;
 import com.example.semester1.core.Utilities.Direction;
 import com.example.semester1.events.GameEvent;
@@ -103,7 +104,7 @@ public class RoomNavigationContainer extends GridPane {
             case WEST -> this.add(node, 0, 1);
         }
 
-        Tooltip tooltip = new Tooltip(roomName);
+        Tooltip tooltip = TooltipFactory.create(roomName);
         Tooltip.install(node, tooltip);
 
         GridPane.setHalignment(node, HPos.CENTER);

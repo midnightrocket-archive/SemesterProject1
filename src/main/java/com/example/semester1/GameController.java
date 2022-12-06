@@ -95,7 +95,7 @@ public class GameController {
 
         this.roomNavigationContainer.setApplianceTooltipGenerator(appliance -> {
             Activity activity = game.getActivityManager().getAllActivities().getByAlias(appliance.getActivityId());
-            return new Tooltip(String.format("%s\n Kræver: %d", appliance.getDisplayName(), activity.getPowerCost()));
+            return TooltipFactory.create(String.format("%s\nKræver: %d", appliance.getDisplayName(), activity.getPowerCost()));
         });
 
 
@@ -212,7 +212,7 @@ public class GameController {
                 ImageView imageView = new ImageView(image);
                 StackPane stackPane = new StackPane();
 
-                Tooltip tooltip = new Tooltip(item.getDisplayName());
+                Tooltip tooltip = TooltipFactory.create(item.getDisplayName());
                 Tooltip.install(imageView, tooltip);
 
                 // Setting up the imageView

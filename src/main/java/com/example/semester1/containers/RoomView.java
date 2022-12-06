@@ -1,6 +1,7 @@
 package com.example.semester1.containers;
 
 import com.example.semester1.ResourceLoader;
+import com.example.semester1.TooltipFactory;
 import com.example.semester1.core.Classes.Appliance;
 import com.example.semester1.core.Classes.Item;
 import com.example.semester1.core.Room;
@@ -59,7 +60,7 @@ public class RoomView extends Pane {
             node.fireEvent(gameEvent);
         });
 
-        Tooltip tooltip = new Tooltip(item.getDisplayName());
+        Tooltip tooltip = TooltipFactory.create(item.getDisplayName());
         Tooltip.install(node, tooltip);
 
         return node;
