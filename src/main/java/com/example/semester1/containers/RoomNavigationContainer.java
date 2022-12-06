@@ -134,4 +134,10 @@ public class RoomNavigationContainer extends GridPane {
     public void updateView() {
         this.roomView.updateView();
     }
+
+
+
+    public void setApplianceTooltipGenerator(ApplianceTooltipGenerator generator) {
+        this.roomView.setApplianceTooltipGenerator(generator);
+    }
 }

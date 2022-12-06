@@ -31,6 +31,12 @@ public class RoomView extends Pane {
 
     private Room room;
 
+    private ApplianceTooltipGenerator applianceTooltipGenerator = new ApplianceTooltipGenerator() {
+        @Override
+        public Tooltip generate(Appliance appliance) {
+            return new Tooltip(appliance.getDisplayName());
+        }
+    };
 
     private static Node createNode(String subdir, Item object) {
         Image image = new Image(ResourceLoader.loadGameAssetAsInputStream(subdir, object.getId()));
@@ -41,21 +47,9 @@ public class RoomView extends Pane {
         imageView.setX(object.getX());
         imageView.setY(object.getY());
 
-        Tooltip tooltip = new Tooltip(object.getDisplayName());
-        Tooltip.install(imageView, tooltip);
-
         return imageView;
     }
 
-    private static Node createApplianceNode(Appliance appliance) {
-        Node node = RoomView.createNode("appliances", appliance);
-        node.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            GameEvent gameEvent = new GameEvent(GameEvent.USE_APPLIANCE);
-            gameEvent.setValue(appliance.getId());
-            node.fireEvent(gameEvent);
-        });
-        return node;
-    }
 
     private static Node createItemNode(Item item) {
         Node node = RoomView.createNode("items", item);
@@ -64,6 +58,10 @@ public class RoomView extends Pane {
             gameEvent.setValue(item.getId());
             node.fireEvent(gameEvent);
         });
+
+        Tooltip tooltip = new Tooltip(item.getDisplayName());
+        Tooltip.install(node, tooltip);
+
         return node;
     }
 
@@ -73,6 +71,26 @@ public class RoomView extends Pane {
         BorderStroke borderStroke = new BorderStroke(color, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT);
         Border border = new Border(borderStroke);
         this.setBorder(border);
+    }
+
+
+    private Node createApplianceNode(Appliance appliance) {
+        Node node = RoomView.createNode("appliances", appliance);
+        node.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            GameEvent gameEvent = new GameEvent(GameEvent.USE_APPLIANCE);
+            gameEvent.setValue(appliance.getId());
+            node.fireEvent(gameEvent);
+        });
+
+
+        Tooltip tooltip = this.applianceTooltipGenerator.generate(appliance);
+        Tooltip.install(node, tooltip);
+
+        return node;
+    }
+
+    public void setApplianceTooltipGenerator(ApplianceTooltipGenerator generator) {
+        this.applianceTooltipGenerator = generator;
     }
 
     public void setRoom(Room room) {
@@ -106,7 +124,7 @@ public class RoomView extends Pane {
 
     private void addAppliances() {
         for (Appliance appliance : this.room.getAllAppliances()) {
-            Node node = RoomView.createApplianceNode(appliance);
+            Node node = this.createApplianceNode(appliance);
             this.appliancesNodes.add(node);
             this.getChildren().add(node);
         }
