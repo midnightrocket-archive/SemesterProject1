@@ -10,7 +10,8 @@ public class ConfigLoader {
     private static final String NONE_KEYWORD = "none";
     private Properties gameProperties;
 
-    private HashMap<String, Properties> allRoomProperties = new HashMap<>();
+    private HashMap<String, Properties> allRoomProperties;
+    private HashMap<String, Properties> allItemProperties;
 
 
     private HashMap<String, Room> roomsHashMap = new HashMap<>();
@@ -52,20 +53,32 @@ public class ConfigLoader {
 
 
             Appliance object = new Appliance(id, displayName, activityId);
+
+            object.setX(Integer.parseInt(properties.getProperty("x")));
+            object.setY(Integer.parseInt(properties.getProperty("y")));
+
             this.appliancesHashMap.put(id, object);
         }
     }
 
     private void loadItems() throws IOException {
         HashMap<String, Properties> allProperties = this.propertiesLoader.loadItemProperties();
-        for (Map.Entry<String, Properties> n : allProperties.entrySet()) {
-            String id = n.getKey();
-            Properties properties = n.getValue();
-            String displayName = properties.getProperty("displayName");
 
-            Item object = new Item(id, displayName);
-            this.itemsStore.add(object);
+        this.allItemProperties = allProperties;
+
+        for (Map.Entry<String, Properties> n : allProperties.entrySet()) {
+            this.itemsStore.add(this.createItem(n.getKey()));
         }
+    }
+
+    private Item createItem(String id) {
+        Properties properties = this.allItemProperties.get(id);
+        Item object = new Item(id, properties.getProperty("displayName"));
+
+        object.setX(Integer.parseInt(properties.getProperty("x")));
+        object.setY(Integer.parseInt(properties.getProperty("y")));
+
+        return object;
     }
 
     private void loadActivities() throws IOException {
@@ -165,19 +178,47 @@ public class ConfigLoader {
     }
 
 
+
+
+
+    private ArrayList<String> getDailyNeededItemIds() {
+        ArrayList<String> ids = new ArrayList<>();
+
+        for (Activity activity : this.activityManager.getAllDailyActivities()) {
+            String itemId = activity.getItemId();
+            ids.add(itemId);
+        }
+
+        return ids;
+    }
+
+
+//    private void repopulateRoom(Room room, Properties roomProperties, ArrayList<String> dailyNeededItems) {
+//
+//    }
+
     public void repopulateDailyNeededItems() {
-        Collection<Room> roomsCollection = this.roomsHashMap.values();
-        int numberOfRooms = roomsCollection.size();
-        Room[] roomsArray = roomsCollection.toArray(new Room[numberOfRooms]);
-        Random random = new Random();
+        ArrayList<String> dailyNeededItems = this.getDailyNeededItemIds();
 
-        for (Activity a : this.activityManager.getAllDailyActivities()) {
-            String itemId = a.getItemId();
+        for (Map.Entry<String, Properties> entry : this.allRoomProperties.entrySet()) {
+            this.repopulateRoomWithItems(entry, dailyNeededItems);
+        }
+    }
 
-            if (!itemId.equals(ConfigLoader.NONE_KEYWORD)) {
-                Item item = this.itemsStore.getByAlias(itemId);
+    private void repopulateRoomWithItems(Map.Entry<String, Properties> entry, ArrayList<String> dailyNeededItems) {
+        String roomId = entry.getKey();
+        Properties roomProperties = entry.getValue();
+        Room room = this.roomsHashMap.get(roomId);
 
-                roomsArray[random.nextInt(numberOfRooms)].addItem(item);
+        String[] itemIds = roomProperties.getProperty("itemId").split(",");
+
+
+        for (String itemId : itemIds) {
+            if (itemId.equals(ConfigLoader.NONE_KEYWORD)) continue;
+
+            if (!room.hasItem(itemId) && dailyNeededItems.contains(itemId)) {
+                Item item = this.createItem(itemId);
+                room.addItem(item);
             }
         }
     }

@@ -111,9 +111,9 @@ class PropertiesLoader {
     }
 
     private HashMap<String, Properties> loadPropertiesFromDir(String subdir) throws IOException {
-        HashMap<String, Properties> output = new HashMap<>();
-
         String[] fileNames = this.getContentsOfDir(subdir);
+
+        HashMap<String, Properties> output = new HashMap<>(fileNames.length);
         for (String f : fileNames) {
             Properties roomProperties = this.readProperties(subdir, f);
 
