@@ -1,6 +1,7 @@
 package com.example.semester1.containers;
 
 
+import com.example.semester1.ResourceLoader;
 import com.example.semester1.core.Room;
 import com.example.semester1.core.Utilities.Direction;
 import com.example.semester1.events.GameEvent;
@@ -8,6 +9,8 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -25,8 +28,13 @@ import java.util.Map;
 public class RoomNavigationContainer extends GridPane {
 
     private static Node getArrowNode(Direction direction) {
-        // Just using rectangle as placeholder
-        Node node = new Rectangle(10,20);
+        Image image = new Image(ResourceLoader.loadUIAssetAsInputStream("arrow"));
+        ImageView imageView = new ImageView(image);
+
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(20);
+
+        Node node = imageView;
 
         // ordinal method is an enum default, which returns the ordinal number of the enum constant
         node.setRotate(90 * direction.ordinal());
