@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
@@ -33,6 +34,12 @@ public class SleepController {
     @FXML
     ListView activitiesMissed;
 
+    @FXML
+    Button nextDayButton;
+
+    @FXML
+    Label lastDayText;
+
 
     Game game;
 
@@ -49,6 +56,11 @@ public class SleepController {
             System.out.println(e.getMessage());
         }
 
+        if (game.getDay() == 7) {
+            nextDayButton.setVisible(false);
+        } else {
+            lastDayText.setVisible(false);
+        }
 
         activitiesDone.setItems(activitiesDoneObservableList);
         activitiesMissed.setItems(activitiesMissedObservableList);

@@ -43,11 +43,12 @@
             </Label>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#startNextDay" text="Gå til næste dag">
+                  <Button fx:id="nextDayButton" mnemonicParsing="false" onAction="#startNextDay" text="Gå til næste dag">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
+                  <Label fx:id="lastDayText" text="Spillet er færdigt" />
                </children>
             </VBox>
          </children>
