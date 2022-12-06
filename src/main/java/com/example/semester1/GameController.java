@@ -221,6 +221,7 @@ public class GameController {
                 Tooltip.install(imageView, tooltip);
 
                 // Setting up the imageView
+                imageView.setPreserveRatio(true);
                 imageView.setFitWidth(50);
                 imageView.setFitHeight(50);
 
