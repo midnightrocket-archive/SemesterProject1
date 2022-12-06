@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -45,10 +46,10 @@ public class GameController {
     private AnchorPane roomOuterAnchorPane;
 
     @FXML
-    ListView activitiesList1 = new ListView();
+    ListView<String> activitiesList1 = new ListView<>();
 
     @FXML
-    ListView activitiesList2 = new ListView();
+    ListView<String> activitiesList2 = new ListView<String>();
 
     @FXML
     Label consoleArea;
@@ -205,6 +206,9 @@ public class GameController {
                 // Creates a imageView and a stackPane
                 ImageView imageView = new ImageView(image);
                 StackPane stackPane = new StackPane();
+
+                Tooltip tooltip = new Tooltip(item.getDisplayName());
+                Tooltip.install(imageView, tooltip);
 
                 // Setting up the imageView
                 imageView.setFitWidth(50);
