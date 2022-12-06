@@ -1,6 +1,7 @@
 package com.example.semester1.core.Utilities;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -80,7 +81,7 @@ class PropertiesLoader {
 
         File file = new File(this.getFullPathFromPathArray(pathArray));
         //Using the try-with-resource construct, so that it auto closes the FileReader on IOException.
-        try (FileReader fileReader = new FileReader(file)) {
+        try (FileReader fileReader = new FileReader(file, StandardCharsets.ISO_8859_1)) {
             properties.load(fileReader);
         }
 
@@ -95,7 +96,7 @@ class PropertiesLoader {
         File file = new File(this.getFullPathFromPathArray(pathArray));
 
 
-        try (FileReader fileReader = new FileReader(file)) {
+        try (FileReader fileReader = new FileReader(file, StandardCharsets.ISO_8859_1)) {
             properties.load(fileReader);
         } catch (FileNotFoundException exception) {
             //ignore.Pass empty properties instead.
