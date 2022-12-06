@@ -47,15 +47,14 @@ class ActivityTest {
             ArrayList<String> inputArgs = inputFile.get(i);
             ArrayList<String> exptectedOutputArgs = expectedOutputFile.get(i);
             try {
-                Activity activity = new Activity(inputArgs.get(0), inputArgs.get(1), Boolean.parseBoolean(inputArgs.get(2)), inputArgs.get(3), Integer.parseInt(inputArgs.get(4)), Integer.parseInt(inputArgs.get(5)), Integer.parseInt(inputArgs.get(6)));
+                Activity activity = new Activity(inputArgs.get(0), inputArgs.get(1), Boolean.parseBoolean(inputArgs.get(2)), inputArgs.get(3), Integer.parseInt(inputArgs.get(4)), Integer.parseInt(inputArgs.get(5)));
 
                 assertEquals(exptectedOutputArgs.get(0), activity.getId());
                 assertEquals(exptectedOutputArgs.get(1), activity.getDisplayName());
                 assertEquals(exptectedOutputArgs.get(2), activity.getItemId());
                 assertEquals(Boolean.parseBoolean(exptectedOutputArgs.get(3)), activity.isDaily());
-                assertEquals(Integer.parseInt(exptectedOutputArgs.get(4)), activity.getSuccessPoints());
-                assertEquals(Integer.parseInt(exptectedOutputArgs.get(5)), activity.getFailurePoints());
-                assertEquals(Integer.parseInt(exptectedOutputArgs.get(6)), activity.getPowerCost());
+                assertEquals(Integer.parseInt(exptectedOutputArgs.get(4)), activity.getPoints());
+                assertEquals(Integer.parseInt(exptectedOutputArgs.get(5)), activity.getPowerCost());
                 assertFalse(activity.isDone());
                 assertEquals(0, activity.getFailedCounter());
                 assertEquals(0, activity.getSuccessCounter());
@@ -65,11 +64,8 @@ class ActivityTest {
                     case "successPoints cannot be negative":
                         assertEquals(exptectedOutputArgs.get(4), exception.getMessage());
                         break;
-                    case "failurePoints cannot be negative":
-                        assertEquals(exptectedOutputArgs.get(5), exception.getMessage());
-                        break;
                     case "powerCost cannot be negative":
-                        assertEquals(exptectedOutputArgs.get(6), exception.getMessage());
+                        assertEquals(exptectedOutputArgs.get(5), exception.getMessage());
                         break;
                     default:
                         throw exception;
@@ -82,20 +78,20 @@ class ActivityTest {
     @Test
     @DisplayName("Test Activity - calculateResultingPoints")
     public void testCalculateResultingPoints() {
-        Activity activity1 = new Activity("test", "displaytest", false, "test", 5, 10, 15);
+        Activity activity1 = new Activity("test", "displaytest", false, "test", 5, 15);
         assertEquals(activity1.calculateResultingPoints(), 0);
 
         activity1.setAsDone();
 
-        assertEquals(activity1.calculateResultingPoints(), activity1.getSuccessPoints());
+        assertEquals(activity1.calculateResultingPoints(), activity1.getPoints());
     }
 
 
     @Test
     @DisplayName("Test Activity - Settle")
     public void testSettle() {
-        Activity activity1 = new Activity("test", "displaytest", false, "test", 5, 10, 15);
-        Activity activity2 = new Activity("test", "displaytest", false, "test", 5, 10, 15);
+        Activity activity1 = new Activity("test", "displaytest", false, "test", 5, 15);
+        Activity activity2 = new Activity("test", "displaytest", false, "test", 5, 15);
 
         activity2.setAsDone();
 
@@ -107,9 +103,9 @@ class ActivityTest {
     @Test
     @DisplayName("Test Activity - HasAlias")
     public void testHasAlias() {
-        Activity activity1 = new Activity("test", "displaytest", false, "test", 5, 10, 15);
-        Activity activity2 = new Activity("test", "displaytest", false, "test", 5, 10, 15);
-        Activity activity3 = new Activity("testtest", "displaytesttest", false, "test", 5, 10, 15);
+        Activity activity1 = new Activity("test", "displaytest", false, "test", 5, 15);
+        Activity activity2 = new Activity("test", "displaytest", false, "test", 5, 15);
+        Activity activity3 = new Activity("testtest", "displaytesttest", false, "test", 5, 15);
 
         assertTrue(activity1.hasAlias(activity2.getId()));
         assertFalse(activity1.hasAlias(activity3.getId()));
@@ -119,7 +115,7 @@ class ActivityTest {
     @Test
     @DisplayName("Test Activity - ToString")
     public void testToString() {
-        Activity activity1 = new Activity("test", "displaytest", false, "test", 5, 10, 15);
+        Activity activity1 = new Activity("test", "displaytest", false, "test", 5, 15);
 
         assertEquals(activity1.toString(), "'displaytest' power=15 not done");
 

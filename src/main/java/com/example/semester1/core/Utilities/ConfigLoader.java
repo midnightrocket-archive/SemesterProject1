@@ -178,12 +178,11 @@ public class ConfigLoader {
             Properties properties = this.readProperties(ConfigLoader.ACTIVITIES_DIR_PATH, n);
             String displayName = properties.getProperty("displayName");
             int successPoints = Integer.parseInt(properties.getProperty("successPoints"));
-            int failurePoints = Integer.parseInt(properties.getProperty("failurePoints"));
             int powerCost = Integer.parseInt(properties.getProperty("powerCost"));
             boolean daily = Boolean.parseBoolean(properties.getProperty("daily"));
             String itemId = properties.getProperty("itemId");
 
-            Activity object = new Activity(id, displayName, daily, itemId, successPoints, failurePoints, powerCost);
+            Activity object = new Activity(id, displayName, daily, itemId, successPoints, powerCost);
             this.activityManager.add(object);
         }
     }

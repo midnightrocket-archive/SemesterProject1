@@ -1,5 +1,5 @@
-test1,testDisplay1,false,itemId,2,3,0
-test2,testDisplay2,true,itemId,successPoints cannot be negative,2147483647,powerCost cannot be negative
-test3,testDisplay3,true,itemId,successPoints cannot be negative,1453,9
-test4,testDisplay4,false,itemId,234,failurePoints cannot be negative,powerCost cannot be negative
-test5,testDisplay5,true,itemId,0,234,powerCost cannot be negative
+test1,testDisplay1,false,itemId,2,0
+test2,testDisplay2,true,itemId,successPoints cannot be negative,powerCost cannot be negative
+test3,testDisplay3,true,itemId,successPoints cannot be negative,9
+test4,testDisplay4,false,itemId,234,powerCost cannot be negative
+test5,testDisplay5,true,itemId,0,powerCost cannot be negative

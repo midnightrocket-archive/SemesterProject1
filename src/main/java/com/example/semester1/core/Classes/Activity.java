@@ -4,28 +4,26 @@ package com.example.semester1.core.Classes;
 public class Activity extends AliasableImplementation {
     private final String itemId;
     private final boolean daily; // Determines if the task is daily (Daily=true, non-daily=false)
-    private int successPoints; // Positive number for number of points to receive when completing the activity.
-    private int failurePoints; // Positive number to subtract from points when not completing or failing the activity.
+    private int points; // Positive number for number of points to receive when completing the activity.
     private int powerCost; // Amount of power required to complete the activity.
     private boolean done = false; // False if activity is not done, true if activity is done.
 
     private int failedCounter = 0; // This is used to keep track of how many times an activity has been failed.
     private int successCounter = 0;
 
-    public Activity(String id, String displayName, boolean daily, String itemId, int successPoints, int failurePoints, int powerCost) {
+    public Activity(String id, String displayName, boolean daily, String itemId, int points, int powerCost) {
         super(id, displayName);
         this.daily = daily;
         this.itemId = itemId;
 
-        // successPoint, failurePoint and powerCost uses another method, which makes sure that all the values non-negative.
-        this.setSuccessPoints(successPoints);
-        this.setFailurePoints(failurePoints);
+        // successPoint and powerCost uses another method, which makes sure that all the values non-negative.
+        this.setPoints(points);
         this.setPowerCost(powerCost);
     }
 
     public int calculateResultingPoints() {
-        int totalSuccessPoints =  this.successCounter * this.successPoints;
-        int totalFailurePoints = this.failedCounter * this.failurePoints;
+        int totalSuccessPoints = this.getSuccessCounter() * this.getPoints();
+        int totalFailurePoints = this.getFailedCounter() * this.getPoints();
         return totalSuccessPoints - totalFailurePoints;
     }
 
@@ -62,28 +60,15 @@ public class Activity extends AliasableImplementation {
         }
     }
 
-
-    public int getSuccessPoints() {
-        return this.successPoints;
+    public int getPoints() {
+        return this.points;
     }
 
-    private void setSuccessPoints(int points) {
+    private void setPoints(int points) {
         if (points < 0) {
             throw new IllegalArgumentException("successPoints cannot be negative");
         } else {
-            this.successPoints = points;
-        }
-    }
-
-    public int getFailurePoints() {
-        return this.failurePoints;
-    }
-
-    private void setFailurePoints(int points) {
-        if (points < 0) {
-            throw new IllegalArgumentException("failurePoints cannot be negative");
-        } else {
-            this.failurePoints = points;
+            this.points = points;
         }
     }
 

@@ -61,10 +61,6 @@ public class SleepController {
 
     // Update methods
     public void setAllData() {
-        this.dayHeader.setText("Dag " + game.getDay() + " klaret");
-        this.points.setText("Point ialt: " + game.getPoints());
-        this.powerLeft.setText("Power tilovers: " + game.getPower());
-
         //
         // Insert code for Daily activities done here
         //
@@ -77,7 +73,12 @@ public class SleepController {
             activitiesMissedObservableList.add(missingDailyActivity.getDisplayName());
         }
 
+        this.powerLeft.setText("Power tilovers: " + game.getPower());
+        this.dayHeader.setText("Dag " + game.getDay() + " klaret");
+
         game.sleepCommand();
+
+        this.points.setText("Point ialt: " + game.getPoints());
     }
 
 
