@@ -28,12 +28,8 @@ public class RoomNavigationContainer extends GridPane {
         // Just using rectangle as placeholder
         Node node = new Rectangle(10,20);
 
-        node.setRotate(90 * switch (direction) {
-            case NORTH -> 0;
-            case EAST -> 1;
-            case SOUTH -> 2;
-            case WEST -> 3;
-        });
+        // ordinal method is an enum default, which returns the ordinal number of the enum constant
+        node.setRotate(90 * direction.ordinal());
 
         return node;
     }
