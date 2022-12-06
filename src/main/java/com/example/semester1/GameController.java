@@ -95,7 +95,12 @@ public class GameController {
 
         this.roomNavigationContainer.setApplianceTooltipGenerator(appliance -> {
             Activity activity = game.getActivityManager().getAllActivities().getByAlias(appliance.getActivityId());
-            return TooltipFactory.create(String.format("%s\nKræver: %d", appliance.getDisplayName(), activity.getPowerCost()));
+
+            if (activity != null) {
+                return TooltipFactory.create(String.format("%s\n Kræver: %d", appliance.getDisplayName(), activity.getPowerCost()));
+            } else {
+                return TooltipFactory.create(appliance.getDisplayName());
+            }
         });
 
 
