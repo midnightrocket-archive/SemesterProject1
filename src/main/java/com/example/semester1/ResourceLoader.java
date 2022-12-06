@@ -28,4 +28,9 @@ public class ResourceLoader {
         String path = ResourceLoader.BASE_PATH + "assets/game/" + subDir;
         return ResourceLoader.loadAsInputStream(String.format("%s/%s.png", path, id), path + "/default.png");
     }
+
+    public static InputStream loadUIAssetAsInputStream(String id) {
+        String path = ResourceLoader.BASE_PATH + "assets/UI";
+        return ResourceLoader.loadAsInputStream(String.format("%s/%s.png", path, id), path + "/placeholderImage.png");
+    }
 }
