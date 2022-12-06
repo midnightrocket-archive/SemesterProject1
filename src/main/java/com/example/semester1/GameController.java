@@ -220,8 +220,8 @@ public class GameController {
                 Tooltip tooltip = TooltipFactory.create(item.getDisplayName());
                 Tooltip.install(imageView, tooltip);
 
-                imageView.setPreserveRatio(true);
                 // Setting up the imageView
+                imageView.setPreserveRatio(true);
                 imageView.setFitWidth(50);
                 imageView.setFitHeight(50);
 
