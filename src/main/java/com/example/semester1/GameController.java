@@ -200,7 +200,7 @@ public class GameController {
         try {
             for (Item item : inventory) {
                 // Gets the image and loads it
-                Image image = new Image(ResourceLoader.loadAsInputStream("assets/game/items/" + item.getId() + ".png"));
+                Image image = new Image(ResourceLoader.loadGameAssetAsInputStream("items", item.getId()));
 
                 // Creates a imageView and a stackPane
                 ImageView imageView = new ImageView(image);
