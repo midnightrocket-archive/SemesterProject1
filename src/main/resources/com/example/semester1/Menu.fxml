@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.semester1.MenuController" fx:id="menuPane">
+<GridPane fx:id="menuPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.semester1.MenuController">
    <children>
       <VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0">
          <children>
@@ -27,12 +27,33 @@
             </Label>
             <Button mnemonicParsing="false" onAction="#startGame" text="Start">
                <VBox.margin>
-                  <Insets bottom="150.0" />
+                  <Insets bottom="100.0" top="20.0" />
                </VBox.margin>
                <font>
                   <Font size="18.0" />
                </font>
             </Button>
+            <Label text="How to play">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </Label>
+            <Label text="I dette spil, skal man bruge sin power fornuftigt så man får gjort alle sine opgaver hen over ugen.">
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding></Label>
+            <Label text="For at se hvor meget strøm et apparat bruger, kan man holde musen over.">
+               <padding>
+                  <Insets bottom="5.0" />
+               </padding></Label>
+            <Label text="Når du er færdig med en dag, kan du trykke på sengen i soveværelset for at komme til næste dag.">
+               <padding>
+                  <Insets bottom="15.0" />
+               </padding></Label>
+            <Label text="For hver aktivitet man færdiggøre, får man point. Hvis man ikke laver en aktivitet, får man minus point." />
          </children>
       </VBox>
    </children>
