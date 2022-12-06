@@ -1,15 +1,14 @@
 package com.example.semester1.core;
 
 
-
 import com.example.semester1.core.Classes.Appliance;
 import com.example.semester1.core.Classes.Inventory;
 import com.example.semester1.core.Classes.Item;
 import com.example.semester1.core.Classes.ReferenceList;
 import com.example.semester1.core.Utilities.Direction;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Room {
     private final String description;

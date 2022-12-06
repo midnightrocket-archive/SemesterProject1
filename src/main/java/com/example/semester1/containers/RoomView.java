@@ -1,11 +1,11 @@
 package com.example.semester1.containers;
 
 import com.example.semester1.ResourceLoader;
-import com.example.semester1.core.Classes.AliasableImplementation;
 import com.example.semester1.core.Classes.Appliance;
 import com.example.semester1.core.Classes.Item;
 import com.example.semester1.core.Room;
 import com.example.semester1.events.GameEvent;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -13,7 +13,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.Node;
 
 import java.util.ArrayList;
 
@@ -22,10 +21,9 @@ import java.util.ArrayList;
  * Class to contain a view of the current room
  */
 
-public class RoomView extends AnchorPane {
+public class RoomView extends Pane {
 
-    private GridPane grid = new GridPane();
-
+    //Arraylist to save item and appliance nodes, in order to later be able to remove them from view.
     private ArrayList<Node> itemNodes = new ArrayList<>();
     private ArrayList<Node> appliancesNodes = new ArrayList<>();
 
@@ -34,15 +32,18 @@ public class RoomView extends AnchorPane {
     private Room room;
 
 
-    private static Node createNode(String subdir, AliasableImplementation object) {
+    private static Node createNode(String subdir, Item object) {
         Image image = new Image(ResourceLoader.loadGameAssetAsInputStream(subdir, object.getId()));
+
         ImageView imageView = new ImageView(image);
         imageView.setPreserveRatio(true);
-        imageView.maxWidth(30);
-        imageView.setFitWidth(100);
+
+        imageView.setX(object.getX());
+        imageView.setY(object.getY());
 
         Tooltip tooltip = new Tooltip(object.getDisplayName());
         Tooltip.install(imageView, tooltip);
+
         return imageView;
     }
 
@@ -68,20 +69,10 @@ public class RoomView extends AnchorPane {
 
 
     public RoomView() {
-        this.getChildren().add(this.grid);
-        this.setAnchorsOnGridPane(1);
-
         Color color = Color.BLACK;
         BorderStroke borderStroke = new BorderStroke(color, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT);
         Border border = new Border(borderStroke);
         this.setBorder(border);
-    }
-
-    private void setAnchorsOnGridPane(double value) {
-        AnchorPane.setTopAnchor(this.grid, value);
-        AnchorPane.setRightAnchor(this.grid, value);
-        AnchorPane.setBottomAnchor(this.grid, value);
-        AnchorPane.setLeftAnchor(this.grid, value);
     }
 
     public void setRoom(Room room) {
@@ -109,7 +100,7 @@ public class RoomView extends AnchorPane {
 
     private void clearAppliancesNodes() {
         for (Node node : this.appliancesNodes) {
-            this.grid.getChildren().remove(node);
+            this.getChildren().remove(node);
         }
     }
 
@@ -117,13 +108,13 @@ public class RoomView extends AnchorPane {
         for (Appliance appliance : this.room.getAllAppliances()) {
             Node node = RoomView.createApplianceNode(appliance);
             this.appliancesNodes.add(node);
-            this.grid.addRow(0, node);
+            this.getChildren().add(node);
         }
     }
 
     private void clearItemNodes() {
         for (Node node : this.itemNodes) {
-            this.grid.getChildren().remove(node);
+            this.getChildren().remove(node);
         }
     }
 
@@ -131,7 +122,7 @@ public class RoomView extends AnchorPane {
         for (Item item : this.room.getAllItems()) {
             Node node = RoomView.createItemNode(item);
             this.itemNodes.add(node);
-            this.grid.addRow(1, node);
+            this.getChildren().add(node);
         }
     }
 
