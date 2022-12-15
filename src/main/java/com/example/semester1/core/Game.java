@@ -124,9 +124,9 @@ public class Game {
     // Returns a random int between 0 and the sum of extraPowerList. If last day, return remaining extra power.
     private void generateRandomPowerLevels() {
         Random rand = new Random();
-        this.randomPowerLevels = new int[this.maxDays + 1];
+        this.randomPowerLevels = new int[this.maxDays];
         for (int i : this.extraPowerList) {
-            this.randomPowerLevels[rand.nextInt(this.maxDays + 1)] += i;
+            this.randomPowerLevels[rand.nextInt(this.maxDays)] += i;
         }
 
     }
@@ -238,7 +238,7 @@ public class Game {
 
     private void getPowerForToday() {
         // Add defaultPower level with the random powerLevel of the current day
-        this.power = this.defaultPower + this.randomPowerLevels[this.getDay()];
+        this.power = this.defaultPower + this.randomPowerLevels[this.getDay() - 1];
     }
 
     private void advanceDay() {
