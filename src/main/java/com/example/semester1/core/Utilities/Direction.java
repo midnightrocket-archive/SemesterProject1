@@ -8,8 +8,10 @@ public enum Direction {
 
 
     public static Direction parse(String string) {
+        if (string == null) throw new IllegalArgumentException("null string not a valid direction");
         string = string.trim().toUpperCase();
         return Direction.valueOf(string);
+        // throws IllegalArgumentException
     }
 
     public Direction opposite() {

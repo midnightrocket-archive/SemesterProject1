@@ -66,13 +66,6 @@ public class Game {
 
 
     public boolean goRoom(Command command) {
-
-        if (!command.hasCommandValue()) {
-            //No direction on command.
-            //Can't continue with GO command.
-            return false;
-        }
-
         Direction direction;
 
         try {
